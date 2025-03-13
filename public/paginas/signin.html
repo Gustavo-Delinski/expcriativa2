@@ -11,22 +11,22 @@
     <form class="container">
         <div class="mb-3 nome">
           <label for="exampleInputEmail1" class="form-label">Seu nome</label>
-          <input type="text" class="form-control" id="exampleInputEmail1">
+          <input type="text" class="form-control" id="nome">
         </div>
         <br>
         <div class="mb-3 email">
             <label for="exampleInputEmail1" class="form-label">Endereço de Email</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  placeholder="Ex: joaodasilva@gmail.com">
+            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" required pattern="^[A-Za-z0-9_.-]+@([A-Za-z0-9_]+\.)+[A-Za-z]{2,4}$" placeholder="Ex: joaodasilva@gmail.com">
           </div>
           <br>
         <div class="mb-3 cpf">
             <label for="exampleInputEmail1" class="form-label">CPF</label>
-            <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Ex: XXX.XXX.XXX-XX">
+            <input type="phone" class="form-control" id="cpf" placeholder="Ex: XXX.XXX.XXX-XX" required pattern="^(\d{3}\.\d{3}\.\d{3}\-\d{2})|(\d){11}$">
         </div>
           <br>
         <div class="mb-3 senha">
           <label for="exampleInputPassword1" class="form-label">Senha</label>
-          <input type="password" class="form-control" id="exampleInputPassword1">
+          <input type="password" class="form-control" id="senha">
         </div>
         <br>
         <div class="mb-3 form-check">

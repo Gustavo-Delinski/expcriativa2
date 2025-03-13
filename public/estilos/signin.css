@@ -25,5 +25,11 @@
 
 .salvar {
     width: 100px;
-    height: 45px;
+    height: 45px; /* 
+    background-color: red;
+    border-color: red; */
 }
+
+input:invalid {
+    border: red solid 3px;
+  }
