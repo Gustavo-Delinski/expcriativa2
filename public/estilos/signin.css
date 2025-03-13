@@ -1,0 +1,29 @@
+.container {
+    justify-items: center;
+    padding-top: 150px;
+}
+
+.nome {
+    width: 250px;
+    height: 50px;
+}
+
+.email {
+    width: 250px;
+    height: 50px;
+}
+
+.cpf {
+    width: 250px;
+    height: 50px;
+}
+
+.senha {
+    width: 250px;
+    height: 50px;
+}
+
+.salvar {
+    width: 100px;
+    height: 45px;
+}
