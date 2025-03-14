@@ -24,3 +24,6 @@ app.get("/", (req, res) => {
 app.listen(port, () => {
     console.log(`Servidor rodando http://localhost:${port}`);
 });
+
+// Para rodar o servidor, execute o comando:
+// node server.js ou npx nodemon server.js
