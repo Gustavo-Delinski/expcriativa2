@@ -20,6 +20,14 @@ app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "paginas", "index.html"));
 });
 
+app.get("/signin", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "paginas", "signin.html"));
+});
+
+app.get("/pesquisa", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "paginas", "pesquisa.html"));
+});
+
 //inicia o servidor na porta 3000
 app.listen(port, () => {
     console.log(`Servidor rodando http://localhost:${port}`);
