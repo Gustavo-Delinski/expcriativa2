@@ -1,6 +1,5 @@
 .container {
-    justify-items: center;
-    padding-top: 150px;
+    padding-top: 60px;
 }
 
 .nome {
@@ -21,6 +20,15 @@
 .senha {
     width: 250px;
     height: 50px;
+}
+
+.senhaConfirm {
+    width: 250px;
+    height: 50px;
+}
+
+.senhaLabel {
+    width: 500px;
 }
 
 .salvar {
