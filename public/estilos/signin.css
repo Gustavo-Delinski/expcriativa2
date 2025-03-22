@@ -1,5 +1,15 @@
+body {
+    background-color: #F7EFE6;
+}
+
+.form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
 .container {
-    padding-top: 60px;
+    width: 15%;
 }
 
 .nome {
@@ -28,14 +38,13 @@
 }
 
 .senhaLabel {
-    width: 500px;
+    width: 250px;
+    font-size: 12px;
 }
 
 .salvar {
     width: 100px;
-    height: 45px; /* 
-    background-color: red;
-    border-color: red; */
+    height: 45px;
 }
 
 input:invalid {
