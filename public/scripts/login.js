@@ -19,3 +19,12 @@ function VerificarCampos() {
         return;
     }
 }
+
+function mostrarSenha(event) {
+    var campoSenha = document.getElementById('senha');
+    if (campoSenha.type == 'password') {
+        campoSenha.type = 'text';
+    } else {
+        campoSenha.type = 'password';
+    }
+}

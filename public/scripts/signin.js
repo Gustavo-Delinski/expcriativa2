@@ -95,16 +95,9 @@ function msgValidaCPF (cpf) {
       '',
       'error'
     );
-  // }else {
-  //   Swal.fire(
-  //     'CPF Inválido',
-  //     '',
-  //     'error'
-  // );
-  
-  //else desnecessario
-
+    return false;
   } 
+  return true;
 }
 
 function mostrarSenha (event) {
@@ -128,21 +121,13 @@ function validaSenhas (senha, senhaConfirmar) {
   let mascara = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*]).{8,}$/
 
 
-  if (senha != senhaConfirmar) {
-    Swal.fire(
-      'Senhas Diferentes',
-      'O campo de senha e confirmação de senha devem ser iguais.',
-      'error'
-    );
-    return;
-  }
   if (senha.length < 8) {
     Swal.fire(
       'Senha Fraca',
       'A senha deve ter pelo menos 8 caracteres.',
       'error'
     );
-    return;
+    return false;
   }
   if (!mascara.test(senha)) {
     Swal.fire(
@@ -150,8 +135,17 @@ function validaSenhas (senha, senhaConfirmar) {
       'A senha deve ter pelo menos uma letra maiúscula, uma letra minúscula, um número e um símbolo especial.',
       'error'
     );
-    return;
+    return false;
   }
+  if (senha != senhaConfirmar) {
+    Swal.fire(
+      'Senhas Diferentes',
+      'O campo de senha e confirmação de senha devem ser iguais.',
+      'error'
+    );
+    return false;
+  }
+  return true;
 };
 
 function validarEmail(email) {
@@ -163,8 +157,9 @@ function validarEmail(email) {
       'Por favor, insira um email v&aacute;lido.',
       'error'
     )
-    return;
+    return false;
   };
+  return true;
 }
 
 function ValidarCampos() {
@@ -183,7 +178,7 @@ function ValidarCampos() {
     return;
   }
 
-  validarEmail(email);
-  msgValidaCPF();
-  validaSenhas(senha, senhaConfirmar);
+  if(!validarEmail(email)){return;};
+  if(!msgValidaCPF()){return;};
+  if(!validaSenhas(senha, senhaConfirmar)){return;};
 }
