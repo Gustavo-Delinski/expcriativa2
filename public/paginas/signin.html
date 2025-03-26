@@ -59,38 +59,41 @@
     <form class="container">
         <div class="mb-3 nome">
           <label for="nome" class="form-label">Seu nome:</label>
-          <input type="text" class="form-control" id="nome" pattern="^[A-Za-z ]{1,50}$" required>
+          <input type="text" class="form-control" id="nome" pattern="^[A-Za-zÀ-ÿ]+(?: [A-Za-zÀ-ÿ]+)*$" required>
         </div>
         <br>
         <div class="mb-3 email">
             <label for="email" class="form-label">Endereço de Email:</label>
-            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" required pattern="^[A-Za-z0-9_.-]+@([A-Za-z0-9_]+\.)+[A-Za-z]{2,4}$" placeholder="Ex: joaodasilva@gmail.com">
+            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" required placeholder="Ex: joaodasilva@gmail.com">
           </div>
           <br>
         <div class="mb-3 cpf">
             <label for="cpf" class="form-label">CPF:</label>
-            <input type="phone" class="form-control" id="cpf" placeholder="Ex: XXX.XXX.XXX-XX" pattern="^(\d{3}\.\d{3}\.\d{3}\-\d{2})|(\d{11})$" 
-            onkeydown="return mascaraCPF(event)" required>
+            <input type="text" class="form-control" id="cpf" placeholder="Ex: XXX.XXX.XXX-XX" maxlength="14" onkeypress="return mascaraCPF(event)" required>
+            <p><span id="teste"></span></p>
         </div>
         <br>
         <div class="mb-3 senha">
           <label for="senha" class="form-label">Senha</label>
-          <input type="password" class="form-control" id="senha" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*]).{8,12}$" required>
+          <input type="password" class="form-control" id="senha" required>
         </div>
         <br>
         <div class="mb-3 senhaConfirm">
           <label for="senhaConfirm" class="form-label">Confirmar a Senha:</label>
-          <input type="password" class="form-control" id="senhaConfirmar" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*]).{8,12}$" required>
+          <input type="password" class="form-control" id="senhaConfirmar" required>
         </div>
         <br>
         <div class="mb-3 form-check">
           <input type="checkbox" class="form-check-input" id="checkSenha" onchange="mostrarSenha(event)">
           <label class="form-check-label" for="checkSenha">Visualizar senha</label>
         </div>
-        <label class="senhaLabel">A senha deve ter pelo menos: Uma letra minúscula, uma letra
-          maiúscula, um símbolo especial, com 8 a 12 caracteres no total.</label>
+        <label class="senhaLabel">A senha deve ter pelo menos:<br>
+          Uma letra minúscula<br>
+          uma letra maiúscula<br>
+          um símbolo especial<br>
+          8 caracteres</label>
         <br>
-        <button type="button" class="btn btn-primary salvar" onclick="return msgValidaCPF()">Cadastrar</button>
+        <button type="button" class="btn btn-primary salvar" onclick="ValidarCampos()">Cadastrar</button>
       </form>
     </div>
     
