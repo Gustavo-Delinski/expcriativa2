@@ -1,15 +1,17 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="../estilos/login.css">
     <link rel="icon" type="image/x-icon" href="../imagens/logo/Símbolo.svg">
     <style>
         .navbar {
             background-color: #302163;
         }
-        </style>
+    </style>
     <title>LocalTop</title>
 </head>
 
@@ -21,34 +23,28 @@
     <div>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: #302163;">
             <div class="container-fluid">
-                <img src="../imagens/logo/SVG Variações/Verde/Principal Verde.svg" alt="logo" width="220" height="50">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+                <a href="/" class="logoContainer"><img src="../imagens/logo/Principal.svg" alt="logo" class="logo"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="index.html">Home</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href=" " id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Dropdown
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="signin.html">Cadastro</a></li>
-                        <li><a class="dropdown-item" href="login.html">Login</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="pesquisa.html">Pesquisa</a></li>
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/">Lojas</a>
+                        </li>
                     </ul>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Desativado</a>
-                    </li>
-                </ul>
-                <form class="d-flex">
-                    <input class="form-control me-2" type="Procurar" placeholder="Procurar" aria-label="Procurar">
-                    <button class="btn btn-outline-success" type="submit">Pesquisar</button>
-                </form>
+                    <div class="dropdown-center">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Usuário
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="login">Login</a></li>
+                            <li><a class="dropdown-item" href="signin">Cadastro</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -66,9 +62,10 @@
 
             <div class="mb-3 senha">
                 <label for="senha" class="form-label">Senha:</label>
-                <input type="password" class="form-control" id="senha" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*]).{8,12}$" required>
+                <input type="password" class="form-control" id="senha"
+                    pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*]).{8,12}$" required>
             </div>
-            
+
             <div class="mb-3 form-check">
                 <input type="checkbox" class="form-check-input" id="checkSenha" onchange="mostrarSenha(event)">
                 <label class="form-check-label" for="checkSenha">Visualizar senha</label>
@@ -76,14 +73,17 @@
 
             <br>
 
-            <button type="button" class="btn btn-primary salvar" style="margin-top: 20px; margin-left: 40%;" onclick="VerificarCampos()">
+            <button type="button" class="btn btn-primary salvar" style="margin-top: 20px; margin-left: 40%;"
+                onclick="VerificarCampos()">
                 Entrar
             </button>
         </form>
 
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
     <script src="sweetalert2.all.min.js"></script>
     <script src="../scripts/login.js"></script>
 </body>

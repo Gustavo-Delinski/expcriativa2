@@ -1,3 +1,27 @@
 .card {
     box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
   }
+
+.logo {
+  width: 100%;
+  height: 100%;
+}
+
+.logoContainer {
+  background-color: whitesmoke;
+  width: 11dvw;
+  height: 4dvw;
+  border-radius: 1dvw;
+  margin-right: 3%;
+  margin-left: 3%;
+}
+
+.queda {
+  color: aliceblue;
+}
+
+.dropdown-center {
+  list-style-type: none;
+  margin-right: 1rem;
+}
+

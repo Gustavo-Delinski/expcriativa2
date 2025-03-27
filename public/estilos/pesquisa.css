@@ -1,0 +1,13 @@
+.logo {
+    width: 100%;
+    height: 100%;
+}
+
+.logoContainer {
+    background-color: whitesmoke;
+    width: 11dvw;
+    height: 4dvw;
+    border-radius: 1dvw;
+    margin-right: 3%;
+    margin-left: 3%;
+}
