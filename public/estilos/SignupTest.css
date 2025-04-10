@@ -1,0 +1,118 @@
+html {
+    width: 100dvw;
+    height: 100dvh;
+}
+
+body {
+    display: flex;;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background-color:#F7EFE6;
+}
+.CardCadastro {
+    background-color: whitesmoke;
+    box-shadow: rgba(0, 0, 0, 0.871) 0px 0px 7px;
+    border-radius: 0.7rem;
+    width: 57.6rem;
+    height: 34.6rem;
+    display: flex;
+    flex-direction: row ;
+}
+
+.voltar {
+    background-color: transparent;
+    position: flex;
+    border:none;
+    width: 3rem;
+    height: 3rem;
+    margin-top: 0.5rem;
+    margin-right: 24.5rem;
+    .imgVoltar {
+        width: 100%;
+        height: 100%;
+        filter: invert(100%);
+    }
+}
+
+.voltar:hover {
+    transform: scale(1.1);
+    .imgVoltar {
+        filter: invert(90%);
+    }
+}
+.voltar:active {
+    transform: scale(0.95);
+    .imgVoltar {
+        filter: invert(90%);
+    }
+}
+
+
+aside{
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 0.7rem 0 0 0.7rem;
+    background-color: black;
+    .backgroundImg{
+        position:absolute;
+        width: 28.8rem;
+        height: 34.6rem;
+        border-radius: 0.7rem 0 0 0.7rem;
+        filter: opacity(0.5);
+    }
+    .logo{
+        position:relative;
+        z-index: 10;
+        width: 75%;
+        margin-top: 7rem;
+        margin-left: 1rem;
+        padding:10px;
+    }
+}
+
+.InputSide {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    h1 {
+        padding-bottom: 1rem;
+    }
+}
+
+.DivNome, .DivDatanasc, .DivEmail, .DivCPF, .DivSenha, .DivChecksenha {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.5rem;
+}
+
+.DivDatanasc {
+    margin-right: 1rem;
+}
+
+.FormCadastro {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.DivDtNascCPF {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+/*
+#F4FA46
+#302163
+#F7EFE6
+#3E996F
+*/
+

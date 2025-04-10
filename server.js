@@ -36,10 +36,14 @@ app.get("/lojas", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "paginas", "lojas.html"));
 });
 
+app.get("/signup", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "paginas", "signupTest.html"));
+});
+
 //inicia o servidor na porta 3000
 app.listen(port, () => {
     console.log(`Servidor rodando http://localhost:${port}`);
 });
 
 // Para rodar o servidor, execute o comando:
-// node server.js ou npx nodemon server.js
+// node server.js ou nodemon server.js

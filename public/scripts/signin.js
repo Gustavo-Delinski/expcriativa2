@@ -162,6 +162,19 @@ function validarEmail(email) {
   return true;
 }
 
+function validarNome(nome) {
+  var regex = /^[A-Za-z\s]+${10,0}/;
+  if (!regex.test(nome)){
+    Swal.fire(
+      'Nome Inválido',
+      'Por favor, insira um nome válido.',
+      'error'
+    )
+    return false;
+  };
+  return true;
+}
+
 function ValidarCampos() {
   var nome = document.getElementById('nome').value;
   var email = document.getElementById('email').value;
@@ -178,6 +191,7 @@ function ValidarCampos() {
     return;
   }
 
+  if(!validarNome(nome)){return;};
   if(!validarEmail(email)){return;};
   if(!msgValidaCPF()){return;};
   if(!validaSenhas(senha, senhaConfirmar)){return;};
