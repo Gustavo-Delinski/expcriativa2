@@ -48,14 +48,14 @@
     <!--Carousel do site-->
     <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel" style="margin-bottom: 10%;">
         <div class="carousel-inner">
-          <div class="carousel-item active" data-bs-interval="10000">
+          <div class="carousel-item active" style="width: auto; height: 83%; object-fit: cover; margin: 0 auto;" data-bs-interval="10000">
             <img src="../imagens/armazem.jpg" class="d-block w-100" alt="armazem">
           </div>
           <div class="carousel-item" data-bs-interval="2000">
-            <img src="../imagens/loja-roupa.jpg" class="d-block w-100" alt="loja-roupa">
+            <img src="../imagens/loja-roupa.jpg" class="d-block w-100" style="width: auto; height: 83%; object-fit: cover; margin: 0 auto;" alt="loja-roupa">
           </div>
           <div class="carousel-item">
-            <img src="../imagens/homem-armazem.jpg" class="d-block w-100" alt="homem-armazem">
+            <img src="../imagens/homem-armazem.jpg" class="d-block w-100" style="width: auto; height: 83%; object-fit: cover; margin: 0 auto;" alt="homem-armazem">
           </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
@@ -68,38 +68,41 @@
         </button>
     </div>
 
-    <div style="display: flex; justify-content: center; gap: 5%; margin-bottom: 50px;">
-      <div class="card" style="width: 18rem;">
-          <img src="../imagens/cliente.png" class="card-img-top" style="width: 200px; height: auto; margin-left: 30px;" alt="cliente">
-          <div class="card-body">
+    <div class="container my-5">
+      <div class="row justify-content-center gap-4">
+    
+        <div class="col-sm-10 col-md-6 col-lg-4">
+          <div class="card h-100 text-center p-3" style="max-width: 300px; margin: 0 auto;">
+            <img src="../imagens/cliente.png" class="card-img-top mx-auto" style="width: 150px; height: auto;" alt="cliente">
+            <div class="card-body">
               <h5 class="card-title">Interessado em ser um cliente?</h5>
-              <p class="card-text">Encontre as melhores soluções com qualidade e confiança! 🏆
-                <br>
-                 <br>Seja nosso cliente e tenha acesso a produtos e serviços que fazem a diferença. Estamos aqui para atender você!</p>
-              <a style="background-color: green; border: none; border-radius: 30px; margin-left: 30px;" href="#" class="btn btn-primary">Clique aqui e saiba mais</a>
+              <p class="card-text">
+                Encontre as melhores soluções com qualidade e confiança! 🏆<br><br>
+                Seja nosso cliente e tenha acesso a produtos e serviços que fazem a diferença. Estamos aqui para atender você!
+              </p>
+              <a href="#" class="btn btn-success rounded-pill">Clique aqui e saiba mais</a>
+            </div>
           </div>
-      </div>
-      
-      <div>
-        <h5 style="display: flex; margin-top: 100px; text-align: center;">
-          Já possui uma conta?
-        </h5>
-
-        <a href="#" style="display: flex; text-align: center; margin-left: 45px;">
-          Clique aqui!
-        </a>
-      </div>
-
-      <div class="card" style="width: 18rem;">
-          <img src="../imagens/discussao.png" class="card-img-top" style="width: 200px; height: auto; margin-left: 35px;" alt="discussao">
-          <div class="card-body">
+        </div>
+    
+        <div class="col-sm-10 col-md-6 col-lg-4">
+          <div class="card h-100 text-center p-3" style="max-width: 300px; margin: 0 auto;">
+            <img src="../imagens/discussao.png" class="card-img-top mx-auto" style="width: 150px; height: auto;" alt="vendedor">
+            <div class="card-body">
               <h5 class="card-title">Interessado em ser um vendedor?</h5>
-              <p class="card-text">Amplie suas oportunidades e aumente seus ganhos! 🚀 
-                <br>
-                <br>Torne-se nosso vendedor e faça parte de um time de sucesso, com suporte e as melhores condições para crescer no mercado.</p>
-              <a style="background-color: green; border: none; border-radius: 30px; margin-left: 30px;" href="#" class="btn btn-primary">Clique aqui e saiba mais</a>
+              <p class="card-text">
+                Amplie suas oportunidades e aumente seus ganhos! 🚀 <br><br>
+                Torne-se nosso vendedor e faça parte de um time de sucesso, com suporte e as melhores condições para crescer no mercado.
+              </p>
+              <a href="#" class="btn btn-success rounded-pill">Clique aqui e saiba mais</a>
+            </div>
           </div>
+        </div>
+    
       </div>
+    </div>
+    
+    
   </div>
   
 
