@@ -4,6 +4,7 @@ import express from "express";
 import path, { dirname } from "path";
 //Importação do fileURLToPath para converter URL para caminho
 import { fileURLToPath } from "url";
+import sequelize from "./db/declaracaoBD.js"
 
 //Inicialização do servidor Express
 const app = express();
@@ -40,10 +41,20 @@ app.get("/signup", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "paginas", "signupTest.html"));
 });
 
+sequelize.authenticate()
+    .then(() => {
+        console.log("conexao com o banco estabelecida")
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+sequelize.sync().then(() => {
+    app.listen(port, () => {
+        console.log(`Servidor rodando http://localhost:${port}`);
+    });
+})
 //inicia o servidor na porta 3000
-app.listen(port, () => {
-    console.log(`Servidor rodando http://localhost:${port}`);
-});
 
 // Para rodar o servidor, execute o comando:
 // node server.js ou nodemon server.js
