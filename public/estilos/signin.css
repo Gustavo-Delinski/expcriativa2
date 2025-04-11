@@ -2,44 +2,34 @@ body {
     background-color: #F7EFE6;
 }
 
-.form {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-}
-
 .container {
-    width: 15%;
+    margin-top: 2%;
+    border: 2px;
+    border-radius: 10px;
+    width: 100%;
+    height: 950px;
+    background: white;
+    box-shadow: 5px 5px 25px rgba(0, 0, 0, 0.5);
 }
 
-.nome,
-.DataNasc,
-.email,
-.cpf,
-.senha,
-.senhaConfirm {
-    width: 250px;
-    height: 50px;
+
+@media (min-width: 500px) {
+    .container {
+        width: 500px;
+    }
 }
 
-.senhaLabel {
-    width: 250px;
-    font-size: 12px;
-}
-
-.salvar {
-    width: 100px;
-    height: 45px;
-}
-
-input:invalid {
-    border: red solid 3px;
+.formulario h1 {
+    padding-top: 3vh;
+    width: 100%;
+    text-align: center;
+    font-size: 300%;
+    font-weight: bold;
 }
 
 .logo {
-    width: 100%;
-    height: 100%;
+    width: auto;
+    height: auto;
 }
 
 .logoContainer {
@@ -50,3 +40,7 @@ input:invalid {
     margin-right: 3%;
     margin-left: 3%;
 }
+
+input:invalid {
+    border: red solid 3px;
+  }
