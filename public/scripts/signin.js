@@ -5,7 +5,7 @@ function mascaraCPF(event) {
 
   // Se a tecla pressionada for um número, adiciona ao CPF
   if (/^[0-9]$/i.test(tecla)) {
-    cpf += tecla;
+    cpf = cpf + tecla;
     let tamanho = cpf.length;
 
     // Se o CPF já tiver 11 caracteres, não faz mais nada
@@ -163,7 +163,7 @@ function validarEmail(email) {
 }
 
 function validarNome(nome) {
-  var regex = /^[A-Za-z\s]+${10,0}/;
+  var regex = /^[A-Za-zÀ-ÿ]+(?: [A-Za-zÀ-ÿ]+)*$/;
   if (!regex.test(nome)){
     Swal.fire(
       'Nome Inválido',
@@ -175,11 +175,13 @@ function validarNome(nome) {
   return true;
 }
 
+
 function ValidarCampos() {
   var nome = document.getElementById('nome').value;
   var email = document.getElementById('email').value;
   var cpf = document.getElementById('cpf').value;
   var senha = document.getElementById('senha').value;
+  var data = document.getElementById('DataNasc').value;
   var senhaConfirmar = document.getElementById('senhaConfirmar').value;
 
   if (nome === '' || email === '' || cpf === '' || senha === '' || senhaConfirmar === '') {
@@ -191,6 +193,7 @@ function ValidarCampos() {
     return;
   }
 
+  
   if(!validarNome(nome)){return;};
   if(!validarEmail(email)){return;};
   if(!msgValidaCPF()){return;};
