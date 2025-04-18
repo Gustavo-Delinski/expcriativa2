@@ -1,3 +1,3 @@
-const senhaDB = "Felipezhu2005!";
+const senhaDB = "senha";
 
 export default senhaDB;
