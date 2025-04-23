@@ -14,7 +14,7 @@ const Usuario = sequelize.define('Usuario', {
     },
     Role: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     CPF:{
         type: DataTypes.STRING,

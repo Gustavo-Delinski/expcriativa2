@@ -177,10 +177,6 @@ function validarNome(nome) {
 
 
 async function ValidarCampos() {
-  const nome = document.getElementById('nome').value.trim();
-  const dataNascimento = document.getElementById('dataNascimento').value;
-  const email = document.getElementById('email').value.trim();
-  const cpf = document.getElementById('cpf').value.replace(/\D/g, '');
   const senha = document.getElementById('senha').value;
   const senhaConfirmar = document.getElementById('senhaConfirmar').value;
 
