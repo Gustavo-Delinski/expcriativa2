@@ -5,9 +5,11 @@ import path, { dirname } from "path";
 //Importação do fileURLToPath para converter URL para caminho
 import { fileURLToPath } from "url";
 import sequelize from "./db/declaracaoBD.js"
-
+import { Usuario } from "./db/tabeladb.js";
+import bodyParser from "body-parser";
 //Inicialização do servidor Express
 const app = express();
+app.use(express.json());
 //Porta em que o servidor rodará
 const port = 3000;
 //diretório atual onde o servidor está rodando
@@ -58,3 +60,25 @@ sequelize.sync().then(() => {
 
 // Para rodar o servidor, execute o comando:
 // node server.js ou nodemon server.js
+
+app.post("/signin", async (req, res) => {
+    const { nome, dataNascimento, email, cpf, senha } = req.body;
+
+    console.log("Dados recebidos:", req.body); // Adicione isso para debug
+
+    try {
+        await Usuario.create({
+            Nome: nome,
+            DataNasc: dataNascimento,
+            Email: email,
+            CPF: cpf,
+            Senha: senha,
+            Role: 'usuario'
+        });
+
+        res.status(201).json({ mensagem: "Usuário cadastrado com sucesso!" });
+    } catch (error) {
+        console.error("Erro ao cadastrar usuário:", error);
+        res.status(500).json({ erro: "Erro ao cadastrar usuário." }); // Retorne JSON
+    }
+});

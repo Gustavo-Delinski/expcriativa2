@@ -169,10 +169,10 @@ Oferta.belongsTo(Servico, { foreignKey: 'ID_servico', onDelete: 'CASCADE' });
 Avaliacao.belongsTo(Oferta, { foreignKey: 'ID_oferta', onDelete: 'CASCADE' });
 Avaliacao.belongsTo(Usuario, { foreignKey: 'ID_usuario', onDelete: 'CASCADE' });
 
-Usuario.HasMany(Estabelecimento, { foreignKey: 'ID_estabelecimento', as: 'estabelecimento'});
-Usuario.HasMany(Avaliacao, { foreignKey: 'ID_avaliacao', as:'avaliacao'});
-Estabelecimento.HasMany(Oferta, { foreignKey: 'ID_oferta', as: 'oferta'});
-Oferta.HasMany(Avaliacao, { foreignKey: 'ID_avaliacao', as: 'avaliacao'});
-Servico.HasMany(Oferta, { foreignKey: 'ID_oferta', as: 'oferta'});
+Usuario.hasMany(Estabelecimento, { foreignKey: 'ID_estabelecimento', as: 'estabelecimento'});
+Usuario.hasMany(Avaliacao, { foreignKey: 'ID_avaliacao', as:'avaliacao'});
+Estabelecimento.hasMany(Oferta, { foreignKey: 'ID_oferta', as: 'oferta'});
+Oferta.hasMany(Avaliacao, { foreignKey: 'ID_avaliacao', as: 'avaliacao'});
+Servico.hasMany(Oferta, { foreignKey: 'ID_oferta', as: 'oferta'});
 
 export {Usuario, Estabelecimento, Servico, Oferta, Avaliacao};

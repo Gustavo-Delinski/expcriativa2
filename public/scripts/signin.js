@@ -176,26 +176,53 @@ function validarNome(nome) {
 }
 
 
-function ValidarCampos() {
-  var nome = document.getElementById('nome').value;
-  var email = document.getElementById('email').value;
-  var cpf = document.getElementById('cpf').value;
-  var senha = document.getElementById('senha').value;
-  var data = document.getElementById('DataNasc').value;
-  var senhaConfirmar = document.getElementById('senhaConfirmar').value;
+async function ValidarCampos() {
+  const nome = document.getElementById('nome').value.trim();
+  const dataNascimento = document.getElementById('dataNascimento').value;
+  const email = document.getElementById('email').value.trim();
+  const cpf = document.getElementById('cpf').value.replace(/\D/g, '');
+  const senha = document.getElementById('senha').value;
+  const senhaConfirmar = document.getElementById('senhaConfirmar').value;
 
-  if (nome === '' || email === '' || cpf === '' || senha === '' || senhaConfirmar === '') {
-    Swal.fire(
-      'Campos Vazios',
-      'Por favor, preencha todos os campos.',
-      'error'
-    );
+  if (senha !== senhaConfirmar) {
+    Swal.fire('Erro', 'As senhas não coincidem', 'error');
     return;
   }
 
+  const dados = {
+    nome: document.getElementById('nome').value.trim(),
+    dataNascimento: document.getElementById('dataNascimento').value,
+    email: document.getElementById('email').value.trim(),
+    cpf: document.getElementById('cpf').value.replace(/\D/g, ''),
+    senha: document.getElementById('senha').value
+  };
+
+  try {
+    const resposta = await fetch('/signin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(dados),
+    });
   
-  if(!validarNome(nome)){return;};
-  if(!validarEmail(email)){return;};
-  if(!msgValidaCPF()){return;};
-  if(!validaSenhas(senha, senhaConfirmar)){return;};
+    // Verificar se a resposta foi bem-sucedida
+    if (resposta.ok) {
+      // A resposta é bem-sucedida, então processa o JSON
+      const resultado = await resposta.json();
+      Swal.fire('Sucesso', resultado.message, 'success');
+    } else {
+      // Se a resposta não for ok, ainda tentamos processar a resposta como JSON
+      const erro = await resposta.json();
+      Swal.fire('Erro', erro.message || 'Erro desconhecido', 'error');
+    }
+  } catch (erro) {
+    Swal.fire('Erro', 'Erro de conexão com o servidor', 'error');
+    console.error(erro);
+  }
 }
+
+document.querySelector("form").addEventListener("submit", function (event) {
+  event.preventDefault(); // Impede envio automático do form
+  ValidarCampos(); // Chama sua função
+});
