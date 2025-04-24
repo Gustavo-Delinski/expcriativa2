@@ -71,6 +71,9 @@ sequelize.sync().then(() => {
 // node server.js ou nodemon server.js
 
 app.use(rota_usuarios)
+app.get("/usuariocrud", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "paginas", "usuariocrud.html"));
+});
 
 // app.post("/usuarios", async (req, res) => {
 //     const { nome, dataNascimento, email, cpf, senha } = req.body;
