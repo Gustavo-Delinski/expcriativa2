@@ -171,11 +171,11 @@ async function ValidarCampos() {
     let senha = document.getElementById('senha').value;
     let checksenha = document.getElementById('confirmarsenha').value;
 
-    if (!validarSenhas(senha, checksenha)) return;
-    if (!msgValidaCPF(cpf)) return;
-    if (!ValidarData(datanasc)) return;
-    if (!validarEmail(email)) return;
     if (!ValidarNome(nome)) return;
+    if (!validarEmail(email)) return;
+    if (!ValidarData(datanasc)) return;
+    if (!msgValidaCPF(cpf)) return;
+    if (!validarSenhas(senha, checksenha)) return;
 
     try {
         const resposta = await fetch('/signup', {
@@ -194,7 +194,7 @@ async function ValidarCampos() {
 
         
         if (resposta.ok) {
-            const resultado = await resposta.json();
+            console.log("Funcionou")
             Swal.fire(
                 'Cadastro realizado com sucesso',
                 resultado.message,
@@ -204,14 +204,14 @@ async function ValidarCampos() {
             const erro = await resposta.json();
             Swal.fire(
                 'Erro ao cadastrar',
-                erro.mensagem,
+                `${erro.mensagem}`,
                 'error'
             );
         }
     } catch (error) {
         Swal.fire(
             'Erro ao cadastrar',
-            error.messagem,
+            `${error.messagem}`,
             'error'
         )
     }

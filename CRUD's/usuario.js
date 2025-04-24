@@ -10,18 +10,31 @@ rota_usuarios
     res.json(usuarios);
 })
 .post('/login', async (req, res) => {
-    const {email, senha} = req.body;
-    const usuario = await Usuario.findOne({where: {email: email}});
-    if(!usuario){
-        return res.status(401).json({mensagem:"Usuário ou senha incorretos."});
-    }
-
-    const senhaValida = await bcrypt.compare(senha, usuario.senha);
-    if(!senhaValida && usuario.email != email){
-        return res.status(401).json({mensagem:"Usuário ou senha incorretos."});
-    } else {
-        console.log("Usuário logado com sucesso: " + usuario.nome + "id: " + usuario.id_usuario)
-        res.json(usuario.id_usuario);
+    console.log("Dados recebidos:", req.body);
+    const { email, senha } = req.body;
+    try {
+        if (!email || !senha) {
+            return res.status(400).json({ mensagem: "Email e senha são obrigatórios." });
+        }
+        
+        const usuario = await Usuario.findOne({ where: { email } });
+        // console.log(usuario)
+        // return res.status(200).json({usuario: usuario});
+        if (!usuario) {
+            return res.status(401).json({ mensagem: "Usuário ou senha incorretos." });
+        }
+        
+        const senhaCorreta = await bcrypt.compare(senha, usuario.Senha);
+        if (!senhaCorreta) {
+            return res.status(401).json({ mensagem: "Usuário ou senha incorretos." });
+        }
+        console.log(`Usuário logado com sucesso: ${usuario.Nome}, id: ${usuario.ID_usuario}`);
+        req.session.usuarioId = usuario.ID_usuario;
+        req.session.nome = usuario.Nome;
+        res.json(usuario.ID_usuario);
+    } catch (err) {
+        console.error('Erro ao fazer login:', err);
+        res.status(500).json({ mensagem: `Erro interno no servidor.${err}` });
     }
 })
 .post('/signup', async (req, res) => {
@@ -49,26 +62,30 @@ rota_usuarios
             Senha: hashedSenha,
             Role: null
         });
-
-        console.log(res.status(201).json({ mensagem: "Usuário cadastrado com sucesso!" }));
     } catch (error) {
         console.error("Erro ao cadastrar usuário:", error);
         res.status(500).json({ mensagem: `Erro ao cadastrar usuário: ${error}` }); // Retorne JSON
     }
 })
 .get('/usuarios/:id', async (req, res) => {
-    const { id } = req.params.id;
+    const { id } = req.params;
     const usuario = await Usuario.findByPk(id);
     return usuario ? res.json(usuario) : res.status(404).end();
 })
 .put('/usuarios/:id', async (req, res) => {
-    const { id } = req.params.id;
+    const { id } = req.params;
     const { nome, dataNascimento, email, cpf, senha } = req.body;
     const usuario = await Usuario.findByPk(id);
-    return usuario ? res.json(await usuario.update({ Nome: nome, DataNasc: dataNascimento, Email: email, CPF: cpf, Senha: senha })) : res.status(404).end();
+    return usuario ? res.json(await usuario.update({ 
+        Nome: nome,
+        DataNasc: dataNascimento,
+        Email: email,
+        CPF: cpf,
+        Senha: senha ? await bcrypt.hash(senha, 10) : usuario.Senha
+    })) : res.status(404).end();
 })
 .delete('/usuarios/:id', async (req, res) => {
-    const { id } = req.params.id;
+    const { id } = req.params;
     const usuario = await Usuario.findByPk(id);
     return usuario ? res.json(await usuario.destroy()) : res.status(404).end();
 });

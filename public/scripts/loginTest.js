@@ -1,3 +1,15 @@
+function MostrarSenha() {
+    var campoSenha = document.getElementById('senha');
+    const img = document.getElementById('olho');
+    if (campoSenha.type == 'password') {
+        campoSenha.type = 'text';
+        img.src = '../imagens/olho-fechado.svg';
+    } else {
+        campoSenha.type = 'password';
+        img.src = '../imagens/olho-aberto.svg';
+    }
+}
+
 function validarEmail(email) {
     var regex = /^[A-Za-z0-9._!#$%&*+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
     if (!regex.test(email)) {
@@ -11,7 +23,7 @@ function validarEmail(email) {
     };
     return true;
 }
-let form = document.getElementById('form');
+let form = document.getElementById('Form-login');
 
 async function VerificarCampos() {
     let email = document.getElementById("email").value;
@@ -64,17 +76,9 @@ form.addEventListener('submit', function (e) {
     VerificarCampos();
 })
 
-function mostrarSenha(event) {
-    var campoSenha = document.getElementById('senha');
-    if (campoSenha.type == 'password') {
-        campoSenha.type = 'text';
-    } else {
-        campoSenha.type = 'password';
-    }
-}
-
-function mostrar() {
-    let email = document.getElementById("email").value;
-    let senha = document.getElementById("senha").value;
-    console.log(email, senha);
-}
+document.getElementById('senha').addEventListener('input', function () {
+    document.getElementById('senha').style.outline = '1px solid #3E996F';
+})
+document.getElementById('email').addEventListener('input', function () {
+    document.getElementById('email').style.outline = '1px solid #3E996F';
+})
