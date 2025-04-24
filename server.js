@@ -5,8 +5,9 @@ import path, { dirname } from "path";
 //Importação do fileURLToPath para converter URL para caminho
 import { fileURLToPath } from "url";
 import sequelize from "./db/declaracaoBD.js"
-import { Usuario } from "./db/tabeladb.js";
+// import { Usuario } from "./db/tabeladb.js";
 import bodyParser from "body-parser";
+import rota_usuarios from "./CRUD's/usuario.js";
 //Inicialização do servidor Express
 const app = express();
 app.use(express.json());
@@ -69,33 +70,35 @@ sequelize.sync().then(() => {
 // Para rodar o servidor, execute o comando:
 // node server.js ou nodemon server.js
 
-app.post("/usuarios", async (req, res) => {
-    const { nome, dataNascimento, email, cpf, senha } = req.body;
-    const usuario_email = await Usuario.findOne({ where: { email: email } });
-    const usuario_cpf = await Usuario.findOne({ where: { cpf: cpf } });
+app.use(rota_usuarios)
 
-    if (usuario_email) {
-        return res.status(400).json({mensagem:"Email ja cadastrado."});
-    }
+// app.post("/usuarios", async (req, res) => {
+//     const { nome, dataNascimento, email, cpf, senha } = req.body;
+//     const usuario_email = await Usuario.findOne({ where: { email: email } });
+//     const usuario_cpf = await Usuario.findOne({ where: { cpf: cpf } });
 
-    if (usuario_cpf) {
-        return res.status(400).json({mensagem:"CPF ja cadastrado."});
-    }
-    console.log("Dados recebidos:", req.body); // Adicione isso para debug
+//     if (usuario_email) {
+//         return res.status(400).json({mensagem:"Email ja cadastrado."});
+//     }
 
-    try {
-        await Usuario.create({
-            Nome: nome,
-            DataNasc: dataNascimento,
-            Email: email,
-            CPF: cpf,
-            Senha: senha,
-            Role: null
-        });
+//     if (usuario_cpf) {
+//         return res.status(400).json({mensagem:"CPF ja cadastrado."});
+//     }
+//     console.log("Dados recebidos:", req.body); // Adicione isso para debug
 
-        console.log(res.status(201).json({ mensagem: "Usuário cadastrado com sucesso!" }));
-    } catch (error) {
-        console.error("Erro ao cadastrar usuário:", error);
-        res.status(500).json({ erro: "Erro ao cadastrar usuário." }); // Retorne JSON
-    }
-});
+//     try {
+//         await Usuario.create({
+//             Nome: nome,
+//             DataNasc: dataNascimento,
+//             Email: email,
+//             CPF: cpf,
+//             Senha: senha,
+//             Role: null
+//         });
+
+//         console.log(res.status(201).json({ mensagem: "Usuário cadastrado com sucesso!" }));
+//     } catch (error) {
+//         console.error("Erro ao cadastrar usuário:", error);
+//         res.status(500).json({ erro: "Erro ao cadastrar usuário." }); // Retorne JSON
+//     }
+// });
