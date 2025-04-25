@@ -191,7 +191,6 @@ async function ValidarCampos() {
                 senha: senha
             }),
         });
-
         
         if (resposta.ok) {
             console.log("Funcionou")
@@ -200,6 +199,7 @@ async function ValidarCampos() {
                 resultado.message,
                 'success'
             );
+            window.location.href = "/login";
         } else {
             const erro = await resposta.json();
             Swal.fire(

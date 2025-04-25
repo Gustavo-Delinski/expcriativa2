@@ -33,7 +33,7 @@ sequelize.authenticate()
     console.log(err)
 })
 // const sessionMaxAge = 10 * 60 * 1000;
-const sessionMaxAge =100 * 30 * 1000;
+const sessionMaxAge = 30 * 1000;
 
 app.use(session({
     secret: 'localtop',
@@ -85,12 +85,12 @@ app.get("/login", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "paginas", "loginTest.html"));
 });
 
-app.get("/lista",(req, res) => {
-    res.sendFile(path.join(__dirname, "public", "paginas", "usuariocrud.html"));
-});
-// app.get("/lista",verificarAutenticacao, (req, res) => {
+// app.get("/lista",(req, res) => {
 //     res.sendFile(path.join(__dirname, "public", "paginas", "usuariocrud.html"));
 // });
+app.get("/lista",verificarAutenticacao, (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "paginas", "usuariocrud.html"));
+});
 
 app.get("/sessao", (req, res) => {
     res.json({ usuarioId: req.session.usuarioId || null, nome: req.session.nome || null });

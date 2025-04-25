@@ -169,10 +169,10 @@ Oferta.belongsTo(Servico, { foreignKey: 'ID_servico', onDelete: 'CASCADE' });
 Avaliacao.belongsTo(Oferta, { foreignKey: 'ID_oferta', onDelete: 'CASCADE' });
 Avaliacao.belongsTo(Usuario, { foreignKey: 'ID_usuario', onDelete: 'CASCADE' });
 
-Usuario.hasMany(Estabelecimento, { foreignKey: 'ID_estabelecimento', as: 'estabelecimento'});
-Usuario.hasMany(Avaliacao, { foreignKey: 'ID_avaliacao', as:'avaliacao'});
-Estabelecimento.hasMany(Oferta, { foreignKey: 'ID_oferta', as: 'oferta'});
-Oferta.hasMany(Avaliacao, { foreignKey: 'ID_avaliacao', as: 'avaliacao'});
-Servico.hasMany(Oferta, { foreignKey: 'ID_oferta', as: 'oferta'});
+// Usuario.hasMany(Estabelecimento, { foreignKey: 'ID_estabelecimento', as: 'estabelecimento', onDelete: 'CASCADE'});
+// Usuario.hasMany(Avaliacao, { foreignKey: 'ID_avaliacao', as:'avaliacao', onDelete: 'CASCADE'});
+// Estabelecimento.hasMany(Oferta, { foreignKey: 'ID_oferta', as: 'oferta', onDelete: 'CASCADE'});
+// Oferta.hasMany(Avaliacao, { foreignKey: 'ID_avaliacao', as: 'avaliacao', onDelete: 'CASCADE'});
+// Servico.hasMany(Oferta, { foreignKey: 'ID_oferta', as: 'oferta', onDelete: 'CASCADE'});
 
 export {Usuario, Estabelecimento, Servico, Oferta, Avaliacao};
