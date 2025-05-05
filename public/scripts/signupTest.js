@@ -178,7 +178,7 @@ async function ValidarCampos() {
     if (!validarSenhas(senha, checksenha)) return;
 
     try {
-        const resposta = await fetch('/signup', {
+        const resposta = await fetch('/api/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -191,15 +191,17 @@ async function ValidarCampos() {
                 senha: senha
             }),
         });
-        
         if (resposta.ok) {
+            const resultado = await resposta.json();
             console.log("Funcionou")
             Swal.fire(
                 'Cadastro realizado com sucesso',
-                resultado.message,
+                `${resultado.mesagem},você ser&aacute; redirecionado para a tela de login em breve`,
                 'success'
             );
-            window.location.href = "/login";
+            setTimeout(() => {
+                window.location.href = "/login";
+            },3000)
         } else {
             const erro = await resposta.json();
             Swal.fire(

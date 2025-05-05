@@ -55,7 +55,7 @@ function msgValidaCPF() {
 }
 
 function listarUsuarios() {
-    fetch('/usuarios', {
+    fetch('/api/usuarios', {
         method: 'GET'
     })
         .then(response => response.json())
@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 async function deletarUsuario(id) {
     try {
-        const response = await fetch(`/usuarios/${id}`, {
+        const response = await fetch(`/api/usuarios/${id}`, {
             method: 'DELETE'
         })
         const result = await response.json()
@@ -148,7 +148,7 @@ async function editarUsuario(id) {
     let email = document.querySelector(`.userEmail[id="${id}"]`);
     let cpf = document.querySelector(`.userCPF[id="${id}"]`);
     try {
-        const response = await fetch(`/usuarios/${id}`, {
+        const response = await fetch(`/api/usuarios/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

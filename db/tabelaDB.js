@@ -141,6 +141,10 @@ const Avaliacao = sequelize.define('Avaliacao', {
         type: DataTypes.TEXT,
         allowNull: false
     },
+    Data: {
+        type: DataTypes.DATE,
+        allowNull: false
+    },
     ID_oferta: {
         type: DataTypes.INTEGER,
         allowNull: false,

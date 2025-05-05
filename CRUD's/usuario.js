@@ -5,11 +5,11 @@ import bcrypt from "bcrypt";
 const rota_usuarios = Router();
 
 rota_usuarios
-.get('/usuarios', async (req, res) => {
+.get('/api/usuarios', async (req, res) => {
     const usuarios = await Usuario.findAll();
     res.json(usuarios);
 })
-.post('/login', async (req, res) => {
+.post('/api/login', async (req, res) => {
     console.log("Dados recebidos:", req.body);
     const { email, senha } = req.body;
     try {
@@ -37,7 +37,7 @@ rota_usuarios
         res.status(500).json({ mensagem: `Erro interno no servidor.${err}` });
     }
 })
-.post('/signup', async (req, res) => {
+.post('/api/signup', async (req, res) => {
     const { nome, dataNascimento, email, cpf, senha } = req.body;
     const usuario_email = await Usuario.findOne({ where: { email: email } });
     const usuario_cpf = await Usuario.findOne({ where: { cpf: cpf } });
@@ -62,17 +62,19 @@ rota_usuarios
             Senha: hashedSenha,
             Role: null
         });
+
+        res.status(200).json({ mensagem: "Usuário cadastrado com sucesso." });
     } catch (error) {
         console.error("Erro ao cadastrar usuário:", error);
         res.status(500).json({ mensagem: `Erro ao cadastrar usuário: ${error}` }); // Retorne JSON
     }
 })
-.get('/usuarios/:id', async (req, res) => {
+.get('/api/usuarios/:id', async (req, res) => {
     const { id } = req.params;
     const usuario = await Usuario.findByPk(id);
     return usuario ? res.json(usuario) : res.status(404).end();
 })
-.put('/usuarios/:id', async (req, res) => {
+.put('/api/usuarios/:id', async (req, res) => {
     const { id } = req.params;
     const { nome, dataNascimento, email, cpf, senha } = req.body;
     const usuario = await Usuario.findByPk(id);
@@ -84,7 +86,7 @@ rota_usuarios
         Senha: senha ? await bcrypt.hash(senha, 10) : usuario.Senha
     })) : res.status(404).end();
 })
-.delete('/usuarios/:id', async (req, res) => {
+.delete('/api/usuarios/:id', async (req, res) => {
     const { id } = req.params;
     const usuario = await Usuario.findByPk(id);
     return usuario ? res.json(await usuario.destroy()) : res.status(404).end();
