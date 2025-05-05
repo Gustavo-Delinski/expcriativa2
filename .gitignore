@@ -1,3 +1,3 @@
 /node_modules/
 
-/senhaSQL.js
+db/senhaSQL.js
