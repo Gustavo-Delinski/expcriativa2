@@ -45,7 +45,7 @@ app.use(session({
     cookie: {
         maxAge: sessionMaxAge,
         httpOnly: true,
-        secure: false
+        secure: false,
     }
 }));
 
@@ -87,6 +87,10 @@ app.get("/login", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "paginas", "loginTest.html"));
 });
 
+app.get("/perfil", (req,res) => {
+    res.sendFile(path.join(__dirname, "public", "paginas", "perfilUsuario.html"));
+})
+
 app.get("/lista",(req, res) => {
     res.sendFile(path.join(__dirname, "public", "paginas", "usuariocrud.html"));
 });
@@ -95,7 +99,7 @@ app.get("/lista",(req, res) => {
 // });
 
 app.get("/sessao", (req, res) => {
-    res.json({ usuarioId: req.session.usuarioId || null, nome: req.session.nome || null });
+    res.json(req.session.usuarioId == null ? {Resposta: "Não há sessão ativa"} : {usuarioId: req.session.usuarioId, nome: req.session.nome});
 });
 
 app.get("/logout", (req, res) => {
@@ -103,8 +107,8 @@ app.get("/logout", (req, res) => {
         if (err) {
             return res.status(500).json({ mensagem: "Erro ao tentar fazer logout." });
         }
-        // Redireciona para a página de login ou página inicial após o logout
-        res.redirect("/");
+        // Redireciona para a página de login após o logout
+        res.redirect("/login");
     });
 });
 

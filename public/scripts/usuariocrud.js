@@ -66,12 +66,9 @@ function listarUsuarios() {
                 const linha = document.createElement('tr');
                 linha.innerHTML = `
                     <td class="linha" >${usuario.ID_usuario}</td>
-                    <td class="linha" >${usuario.Nome}</td></td>
-                    <!-- <td class="linha" ><input class="userNome" type="text" value="${usuario.Nome}" readonly></td></td> -->
-                    <td class="linha" >${usuario.Email}</td></td>
-                    <!-- <td class="linha" ><input class="userEmail" type="text" value="${usuario.Email}" readonly></td></td> -->
-                    <td class="linha" >${usuario.CPF}</td>
-                    <!-- <td class="linha" ><input class="userCPF" type="text" id ="cpf" oninput="mascaraCPF(event)" value="${formatarCPF(usuario.CPF)}" readonly></td> -->
+                    <td class="linha" >${usuario.Nome}</td>
+                    <td class="linha" >${usuario.Email}</td>
+                    <td class="linha" >${formatarCPF(usuario.CPF)}</td>
                     <td style="border: 2px solid #333; padding: 0;">
                         <button type="button" style="width: 100%; height: 100%; padding: 12px; background-color: red; border: none; color: white; font-weight: bold; cursor: pointer;" id="delete" onclick="PopUpDelete(${usuario.ID_usuario})">X</button>
                     </td>
@@ -129,11 +126,11 @@ async function PopUpDelete(id) {
     }
 }
 function trocarTipo() {
-    let nome = document.querySelector("userNome");
-    let email = document.querySelector(`.userEmail[id="${id}"]`);
-    let cpf = document.querySelector(`.userCPF[id="${id}"]`);
+    let nome = document.getElementById('nome');
+    let email = document.getElementById('email');
+    let cpf = document.getElementById('cpf');
     if (nome.readOnly) {
-        nome.removeAttribute("readonly");
+        nome.readOnly = false;
         email.readOnly = false;
         cpf.readOnly = false;
     } else {

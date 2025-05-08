@@ -41,10 +41,10 @@
             </button>
             <ul class="dropdown-menu dropdown-menu-end">
               <li><a class="dropdown-item" href="login">Login</a></li>
-              <li><a class="dropdown-item" href="signin">Cadastro</a></li>
+              <li><a class="dropdown-item" href="signup">Cadastro</a></li>
               <li><a class="dropdown-item" href="lojas">Cadastro de loja</a></li>
               <li><a class="dropdown-item" href="usuariocrud">usuario</a></li>
-              <!-- <li><button id="logoutBtn">Logout</button></li> -->
+              <li><button id="logoutBtn">Logout</button></li>
             </ul>
           </div>
         </div>
@@ -114,7 +114,7 @@
           <br>Torne-se nosso vendedor e faça parte de um time de sucesso, com suporte e as melhores condições para
           crescer no mercado.
         </p>
-        <a style="background-color: green; border: none; border-radius: 30px;" href="#" class="btn btn-primary">Clique
+        <a style="background-color: green; border: none; border-radius: 30px;" href="#" id="sobre" class="btn btn-primary">Clique
           aqui e saiba mais</a>
       </div>
     </div>
@@ -135,6 +135,7 @@
         const dados = await resposta.json();
         const dropdown = document.getElementById("dropdownCenter");
         const status = document.getElementById("statusLogin");
+        const logout = document.getElementById("logoutBtn");
         if (dados.logado) {
           status.innerText = `Bem-vindo, ${dados.nome}`;
           dropdown.style.display = "none";
@@ -158,9 +159,15 @@
           Swal.fire({
             icon: 'error',
             title: 'Sua sessão expirou',
-            text: 'Por favor, faca login novamente.'
+            text: 'Aperte OK para ser redirecionado para a tela de login ou espere para ser redirecionado.',
+            timer:5000,
+            timerProgressBar: true
           }).then((result) => {
+            sessionStorage.clear();
             if (result.isConfirmed) {
+              window.location.href = "/login";
+            }
+            if (result.dismiss === Swal.DismissReason.timer) {
               window.location.href = "/login";
             }
           })
@@ -179,25 +186,22 @@
     };
     // Inicia tudo ao carregar a página
     inicializarVerificacaoDeSessao();
-
-    // async function logout() {
-    //   try {
-    //     const resposta = await fetch("/logout", {
-    //       method: "GET", // Pode ser POST também, mas GET funciona bem aqui
-    //     });
-
-    //     if (resposta.ok) {
-    //       // Quando o logout for bem-sucedido, redireciona para o login ou página inicial
-    //       window.location.href = "/login";
-    //     } else {
-    //       alert("Erro ao fazer logout.");
-    //     }
-    //   } catch (err) {
-    //     console.error("Erro ao fazer logout:", err);
-    //     alert("Erro ao fazer logout.");
-    //   }
-    // }
-    // document.getElementById("logoutBtn").addEventListener("click", logout);
+    async function logout() {
+      try {
+        const resposta = await fetch("/logout", {
+          method: "GET",
+        });
+        if (resposta.ok) {
+          // Quando o logout for bem-sucedido, redireciona para o login ou página inicial
+          window.location.href = "/login";
+        } else {
+          alert("Erro ao fazer logout.");
+        }
+      } catch (err) {
+        console.error("Erro ao fazer logout:", err);
+      }
+    }
+    document.getElementById("logoutBtn").addEventListener("click", logout);
 
   </script>
 </body>

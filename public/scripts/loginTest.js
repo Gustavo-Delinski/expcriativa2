@@ -50,7 +50,6 @@ async function VerificarCampos() {
         if (response.ok) {
             const id_usuario = await response.json();
             sessionStorage.setItem('id_usuario', id_usuario);
-            sessionStorage.setItem('email', email);
             window.location.href = "/";
         } else {
             const error = await response.json();

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../imagens/logo/Símbolo.svg">
+    <link rel="stylesheet" href="../estilos/perfilUsuario.css">
+    <title>LocalTop</title>
+</head>
+<body>
+    <header>
+        <a href="/" class="logoLink">
+            <img src="../imagens/logo/SVG Variações/Branco/Vertical Branco.svg" alt="Logo LocalTop" class="logo">
+        </a>
+        <nav>
+            <a href="/">Contratar Serviço</a>
+            <a href="/">Divulgar Serviço</a>
+            <a href="/#sobre">Sobre Nós</a>
+        </nav>
+        <nav>
+            <a href="/login">Login</a>
+            <a href="/signup">SignUp</a>
+        </nav>
+    </header>
+    <main>
+        <div>
+            <aside>
+                <div>
+                    <img/>
+                    <h2>Nome Usuário</h2>
+                </div>
+                <div>
+                    <button>Minha conta</button>
+                    <button>Favoritos</button>
+                    <button>Dados cadastrais</button>
+                    <button>Trocar senha</button>
+                </div>
+            </aside>
+            <div>
+                <h1>Meu Perfil</h1>
+                <form>
+                    <div>
+                        <div>
+                            <div class="nome">
+                                <label for="nome">Nome:</label>
+                                <input type="text" id="nome" name="nome">
+                            </div>
+                            <div class="email">
+                                <label for="email">Email:</label>
+                                <input type="text" id="email" name="email">
+                            </div>
+                            <div class="cpf">
+                                <label for="cpf">CPF:</label>
+                                <input type="text" id="cpf" name="cpf">
+                            </div>
+                        </div>
+                        <div>
+                            <img id="img" src="../imagens/user-svgrepo-com (1).svg" alt="foto de perfil"/>
+                            <input type="file" id="file" name="file" accept="image/*" onchange="mostrarFoto()">
+                        </div>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-primary salvar" onclick="ValidarCampos()">Salvar</button>
+                        <button type="button" class="btn btn-primary cancelar" onclick="Cancelar()">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+    <footer>
+
+    </footer>
+    <script src="../scripts/perfilUsuario.js"></script>
+</body>
+</html>
