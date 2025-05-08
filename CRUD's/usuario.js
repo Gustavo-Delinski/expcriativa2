@@ -1,6 +1,6 @@
 import {Router} from "express";
 import {Usuario} from "../db/tabelaDB.js";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 const rota_usuarios = Router();
 
