@@ -13,7 +13,7 @@ async function criarDB() {
     await connection.end()
 }
 
-const sequelize = new Sequelize('localtop', 'root', senhaDB, {
+let sequelize= new Sequelize('localtop', 'root', senhaDB, {
     host: 'localhost',
     dialect: 'mysql'
 });
@@ -21,7 +21,6 @@ const sequelize = new Sequelize('localtop', 'root', senhaDB, {
 
 async function iniciarDB() {
     await criarDB();
-    await sequelize.sync();
 }
 
 iniciarDB().then(() => {

@@ -31,7 +31,8 @@ rota_usuarios
         console.log(`Usuário logado com sucesso: ${usuario.Nome}, id: ${usuario.ID_usuario}`);
         req.session.usuarioId = usuario.ID_usuario;
         req.session.nome = usuario.Nome;
-        res.json(usuario.ID_usuario);
+        req.session.adm = usuario.ADM;
+        res.json({id:usuario.ID_usuario,adm:usuario.ADM,nome:usuario.Nome});
     } catch (err) {
         console.error('Erro ao fazer login:', err);
         res.status(500).json({ mensagem: `Erro interno no servidor.${err}` });

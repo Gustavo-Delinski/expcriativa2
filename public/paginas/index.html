@@ -44,9 +44,9 @@
               <li><a class="dropdown-item" href="signup">Cadastro</a></li>
               <li><a class="dropdown-item" href="lojas">Cadastro de loja</a></li>
               <li><a class="dropdown-item" href="usuariocrud">usuario</a></li>
-              <li><button id="logoutBtn">Logout</button></li>
             </ul>
           </div>
+          <button id="logoutBtn" style="display: none;">Logout</button>
         </div>
       </div>
     </nav>
@@ -139,11 +139,13 @@
         if (dados.logado) {
           status.innerText = `Bem-vindo, ${dados.nome}`;
           dropdown.style.display = "none";
+          logout.style.display = "block";
           // Se o usuário estiver logado, ativa o monitoramento
           ativarMonitoramento();
         } else {
           status.innerText = "Você não está logado.";
           dropdown.style.display = "block"; // Exibe novamente, se quiser
+          logout.style.display = "none";
         }
       } catch (err) {
         console.error("Erro ao verificar login inicial:", err);

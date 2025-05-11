@@ -1,3 +1,15 @@
+function MostrarSenha() {
+    var campoSenha = document.getElementById('senha');
+    const img = document.getElementById('olho');
+    if (campoSenha.type == 'password') {
+        campoSenha.type = 'text';
+        img.src = '../imagens/olho-fechado.svg';
+    } else {
+        campoSenha.type = 'password';
+        img.src = '../imagens/olho-aberto.svg';
+    }
+}
+
 function validarEmail(email) {
     var regex = /^[A-Za-z0-9._!#$%&*+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
     if (!regex.test(email)) {
@@ -11,7 +23,7 @@ function validarEmail(email) {
     };
     return true;
 }
-let form = document.getElementById('form');
+let form = document.getElementById('Form-login');
 
 async function VerificarCampos() {
     let email = document.getElementById("email").value;
@@ -27,7 +39,7 @@ async function VerificarCampos() {
     }
     if (!validarEmail(email)) return;
     try {
-        const response = await fetch('/login', {
+        const response = await fetch('/api/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -36,9 +48,10 @@ async function VerificarCampos() {
             body: JSON.stringify({ email, senha }),
         });
         if (response.ok) {
-            const id_usuario = await response.json();
-            sessionStorage.setItem('id_usuario', id_usuario);
-            sessionStorage.setItem('email', email);
+            const usuario = await response.json();
+            sessionStorage.setItem('id_usuario', usuario.id);
+            sessionStorage.setItem('nome', usuario.nome);
+            sessionStorage.setItem('adm', usuario.adm ? "ADM" : "USUARIO");
             window.location.href = "/";
         } else {
             const error = await response.json();
@@ -64,17 +77,9 @@ form.addEventListener('submit', function (e) {
     VerificarCampos();
 })
 
-function mostrarSenha(event) {
-    var campoSenha = document.getElementById('senha');
-    if (campoSenha.type == 'password') {
-        campoSenha.type = 'text';
-    } else {
-        campoSenha.type = 'password';
-    }
-}
-
-function mostrar() {
-    let email = document.getElementById("email").value;
-    let senha = document.getElementById("senha").value;
-    console.log(email, senha);
-}
+document.getElementById('senha').addEventListener('input', function () {
+    document.getElementById('senha').style.outline = '1px solid #3E996F';
+})
+document.getElementById('email').addEventListener('input', function () {
+    document.getElementById('email').style.outline = '1px solid #3E996F';
+})

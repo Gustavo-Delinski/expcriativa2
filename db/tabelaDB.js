@@ -12,8 +12,8 @@ const Usuario = sequelize.define('Usuario', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    Role: {
-        type: DataTypes.STRING,
+    ADM: {
+        type: DataTypes.BOOLEAN,
         allowNull: true
     },
     CPF:{
@@ -30,6 +30,10 @@ const Usuario = sequelize.define('Usuario', {
     },
     Email: {
         type: DataTypes.STRING,
+        allowNull: true
+    },
+    Foto: {
+        type: DataTypes.BLOB,
         allowNull: true
     }}, {
         tablename: 'Usuario',
@@ -52,7 +56,31 @@ const Estabelecimento = sequelize.define('Estabelecimento', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    Endereco: {
+    logradouro: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    Numero: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    Complemento: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    Bairro: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    Cidade: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    UF: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    CEP: {
         type: DataTypes.STRING,
         allowNull: false
     },
@@ -135,11 +163,11 @@ const Avaliacao = sequelize.define('Avaliacao', {
     },
     Nota: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: true
     },
     Comentario: {
         type: DataTypes.TEXT,
-        allowNull: false
+        allowNull: true
     },
     Data: {
         type: DataTypes.DATE,
