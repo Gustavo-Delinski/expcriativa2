@@ -16,12 +16,13 @@
 </head>
 
 <body style="background-color:#F7EFE6;">
+
   <script src="../scripts/login.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+  
   <!--Navbar do site-->
   <div>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: #302163;">
+    <nav class="navbar navbar-expand-lg" style="background-color: #302163;">
       <div class="container-fluid">
         <a href="/" class="logoContainer"><img src="../imagens/logo/Principal.svg" alt="logo" class="logo"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -34,14 +35,14 @@
               <a class="nav-link active" aria-current="page" href="/">Lojas</a>
             </li> -->
           </ul>
-          <div class="dropdown-center">
-            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+          <div class="dropdown-center" id="dropdownCenter">
+            <button class="btn btn-secondary dropdown-toggle" style="background-color: whitesmoke; color: #3BA06D;" type="button" data-bs-toggle="dropdown"
               aria-expanded="false">
-              Usuário
+              Menu
             </button>
             <ul class="dropdown-menu dropdown-menu-end">
               <li><a class="dropdown-item" href="login">Login</a></li>
-              <li><a class="dropdown-item" href="signup">Cadastro de cliente</a></li> 
+              <li><a class="dropdown-item" href="signup">Cadastro</a></li>
               <li><a class="dropdown-item" href="lojas">Cadastro de loja</a></li>
             </ul>
           </div>
@@ -49,29 +50,32 @@
       </div>
     </nav>
   </div>
+  
+  <!--Uma div vazia?-->
   <div class="container">
     <div class="box">
 
     </div>
-
+    
   </div>
-
+  
   <div class="form">
     <form class="container">
       <div class="mb-3 nome">
         <label for="nome" class="form-label">Nome do comércio:</label>
         <input type="text" class="form-control" id="nome" pattern="^[A-Za-zÀ-ÿ]+(?: [A-Za-zÀ-ÿ]+)*$" required
           placeholder="Ex: Hotdog do joão">
-      </div>
-      <br>
-      <div class="mb-3 email">
-        <label for="email" class="form-label">Endereço do comércio:</label>
+        </div>
+        <br>
+        <div class="mb-3 email">
+          <label for="email" class="form-label">Endereço do comércio:</label>
         <input type="email" class="form-control" id="email" aria-describedby="emailHelp" required
           placeholder="Ex: Rua Salvador, 123">
       </div>
       <br>
       <div class="mb-3 cnpj">
         <label for="cpf" class="form-label">CNPJ:</label>
+        <!--id CPNJ com id CPF?-->
         <input type="text" class="form-control" id="cpf" placeholder="Ex: XX.XXX.XXX/0001-XX" maxlength="14"
           onkeypress="return mascaraCPF(event)" required>
         <p><span id="teste"></span></p>
@@ -109,6 +113,10 @@
     </form>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+  
+</body>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
