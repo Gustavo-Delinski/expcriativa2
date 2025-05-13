@@ -81,7 +81,7 @@ app.get("/lojas", (req, res) => {
 });
 
 app.get("/signup", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "paginas", "signupTest.html"));
+    res.sendFile(path.join(__dirname, "public", "paginas", "signup.html"));
 });
 app.get("/login", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "paginas", "login.html"));

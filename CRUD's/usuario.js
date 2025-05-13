@@ -92,5 +92,4 @@ rota_usuarios
     const usuario = await Usuario.findByPk(id);
     return usuario ? res.json(await usuario.destroy()) : res.status(404).end();
 });
-
 export default rota_usuarios;

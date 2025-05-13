@@ -61,7 +61,6 @@ function listarUsuarios() {
         .then(response => response.json())
         .then(data => {
             const tabela = document.getElementById('TabelaCorpo');
-            tabela.innerHTML = '';
             data.forEach(usuario => {
                 const linha = document.createElement('tr');
                 linha.innerHTML = `
