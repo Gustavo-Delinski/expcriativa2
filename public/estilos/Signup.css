@@ -19,7 +19,7 @@ html body.swal2-height-auto {
 
 .CardCadastro {
     background-color: whitesmoke;
-    box-shadow: rgba(0, 0, 0, 0.871) 0px 0px 7px;
+    box-shadow: rgba(0, 0, 0, 0.871) 0 0 7px;
     border-radius: 0.7rem;
     width: 57.6rem;
     height: 34.6rem;
@@ -242,10 +242,10 @@ aside{
     }
     
 }
-/*
-#F4FA46
-#302163
-#F7EFE6
-#3E996F
-*/
+
+/*#F4FA46*/
+/*#302163*/
+/*#F7EFE6*/
+/*#3E996F*/
+
 
