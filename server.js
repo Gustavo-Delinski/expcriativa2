@@ -9,6 +9,7 @@ import session from "express-session";
 import sequelize from "./db/declaracaoBD.js"
 // import { Usuario } from "./db/tabeladb.js";
 import rota_usuarios from "./CRUD's/usuario.js";
+import rota_lojas from "./CRUD's/crud_lojas.js";
 //Inicialização do servidor Express
 
 function verificarAutenticacao(req, res, next) {
@@ -58,6 +59,7 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use(rota_usuarios)
+app.use(rota_lojas)
 
 app.get("/auth/estado", (req, res) => {
     if (req.session && req.session.usuarioId) {

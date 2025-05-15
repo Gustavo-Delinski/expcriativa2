@@ -56,7 +56,7 @@ const Estabelecimento = sequelize.define('Estabelecimento', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    logradouro: {
+    endereco: {
         type: DataTypes.STRING,
         allowNull: false
     },
@@ -68,18 +68,18 @@ const Estabelecimento = sequelize.define('Estabelecimento', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    Bairro: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    Cidade: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    UF: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
+    // Bairro: {
+    //     type: DataTypes.STRING,
+    //     allowNull: false
+    // },
+    // Cidade: {
+    //     type: DataTypes.STRING,
+    //     allowNull: false
+    // },
+    // UF: {
+    //     type: DataTypes.STRING,
+    //     allowNull: false
+    // },
     CEP: {
         type: DataTypes.STRING,
         allowNull: false
