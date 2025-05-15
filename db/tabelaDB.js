@@ -18,7 +18,8 @@ const Usuario = sequelize.define('Usuario', {
     },
     CPF:{
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
     },
     DataNasc: {
         type: DataTypes.DATE,
@@ -30,7 +31,8 @@ const Usuario = sequelize.define('Usuario', {
     },
     Email: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: true,
+        unique: true
     },
     Foto: {
         type: DataTypes.BLOB,
@@ -54,7 +56,8 @@ const Estabelecimento = sequelize.define('Estabelecimento', {
     },
     Cnpj: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
     },
     endereco: {
         type: DataTypes.STRING,
@@ -194,12 +197,76 @@ const Avaliacao = sequelize.define('Avaliacao', {
         tablename: 'Avaliacao',
         timestamps: false,
 });
+const Favoritos = sequelize.define('Favoritos', {
+    ID_favorito: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+        allowNull: false
+    },
+    ID_usuario: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: Usuario,
+            key: 'ID_usuario'
+        },
+        onDelete: 'CASCADE'
+    },
+    ID_estabelecimento: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: Estabelecimento,
+            key: 'ID_estabelecimento'
+        },
+        onDelete: 'CASCADE'
+    }},{
+    tablename: 'Favoritos',
+    timestamps: false,
+});
+const Historico = sequelize.define('Historico', {
+    ID_historico: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+        allowNull: false
+    },
+    DataAcesso: {
+        type: DataTypes.DATE,
+        allowNull: false
+    },
+    ID_usuario: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: Usuario,
+            key: 'ID_usuario'
+        },
+        onDelete: 'CASCADE'
+    },
+    ID_estabelecimento: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: Estabelecimento,
+            key: 'ID_estabelecimento'
+        },
+        onDelete: 'CASCADE'
+    }},{
+    tablename: 'Historico',
+    timestamps: false,
+})
 
 Estabelecimento.belongsTo(Usuario, { foreignKey: 'ID_usuario', onDelete: 'CASCADE' });
 Oferta.belongsTo(Estabelecimento, { foreignKey: 'ID_estabelecimento', onDelete: 'CASCADE' });
 Oferta.belongsTo(Servico, { foreignKey: 'ID_servico', onDelete: 'CASCADE' });
 Avaliacao.belongsTo(Oferta, { foreignKey: 'ID_oferta', onDelete: 'CASCADE' });
 Avaliacao.belongsTo(Usuario, { foreignKey: 'ID_usuario', onDelete: 'CASCADE' });
+
+Usuario.hasMany(Favoritos, { foreignKey: 'ID_usuario', as: 'usuario', onDelete: 'CASCADE'},Historico, { foreignKey: 'ID_usuario', as: 'usuario', onDelete: 'CASCADE'});
+Estabelecimento.hasMany(Favoritos, { foreignKey: 'ID_estabelecimento', as: 'estabelecimento', onDelete: 'CASCADE'},Historico, { foreignKey: 'ID_estabelecimento', as: 'estabelecimento', onDelete: 'CASCADE'});
+
 
 // Usuario.hasMany(Estabelecimento, { foreignKey: 'ID_estabelecimento', as: 'estabelecimento', onDelete: 'CASCADE'});
 // Usuario.hasMany(Avaliacao, { foreignKey: 'ID_avaliacao', as:'avaliacao', onDelete: 'CASCADE'});

@@ -50,7 +50,7 @@ function msgValidaCPF() {
 }
 
 function ValidarNome(nome) {
-    var regex = /^[A-Za-zÀ-ÿ]+(?:\s+[A-Za-zÀ-ÿ]+)+$/;
+    const regex = /^[A-Za-zÀ-ÿ]+(?:\s+[A-Za-zÀ-ÿ]+)+$/;
     if (nome.length < 8 || !regex.test(nome)) {
         Swal.fire(
             'Nome Inválido',
@@ -64,7 +64,7 @@ function ValidarNome(nome) {
 }
 
 function validarEmail(email) {
-    var regex = /^[A-Za-z0-9._!#$%&*+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+    const regex = /^[A-Za-z0-9._!#$%&*+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
     if (!regex.test(email)) {
         Swal.fire(
             'Email Inválido',
@@ -73,7 +73,7 @@ function validarEmail(email) {
         )
         document.getElementById('email').style.outline = '1px solid rgb(202, 50, 121)';
         return false;
-    };
+    }
     return true;
 }
 
@@ -101,7 +101,7 @@ function validarSenhas(senha, senhaConfirmar) {
         document.getElementById('confirmarsenha').style.outline = '1px solid rgb(202, 50, 121)';
         return false;
     }
-    if (senha != senhaConfirmar) {
+    if (senha !== senhaConfirmar) {
         Swal.fire(
             'Senhas Diferentes',
             'O campo de senha e confirmação de senha devem ser iguais.',
@@ -112,17 +112,17 @@ function validarSenhas(senha, senhaConfirmar) {
         return false;
     }
     return true;
-};
+}
 
 function ValidarData(data) {
-    var today = new Date();
-    var dataNasc = new Date(data);
+    let today = new Date();
+    let dataNasc = new Date(data);
 
     let idade = today.getFullYear() - dataNasc.getFullYear();
-    var m = today.getMonth() - dataNasc.getMonth();
-    var d = today.getDate() - dataNasc.getDate();
+    let m = today.getMonth() - dataNasc.getMonth();
+    let d = today.getDate() - dataNasc.getDate();
     if (isNaN(dataNasc.getTime())) {
-        swal.fire(
+        Swal.fire(
             'Data Inválida',
             'Por favor, insira uma data v&aacute;lida.',
             'error'
@@ -134,7 +134,7 @@ function ValidarData(data) {
         idade--;
     }
     if (idade < 18) {
-        swal.fire(
+        Swal.fire(
             'Menor de idade',
             'Apenas maiores de idade podem se cadastrar.',
             'error'
@@ -146,10 +146,10 @@ function ValidarData(data) {
 }
 
 function MostrarSenha() {
-    var campoSenha = document.getElementById('senha');
-    var campoSenha2 = document.getElementById('confirmarsenha');
+    const campoSenha = document.getElementById('senha');
+    const campoSenha2 = document.getElementById('confirmarsenha');
     const img = document.getElementById('olho');
-    if (campoSenha.type == 'password') {
+    if (campoSenha.type === 'password') {
         campoSenha.type = 'text';
         campoSenha2.type = 'text';
         img.src = '../imagens/olho-fechado.svg';
@@ -184,11 +184,13 @@ async function ValidarCampos() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                nome: nome.trim(),
-                dataNascimento: datanasc,
-                email: email.trim(),
-                cpf: cpf.replace(/\D/g, ''),
-                senha: senha
+                Nome: nome.trim(),
+                ADM:false,
+                CPF: cpf.replace(/\D/g, ''),
+                DataNasc: datanasc,
+                Senha: senha,
+                Email: email.trim(),
+                Foto:null,
             }),
         });
         if (resposta.ok) {
@@ -196,7 +198,7 @@ async function ValidarCampos() {
             console.log("Funcionou")
             Swal.fire(
                 'Cadastro realizado com sucesso',
-                `${resultado.mesagem},você ser&aacute; redirecionado para a tela de login em breve`,
+                `${resultado.mensagem},você ser&aacute; redirecionado para a tela de login em breve`,
                 'success'
             );
             setTimeout(() => {
@@ -213,11 +215,11 @@ async function ValidarCampos() {
     } catch (error) {
         Swal.fire(
             'Erro ao cadastrar',
-            `${error.messagem}`,
+            `${error.mensagem}`,
             'error'
         )
     }
-};
+}
 form.addEventListener('submit', function (e) {
     e.preventDefault();
     ValidarCampos();

@@ -1,6 +1,6 @@
 html {
-    width: 99.05dvw;
-    height: 100dvh;
+    margin: 0;
+    padding: 0;
     scroll-behavior: smooth;
 }
 
@@ -9,10 +9,10 @@ body {
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
     align-items: center;
-    font-family: Montserrat, sans-serif;
+    font-family: Montserrat-bold, sans-serif;
     margin: 0;
+    background-color: #F7EFE6;
 }
 
 header {
@@ -20,25 +20,191 @@ header {
     display: flex;
     flex-direction: row;
     width: 100%;
+    height: 6rem;
     justify-content: space-between;
     align-items: center;
     margin: 0;
-    padding: 1rem 0 0 0;
+    padding: 0 3rem;
 }
 
 .logoLink {
-    display: block;
-    height: 5rem;
-    width: 10rem;
+    display: flex;
+    align-items: end;
+    height: 100%;
+    width: 15dvi;
     .logo {
         width: 100%;
+        height: 75%;
+    }
+}
+
+.servicos {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    width: 30dvi;
+    height: 100%;
+    gap: 2dvi;
+    padding-bottom: 1.5rem;
+    margin-right: 7rem;
+    a {
+        font-size: 1.1dvi;
+        text-decoration: none;
+        color: #FFFF;
+    }
+    a:hover {
+        transform: scale(1.1);
+    }a:active {
+        transform: scale(0.95);
+    }
+    .encontrar {
+        display: flex;
+        flex-direction: row;
+        align-items: end;
+        p {
+            font-weight: Bolder;
+            margin: 0 0 0 0.3rem;
+        }
+    }
+}
+
+.infos {
+    width: 8dvi;
+    height: 100%;
+    padding-bottom: 1.5rem;
+    display: flex;
+    align-items: end;
+    justify-content: space-around;
+    .conta,.notificacoes {
+        width: 2.2dvi;
+        height: 2.2dvi;
+    }
+    .conta {
+        border: 2px solid #FFFF;
+        border-radius: 1.1dvi;
+    }
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 35dvi;
+    justify-content: center;
+    align-items: center;
+    margin: 3rem 0;
+    gap: 1dvi;
+    aside {
+        width: 30%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        padding: 0 2rem;
+        .FotoNome {
+            display: flex;
+            flex-direction: row;
+            gap: 1dvi;
+            .imgPerfil {
+                background-color: #302163;
+                background-image: url(../imagens/GatoSneaky.jpg);
+                background-size: cover;
+                background-position: center;
+                width: 5dvi;
+                height: 5dvi;
+                border-radius: 4rem;
+                border: 2px solid #302163;
+            }
+            h4 {
+                margin: 0;
+                font-size: 2dvi;
+                font-weight: bold;
+                color:#3E996F;
+            }
+            h5 {
+                margin: 0;
+                font-size: 1.5dvi;
+                color: #302163;
+            }
+        }
+        hr {
+            margin: 1rem 0;
+        }
+        .opcoes {
+            svg path {
+                stroke: #302163;
+
+            }
+        }
+    }
+    .informacao {
+        background-color: #FFFF;
+        width: 60%;
         height: 100%;
     }
 }
 
-/* 
-#F4FA46
-#302163
-#F7EFE6
-#3E996F 
-*/
+footer {
+    display: flex;
+    flex-direction: column;
+    background-color: #302163;
+    width: 100%;
+    padding: 1dvi;
+    gap: 1dvi;
+}
+
+.footer-top {
+    display: flex;
+    flex-direction: row;
+    justify-content: end ;
+    gap:12dvi;
+    .linkLogo {
+        width: 15dvi;
+        height: 10dvi;
+    }
+    .divisor {
+        display: flex;
+        flex-direction: column;
+        nav {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+    h3 {
+        font-size: 1.8dvi;
+        color: #F4FA46;
+    }
+    .redesSociais {
+        display: flex;
+        flex-direction: row;
+        align-items: end;
+        width: 10dvi;
+        justify-content: space-around;
+        a {
+            width: 2dvi;
+            height: 2dvi;
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+    a {
+        text-decoration: none;
+        color: #FFFF;
+        font-size: 1dvi;
+    }
+}
+
+.footer-bottom {
+    p {
+        margin: 0;
+        color: #FFFF;
+        font-size: 0.7dvi;
+        text-align: end;
+    }
+}
+
+/*Amarelo: #F4FA46*/
+/*Azul escuro: #302163*/
+/*Branco: #F7EFE6*/
+/*Verde: #3E996F */

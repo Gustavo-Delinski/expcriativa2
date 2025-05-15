@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg id="Camada_2" data-name="Camada 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32.04 32.8">
+<svg id="Camada_2" width="30px" height="30px" data-name="Camada 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32.04 32.8">
   <defs>
     <style>
       .cls-1 {
@@ -7,7 +7,7 @@
       }
     </style>
   </defs>
-  <g id="Camada_1-2" data-name="Camada 1">
+  <g id="Camada_1-2">
     <path class="cls-1" d="M0,32.8l12.49-14.55L0,0l.17.04,9.33-.02,8.23,11.96.11.08L28.13.08c.32-.13.64-.04.94-.03.56,0,1.13.02,1.69,0,.06,0,.26-.09.21.02l-11.9,13.87,12.96,18.88h-9.52l-.09-.05c-.03-.15-.13-.27-.21-.39-2.79-4.11-5.67-8.17-8.45-12.28l-10.96,12.73H0ZM28.15,30.76L8.26,2.28s-.13-.12-.15-.12H3.85l19.93,28.52s.09.08.11.08h4.26Z"/>
   </g>
 </svg>

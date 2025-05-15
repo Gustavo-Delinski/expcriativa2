@@ -19,6 +19,13 @@ function verificarAutenticacao(req, res, next) {
         res.status(401).json({ mensagem: 'Você precisa estar logado para acessar esta rota.' });
     }
 }
+function verificarAdm(req, res, next) {
+    if (req.session.adm) {
+        next(); // usuário está logado
+    } else {
+        res.status(401).json({ mensagem: 'Você não tem permissão para acessar esta rota.' });
+    }
+}
 const app = express();
 app.use(express.json());
 //Porta em que o servidor rodará
@@ -26,13 +33,6 @@ const port = 3000;
 //diretório atual onde o servidor está rodando
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-sequelize.authenticate()
-.then(() => {
-    console.log("conexao com o banco estabelecida")
-})
-.catch(err => {
-    console.log(err)
-})
 // const sessionMaxAge = 10 * 60 * 1000;
 // 1*30*1000 = 30 segs
 //                   min * seg * ms
@@ -96,7 +96,7 @@ app.get("/perfil", (req,res) => {
 app.get("/lista",(req, res) => {
     res.sendFile(path.join(__dirname, "public", "paginas", "usuariocrud.html"));
 });
-// app.get("/lista",verificarAutenticacao, (req, res) => {
+// app.get("/lista",verificarAdm, (req, res) => {
 //     res.sendFile(path.join(__dirname, "public", "paginas", "usuariocrud.html"));
 // });
 

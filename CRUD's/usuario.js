@@ -39,9 +39,10 @@ rota_usuarios
     }
 })
 .post('/api/signup', async (req, res) => {
-    const { nome, dataNascimento, email, cpf, senha } = req.body;
-    const usuario_email = await Usuario.findOne({ where: { email: email } });
-    const usuario_cpf = await Usuario.findOne({ where: { cpf: cpf } });
+    console.log("Dados recebidos:", req.body);
+    const { Nome, ADM, DataNasc, Email, CPF, Senha } = req.body;
+    const usuario_email = await Usuario.findOne({ where: { email: Email } });
+    const usuario_cpf = await Usuario.findOne({ where: { cpf: CPF } });
 
     if (usuario_email) {
         return res.status(400).json({mensagem:"Email ja cadastrado."});
@@ -50,24 +51,24 @@ rota_usuarios
     if (usuario_cpf) {
         return res.status(400).json({mensagem:"CPF ja cadastrado."});
     }
-    console.log("Dados recebidos:", req.body); // Adicione isso para debug
+    console.log("Dados recebidos:", req.body);
 
     try {
-        const hashedSenha = await bcrypt.hash(senha, 10);
+        const hashedSenha = await bcrypt.hash(Senha, 10);
 
         await Usuario.create({
-            Nome: nome,
-            DataNasc: dataNascimento,
-            Email: email,
-            CPF: cpf,
+            Nome: Nome,
+            ADM: ADM,
+            DataNasc: DataNasc,
+            Email: Email,
+            CPF: CPF,
             Senha: hashedSenha,
-            Role: null
         });
 
         res.status(200).json({ mensagem: "Usuário cadastrado com sucesso." });
     } catch (error) {
         console.error("Erro ao cadastrar usuário:", error);
-        res.status(500).json({ mensagem: `Erro ao cadastrar usuário: ${error}` }); // Retorne JSON
+        res.status(500).json({ mensagem: `Erro ao cadastrar usuário: ${error}` });
     }
 })
 .get('/api/usuarios/:id', async (req, res) => {
@@ -77,10 +78,11 @@ rota_usuarios
 })
 .put('/api/usuarios/:id', async (req, res) => {
     const { id } = req.params;
-    const { nome, dataNascimento, email, cpf, senha } = req.body;
+    const { nome,ADM, dataNascimento, email, cpf, senha } = req.body;
     const usuario = await Usuario.findByPk(id);
     return usuario ? res.json(await usuario.update({ 
         Nome: nome,
+        ADM: ADM,
         DataNasc: dataNascimento,
         Email: email,
         CPF: cpf,

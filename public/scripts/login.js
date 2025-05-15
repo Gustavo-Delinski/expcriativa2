@@ -51,7 +51,7 @@ async function VerificarCampos() {
             const usuario = await response.json();
             sessionStorage.setItem('id_usuario', usuario.id);
             sessionStorage.setItem('nome', usuario.nome);
-            sessionStorage.setItem('adm', usuario.adm ? "ADM" : "USUARIO");
+            sessionStorage.setItem('adm', !!usuario.adm);
             window.location.href = "/";
         } else {
             const error = await response.json();

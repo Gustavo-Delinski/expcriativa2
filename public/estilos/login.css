@@ -282,7 +282,7 @@ aside{
     display: flex;
     flex-direction: column;
     margin: 0.5rem 0 ;
-    font-size:medium;
+    font-size:medium !important;
 }
 
 .Form-login {

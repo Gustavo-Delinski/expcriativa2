@@ -7,7 +7,7 @@
       }
 
       .cls-1, .cls-2 {
-        font-family: Montserrat-Light, Montserrat;
+        font-family: Montserrat-Light, Sans-serif;
         font-weight: 300;
       }
 
@@ -24,7 +24,7 @@
       }
 
       .cls-5, .cls-6, .cls-7, .cls-8 {
-        font-family: Montserrat-Bold, Montserrat;
+        font-family: Montserrat-Bold, Sans-serif;
         font-weight: 700;
       }
 
@@ -37,7 +37,7 @@
       }
     </style>
   </defs>
-  <g id="Camada_1-2" data-name="Camada 1">
+  <g id="Camada_1-2">
     <g>
       <g>
         <g>
