@@ -3,10 +3,10 @@ function MostrarSenha() {
     const img = document.getElementById('olho');
     if (campoSenha.type == 'password') {
         campoSenha.type = 'text';
-        img.src = '../imagens/olho-fechado.svg';
+        img.src = '../imagens/SVGs/olho-fechado.svg';
     } else {
         campoSenha.type = 'password';
-        img.src = '../imagens/olho-aberto.svg';
+        img.src = '../imagens/SVGs/olho-aberto.svg';
     }
 }
 

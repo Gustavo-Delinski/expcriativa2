@@ -6,6 +6,7 @@ import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 import bodyParser from "body-parser";
 import session from "express-session";
+import multer from "multer";
 import sequelize from "./db/declaracaoBD.js"
 // import { Usuario } from "./db/tabeladb.js";
 import rota_usuarios from "./CRUD's/usuario.js";
@@ -36,7 +37,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 // const sessionMaxAge = 10 * 60 * 1000;
 // 1*30*1000 = 30 segs
 //                   min * seg * ms
-const sessionMaxAge = 1 * 30 * 1000;
+const sessionMaxAge = 60 * 60 * 1000;
 
 app.use(session({
     secret: 'localtop',
@@ -49,6 +50,13 @@ app.use(session({
         secure: false,
     }
 }));
+
+app.use((req,res,next) => {
+    if (req.session.user_logged_in) {
+        req.session.cookies.expires = new Date(Date.now() + sessionMaxAge);
+    }
+    next();
+})
 
 app.use((req, res, next) => {
     res.locals.user_logged_in = req.session.user_logged_in || false;
@@ -113,6 +121,7 @@ app.get("/logout", (req, res) => {
         res.redirect("/login");
     });
 });
+
 
 sequelize.sync().then(() => {
     app.listen(port, () => {

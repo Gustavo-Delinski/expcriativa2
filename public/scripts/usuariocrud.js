@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 async function deletarUsuario(id) {
     try {
-        const response = await fetch(`/api/usuarios/${id}`, {
+        const response = await fetch(`/api/usuario/${id}`, {
             method: 'DELETE'
         })
         const result = await response.json()

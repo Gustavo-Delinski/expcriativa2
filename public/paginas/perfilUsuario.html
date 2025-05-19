@@ -22,90 +22,109 @@
             <a href="/#sobre">Sobre Nós</a>
         </nav>
         <nav class="infos">
-            <img src="../imagens/SVGs/pesquisar.svg" alt="Pesquisar" style="margin-bottom: 0.1dvi; width: 2dvi; height:2dvi;" />
-            <img src="../imagens/SVGs/notification-bell.svg" alt="Notificações" class="notificacoes"/>
-            <img src="../imagens/SVGs/perfil.svg" alt="Minha Conta" class="conta">
+            <h3 id="nomeUsu">Isabela </h3>
+            <div class="usuario">
+                <button class="dropdownUsuario" id="BtnDropdown" onclick="dropdown()">
+                    <img src="../imagens/SVGs/perfil.svg" alt="Minha Conta" class="conta">
+                </button>
+                <div class="dropdown-content">
+                    <a href="/perfil">Meu Perfil</a>
+                    <button id="logoutBtn">Sair</button>
+                </div>
+            </div>
         </nav>
     </header>
     <main>
         <aside>
             <div id="FotoNome" class="FotoNome">
-                <div class="imgPerfil">
+                <div class="imgPerfil" id="imgPerfil">
                 </div>
-                <div class="NomeEmail">
-                    <h4>Nome Usuário</h4>
+                <div class="NomeEmail" id="NomeEmail">
+                    <h4 >Nome Usuário</h4>
                     <h5>Email Usuário</h5>
                 </div>
             </div>
             <hr>
             <div>
                 <div class="opcoes">
-                    <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path opacity="0" d="M17 8C17 10.7614 14.7614 13 12 13C9.23858 13 7 10.7614 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8Z" fill="#323232"/>
-                        <path d="M17 8C17 10.7614 14.7614 13 12 13C9.23858 13 7 10.7614 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8Z" stroke="#FFF" stroke-width="2"/>
-                        <path d="M3 21C3.95728 17.9237 6.41998 17 12 17C17.58 17 20.0427 17.9237 21 21" stroke="#FFF" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
-                    <button>Minha conta</button>
+                    <label for="conta">
+                        <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path opacity="0" d="M17 8C17 10.7614 14.7614 13 12 13C9.23858 13 7 10.7614 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8Z" fill="#323232"/>
+                            <path d="M17 8C17 10.7614 14.7614 13 12 13C9.23858 13 7 10.7614 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8Z" stroke="#FFF" stroke-width="2"/>
+                            <path d="M3 21C3.95728 17.9237 6.41998 17 12 17C17.58 17 20.0427 17.9237 21 21" stroke="#FFF" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </label>
+                    <button id="conta">Minha Conta</button>
                 </div>
                 <div class="opcoes">
-                    <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 6.00019C10.2006 3.90317 7.19377 3.2551 4.93923 5.17534C2.68468 7.09558 2.36727 10.3061 4.13778 12.5772C5.60984 14.4654 10.0648 18.4479 11.5249 19.7369C11.6882 19.8811 11.7699 19.9532 11.8652 19.9815C11.9483 20.0062 12.0393 20.0062 12.1225 19.9815C12.2178 19.9532 12.2994 19.8811 12.4628 19.7369C13.9229 18.4479 18.3778 14.4654 19.8499 12.5772C21.6204 10.3061 21.3417 7.07538 19.0484 5.17534C16.7551 3.2753 13.7994 3.90317 12 6.00019Z" stroke="#FFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    <button>Favoritos</button>
+                    <label for="favorito">
+                        <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 6.00019C10.2006 3.90317 7.19377 3.2551 4.93923 5.17534C2.68468 7.09558 2.36727 10.3061 4.13778 12.5772C5.60984 14.4654 10.0648 18.4479 11.5249 19.7369C11.6882 19.8811 11.7699 19.9532 11.8652 19.9815C11.9483 20.0062 12.0393 20.0062 12.1225 19.9815C12.2178 19.9532 12.2994 19.8811 12.4628 19.7369C13.9229 18.4479 18.3778 14.4654 19.8499 12.5772C21.6204 10.3061 21.3417 7.07538 19.0484 5.17534C16.7551 3.2753 13.7994 3.90317 12 6.00019Z" stroke="#FFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </label>
+                    <button id="favorito">Favoritos</button>
                 </div>
                 <div class="opcoes">
-                    <svg width="30px" height="30px" viewBox="0 0 24 24" fill="#302163" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6.86461 6.88236C8.17813 5.56432 9.99326 4.75 12 4.75C16.0041 4.75 19.25 7.99594 19.25 12C19.25 16.0041 16.0041 19.25 12 19.25C7.99594 19.25 4.75 16.0041 4.75 12C4.75 11.5858 4.41421 11.25 4 11.25C3.58579 11.25 3.25 11.5858 3.25 12C3.25 16.8325 7.16751 20.75 12 20.75C16.8325 20.75 20.75 16.8325 20.75 12C20.75 7.16751 16.8325 3.25 12 3.25C9.57851 3.25 7.38558 4.23462 5.80213 5.82352C5.77668 5.84906 5.75345 5.87597 5.73245 5.90401L4.47488 4.64645C4.33769 4.50926 4.13353 4.46382 3.95111 4.52986C3.76869 4.59591 3.64094 4.76152 3.62338 4.95473L3.26982 8.84382C3.25639 8.9916 3.30929 9.13771 3.41422 9.24264C3.51914 9.34757 3.66526 9.40047 3.81304 9.38703L7.70213 9.03348C7.89534 9.01591 8.06095 8.88817 8.12699 8.70575C8.19304 8.52332 8.1476 8.31916 8.01041 8.18198L6.7823 6.95386C6.81101 6.93235 6.83854 6.90852 6.86461 6.88236Z"/>
-                        <path d="M12.75 7C12.75 6.58579 12.4142 6.25 12 6.25C11.5858 6.25 11.25 6.58579 11.25 7V12C11.25 12.2586 11.3832 12.4989 11.6025 12.636L14.6025 14.511C14.9538 14.7305 15.4165 14.6238 15.636 14.2725C15.8555 13.9212 15.7488 13.4585 15.3975 13.239L12.75 11.5843V7Z"/>
-                    </svg>
-                    <button>Histórico</button>
+                    <label for="historico">
+                        <svg width="30px" height="30px" viewBox="0 0 24 24" fill="#302163" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6.86461 6.88236C8.17813 5.56432 9.99326 4.75 12 4.75C16.0041 4.75 19.25 7.99594 19.25 12C19.25 16.0041 16.0041 19.25 12 19.25C7.99594 19.25 4.75 16.0041 4.75 12C4.75 11.5858 4.41421 11.25 4 11.25C3.58579 11.25 3.25 11.5858 3.25 12C3.25 16.8325 7.16751 20.75 12 20.75C16.8325 20.75 20.75 16.8325 20.75 12C20.75 7.16751 16.8325 3.25 12 3.25C9.57851 3.25 7.38558 4.23462 5.80213 5.82352C5.77668 5.84906 5.75345 5.87597 5.73245 5.90401L4.47488 4.64645C4.33769 4.50926 4.13353 4.46382 3.95111 4.52986C3.76869 4.59591 3.64094 4.76152 3.62338 4.95473L3.26982 8.84382C3.25639 8.9916 3.30929 9.13771 3.41422 9.24264C3.51914 9.34757 3.66526 9.40047 3.81304 9.38703L7.70213 9.03348C7.89534 9.01591 8.06095 8.88817 8.12699 8.70575C8.19304 8.52332 8.1476 8.31916 8.01041 8.18198L6.7823 6.95386C6.81101 6.93235 6.83854 6.90852 6.86461 6.88236Z"/>
+                            <path d="M12.75 7C12.75 6.58579 12.4142 6.25 12 6.25C11.5858 6.25 11.25 6.58579 11.25 7V12C11.25 12.2586 11.3832 12.4989 11.6025 12.636L14.6025 14.511C14.9538 14.7305 15.4165 14.6238 15.636 14.2725C15.8555 13.9212 15.7488 13.4585 15.3975 13.239L12.75 11.5843V7Z"/>
+                        </svg>
+                    </label>
+                    <button id="historico">Histórico</button>
                 </div>
                 <div class="opcoes">
-                    <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g id="Edit / Edit_Pencil_01">
-                            <path id="Vector" d="M12 8.00012L4 16.0001V20.0001L8 20.0001L16 12.0001M12 8.00012L14.8686 5.13146L14.8704 5.12976C15.2652 4.73488 15.463 4.53709 15.691 4.46301C15.8919 4.39775 16.1082 4.39775 16.3091 4.46301C16.5369 4.53704 16.7345 4.7346 17.1288 5.12892L18.8686 6.86872C19.2646 7.26474 19.4627 7.46284 19.5369 7.69117C19.6022 7.89201 19.6021 8.10835 19.5369 8.3092C19.4628 8.53736 19.265 8.73516 18.8695 9.13061L18.8686 9.13146L16 12.0001M12 8.00012L16 12.0001" stroke="#FFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </g>
-                    </svg>
-                    <button>Trocar Senha</button>
+                    <label for="trocarsenha">
+                        <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g id="Edit / Edit_Pencil_01">
+                                <path id="Vector" d="M12 8.00012L4 16.0001V20.0001L8 20.0001L16 12.0001M12 8.00012L14.8686 5.13146L14.8704 5.12976C15.2652 4.73488 15.463 4.53709 15.691 4.46301C15.8919 4.39775 16.1082 4.39775 16.3091 4.46301C16.5369 4.53704 16.7345 4.7346 17.1288 5.12892L18.8686 6.86872C19.2646 7.26474 19.4627 7.46284 19.5369 7.69117C19.6022 7.89201 19.6021 8.10835 19.5369 8.3092C19.4628 8.53736 19.265 8.73516 18.8695 9.13061L18.8686 9.13146L16 12.0001M12 8.00012L16 12.0001" stroke="#FFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </g>
+                        </svg>
+                    </label>
+                    <button id="trocarsenha" onclick="trocarSenhaForm()">Trocar Senha</button>
                 </div>
             </div>
         </aside>
-        <div class="informacao">
+        <div class="informacao" id="informacao">
             <h1>Meu Perfil</h1>
-            <form>
-                <div>
-                    <div>
+            <p>Gerenciar a sua conta</p>
+            <hr>
+            <form id="form">
+                <div class="NomeEmailFoto">
+                    <div class="NomeEmail">
                         <div class="nome">
-                            <label for="nome">Nome:</label>
-                            <input type="text" id="nome" name="nome">
+                            <label for="nome">Nome Completo</label>
+                            <input type="text" id="nome" name="nome" readonly>
                         </div>
                         <div class="email">
-                            <label for="email">Email:</label>
-                            <input type="text" id="email" name="email">
-                        </div>
-                        <div class="datanasc">
-                            <label for="datanasc">Data de nascimento:</label>
-                            <input type="text" id="datanasc" name="cpf">
-                        </div><div class="cpf">
-                            <label for="cpf">CPF:</label>
-                            <input type="text" id="cpf" name="cpf">
+                            <label for="email">Email</label>
+                            <input type="text" id="email" name="email" readonly >
                         </div>
                     </div>
-                    <div>
+                    <div class="InputFoto">
                         <label for="file">
-                            <img id="Perfilimg" src="../imagens/SVGs/perfil.svg" alt="foto de perfil"/>
-                            <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M21 11V18C21 19.1046 20.1046 20 19 20H5C3.89543 20 3 19.1046 3 18V9C3 7.89543 3.89543 7 5 7H6.5C7.12951 7 7.72229 6.70361 8.1 6.2L9.15 4.8C9.52771 4.29639 10.1205 4 10.75 4H13.25" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M18.5 4V6.5M18.5 9V6.5M18.5 6.5H16M18.5 6.5H21" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <circle cx="12" cy="13" r="4" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <div id="Perfilimg" class="Perfilimg"></div>
+                            <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none" id="svgFoto">
+                                <path d="M21 11V18C21 19.1046 20.1046 20 19 20H5C3.89543 20 3 19.1046 3 18V9C3 7.89543 3.89543 7 5 7H6.5C7.12951 7 7.72229 6.70361 8.1 6.2L9.15 4.8C9.52771 4.29639 10.1205 4 10.75 4H13.25" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="70%"/>
+                                <path d="M18.5 4V6.5M18.5 9V6.5M18.5 6.5H16M18.5 6.5H21" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="70%"/>
+                                <circle cx="12" cy="13" r="4" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="70%"/>
                             </svg>
                         </label>
-                        <input type="file" id="file" name="file" accept="image/*" onchange="mostrarFoto()" style="display: none;">
+                        <input type="file" id="file" name="file" accept="image/*" onchange="mostrarFoto()" style="display: none;" disabled>
                     </div>
                 </div>
-                <div>
-                    <button type="button" class="btn btn-primary salvar" onclick="ValidarCampos()">Salvar</button>
-                    <button type="button" class="btn btn-primary cancelar" onclick="Cancelar()">Cancelar</button>
+                <div class="DtnascCpf">
+                    <div class="datanasc">
+                        <label for="datanasc">Data de nascimento</label>
+                        <input type="date" id="datanasc" name="datanasc" readonly>
+                    </div>
+                    <div class="cpf">
+                        <label for="cpf">CPF</label>
+                        <input type="text" id="cpf" name="cpf" maxlength="14" oninput="mascaraCPF(event)" onchange="" readonly>
+                    </div>
+                </div>
+                <div id="btns">
+                    <button type="button" class="mudarcampos" onclick="mudarCampos()">Mudar informações</button>
                 </div>
             </form>
         </div>
@@ -146,6 +165,7 @@
             <p>© 2025 LocalTop. Todos os direitos reservados.</p>
         </div>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../scripts/perfilUsuario.js"></script>
 </body>
 </html>

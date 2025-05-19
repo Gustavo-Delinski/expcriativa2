@@ -35,7 +35,11 @@ const Usuario = sequelize.define('Usuario', {
         unique: true
     },
     Foto: {
-        type: DataTypes.BLOB,
+        type: DataTypes.BLOB('medium'),
+        allowNull: true
+    },
+    TipoFoto: {
+        type: DataTypes.STRING,
         allowNull: true
     }}, {
         tablename: 'Usuario',

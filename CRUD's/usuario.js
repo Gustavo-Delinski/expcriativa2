@@ -1,6 +1,18 @@
 import {Router} from "express";
 import {Usuario} from "../db/tabelaDB.js";
 import bcrypt from "bcryptjs";
+import multer from "multer";
+
+const upload = multer({
+    storage: multer.memoryStorage(),
+    limits: { fileSize: 5 * 1024 * 1024},
+    fileFilter: (req,file,cb) => {
+        if (!file.mimetype.startsWith('image/')) {
+            return cb(new Error('Apenas imagens são permitidas.'), false);
+        }
+        cb(null,true);
+    }
+})
 
 const rota_usuarios = Router();
 
@@ -71,25 +83,50 @@ rota_usuarios
         res.status(500).json({ mensagem: `Erro ao cadastrar usuário: ${error}` });
     }
 })
-.get('/api/usuarios/:id', async (req, res) => {
-    const { id } = req.params;
-    const usuario = await Usuario.findByPk(id);
+.get('/api/usuario/:id', async (req, res) => {
+    const usuario = await Usuario.findByPk(req.params.id);
     return usuario ? res.json(usuario) : res.status(404).end();
 })
-.put('/api/usuarios/:id', async (req, res) => {
+.get('/api/usuario/:id/foto', async (req, res) => {
+    const usuario = await Usuario.findByPk(req.params.id);
+    if (!usuario) {
+        return res.status(404).send('Usuario não encontrada');
+    }
+    if (!usuario.Foto) {
+        return res.status(202).send(null);
+    }
+    res.set('Content-Type', usuario.TipoFoto || 'image/png');
+    res.send(usuario.Foto); // envia o blob diretamente
+})
+.put('/api/usuario/:id',upload.single('file'), async (req, res) => {
     const { id } = req.params;
     const { nome,ADM, dataNascimento, email, cpf, senha } = req.body;
     const usuario = await Usuario.findByPk(id);
-    return usuario ? res.json(await usuario.update({ 
-        Nome: nome,
+
+    if (usuario.Email !== email) {
+        const usuario_email = await Usuario.findOne({ where: { email: email } });
+        if (usuario_email) {
+        return res.status(400).json({mensagem:"Email ja cadastrado."});
+        }
+    }
+    if ( usuario.CPF !== cpf) {
+        const usuario_cpf = await Usuario.findOne({ where: { cpf: cpf } });
+        if (usuario_cpf) {
+        return res.status(400).json({mensagem:"CPF ja cadastrado."});
+        }
+    }
+    return usuario ? res.json(await usuario.update({
+        Nome: nome !== usuario.Nome ? nome : usuario.Nome,
         ADM: ADM,
-        DataNasc: dataNascimento,
-        Email: email,
-        CPF: cpf,
-        Senha: senha ? await bcrypt.hash(senha, 10) : usuario.Senha
+        CPF: cpf !== usuario.CPF ? cpf : usuario.CPF,
+        DataNasc: dataNascimento !== usuario.DataNasc ? dataNascimento : usuario.DataNasc,
+        Senha: senha ? await bcrypt.hash(senha, 10) : usuario.Senha,
+        Email: email !== usuario.Email ? email : usuario.Email,
+        Foto: req.file ? req.file.buffer : usuario.Foto,
+        TipoFoto:req.file ? req.file.mimetype : usuario.TipoFoto
     })) : res.status(404).end();
 })
-.delete('/api/usuarios/:id', async (req, res) => {
+.delete('/api/usuario/:id', async (req, res) => {
     const { id } = req.params;
     const usuario = await Usuario.findByPk(id);
     return usuario ? res.json(await usuario.destroy()) : res.status(404).end();

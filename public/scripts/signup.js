@@ -2,7 +2,7 @@ function mascaraCPF(event) {
     let input = event.target;
     let cpf = input.value.replace(/\D/g, "").slice(0, 11); // apenas números, máximo de 11 dígitos
 
-    // Aplica a máscara de acordo com o tamanho do CPF
+    // Aplica a máscara de acordo com tamanho do CPF
     if (cpf.length > 9) {
         cpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, "$1.$2.$3-$4");
     } else if (cpf.length > 6) {
