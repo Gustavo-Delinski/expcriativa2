@@ -37,7 +37,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 // const sessionMaxAge = 10 * 60 * 1000;
 // 1*30*1000 = 30 segs
 //                   min * seg * ms
-const sessionMaxAge = 60 * 60 * 1000;
+//const sessionMaxAge = 60 * 60 * 1000;
+const sessionMaxAge = 999 * 60 * 9999;
 
 app.use(session({
     secret: 'localtop',
@@ -103,6 +104,10 @@ app.get("/perfil", (req,res) => {
 
 app.get("/lista",(req, res) => {
     res.sendFile(path.join(__dirname, "public", "paginas", "usuariocrud.html"));
+});
+
+app.get("/lista_lojas",(req, res) => {
+    res.sendFile(path.join(__dirname, "public", "paginas", "lojascrud.html"));
 });
 // app.get("/lista",verificarAdm, (req, res) => {
 //     res.sendFile(path.join(__dirname, "public", "paginas", "usuariocrud.html"));

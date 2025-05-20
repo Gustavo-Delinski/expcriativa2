@@ -5,38 +5,36 @@ import bcrypt from "bcryptjs";
 const rota_lojas = Router();
 
 rota_lojas
-// .get('/api/usuarios', async (req, res) => {
-//     const usuarios = await Usuario.findAll();
-//     res.json(usuarios);
-// })
-.post('/api/lojas', async (req, res) => {
-    const { nome, endereco, numero, complemento, cnpj, cep, email, senha } = req.body;
-    const lojas_email = await Estabelecimento.findOne({ where: { email: email } });
-    const lojas_cnpj = await Estabelecimento.findOne({ where: { cnpj: cnpj } });
+.get('/api/lojas', async (req, res) => {
+    const lojas = await Estabelecimento.findAll();
+    res.json(lojas);
+})
 
-    if (lojas_email) {
-        return res.status(400).json({mensagem:"Email ja cadastrado."});
-    }
+.post('/api/lojas', async (req, res) => {
+    const { nome, endereco, numero, complemento, cnpj, cep } = req.body;
+    const lojas_cnpj = await Estabelecimento.findOne({ where: { cnpj: cnpj } });
+    const id_usuario = req.session?.usuarioId;
 
     if (lojas_cnpj) {
         return res.status(400).json({mensagem:"CNPJ ja cadastrado."});
     }
+
+    if (!id_usuario) {
+        return res.status(401).json({ mensagem: "Usuário não autenticado." });
+    }
+
     console.log("Dados recebidos:", req.body); // Adicione isso para debug
-
+    
     try {
-        const hashedSenha = await bcrypt.hash(senha, 10);
-
         await Estabelecimento.create({
             Nome: nome,
-            Endereco: endereco,
+            endereco: endereco,
             Numero: numero,
-            Compl: complemento,
-            Email: email,
-            CNPJ: cnpj,
+            Complemento: complemento || '',
+            Cnpj: cnpj,
             CEP: cep,
-            Senha: hashedSenha,
-            Role: null
-        });
+            ID_usuario: id_usuario
+        });        
 
         res.status(200).json({ mensagem: "Estabelecimento cadastrado com sucesso." });
     } catch (error) {
@@ -46,23 +44,32 @@ rota_lojas
 })
 .get('/api/lojas/:id', async (req, res) => {
     const { id } = req.params;
-    const usuario = await Usuario.findByPk(id);
-    return usuario ? res.json(usuario) : res.status(404).end();
+    const loja = await Estabelecimento.findByPk(id);
+    return loja ? res.json(loja) : res.status(404).end();
 })
 .put('/api/lojas/:id', async (req, res) => {
     const { id } = req.params;
-    const { nome, endereco, numero, email, cnpj, complemento, cep, senha } = req.body;
+    const { nome, endereco, numero, cnpj, complemento, cep } = req.body;
     const loja = await Estabelecimento.findByPk(id);
-    return loja ? res.json(await loja.update({ 
+
+    console.log("Dados recebidos:", req.body);
+
+    if (!loja) {
+        return res.status(404).json({ mensagem: 'Loja não encontrada.' });
+    }
+    
+    const updated = await loja.update({ 
         Nome: nome,
-        Endereco: endereco,
+        endereco: endereco,
         Numero: numero,
-        Compl: complemento,
-        Email: email,
-        CNPJ: cnpj,
-        CEP: cep,
-        Senha: senha ? await bcrypt.hash(senha, 10) : loja.Senha
-    })) : res.status(404).end();
+        Complemento: complemento,
+        Cnpj: cnpj,
+        CEP: cep
+    });
+
+    console.log(updated);
+
+    return res.status(200).json({ mensagem: 'Loja atualizada com sucesso.' });
 })
 .delete('/api/lojas/:id', async (req, res) => {
     const { id } = req.params;

@@ -73,7 +73,7 @@ const Estabelecimento = sequelize.define('Estabelecimento', {
     },
     Complemento: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     // Bairro: {
     //     type: DataTypes.STRING,

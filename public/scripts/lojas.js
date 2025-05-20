@@ -98,7 +98,7 @@ function ValidarNome(nome) {
 }
 
 function validarEndereco(endereco) {
-    var regex = /^[A-Za-zÀ-ÿ]+(?:\s+[A-Za-zÀ-ÿ]+)+$/;
+    var regex = /^[A-Za-zÀ-ÿ0-9]+(?:\s+[A-Za-zÀ-ÿ0-9]+)+$/;
     if (endereco.length < 8 || !regex.test(endereco)) {
         Swal.fire(
             'Endereço Inválido',
@@ -164,15 +164,12 @@ async function ValidarCampos() {
     let compl = document.getElementById('compl').value;
     let cnpj = document.getElementById('cnpj').value;
     let cep = document.getElementById('cep').value;
-    let email = document.getElementById('email').value;
-    let senha = document.getElementById('senha').value;
 
     if (!ValidarNome(nome)) return;
     if (!validarEndereco(endereco)) return;
     if (!validarNum(numero)) return;
     if (!msgValidaCNPJ(cnpj)) return;
     if (!msgValidaCEP(cep)) return;
-    if (!validarEmail(email)) return;
     try {
         const resposta = await fetch('/api/lojas', {
             method: 'POST',
@@ -185,9 +182,7 @@ async function ValidarCampos() {
                 numero: numero,
                 compl: compl.trim(),
                 cnpj: cnpj.replace(/\D/g, ''),
-                cep: cep.replace(/\D/g, ''),
-                email: email.trim(),
-                senha: senha
+                cep: cep.replace(/\D/g, '')
             }),
         });
         if (resposta.ok) {
@@ -195,11 +190,11 @@ async function ValidarCampos() {
             console.log("Funcionou")
             Swal.fire(
                 'Cadastro realizado com sucesso',
-                `${resultado.mesagem},você ser&aacute; redirecionado para a tela de login em breve`,
+                `${resultado.mensagem}`,
                 'success'
             );
             setTimeout(() => {
-                window.location.href = "/login";
+                window.location.href = "/";
             },3000)
         } else {
             const erro = await resposta.json();
