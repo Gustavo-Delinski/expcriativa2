@@ -13,6 +13,10 @@ body {
     font-family: Montserrat, sans-serif;
 }
 
+* {
+    box-sizing: border-box;
+  }
+
 html body.swal2-height-auto {
     height: 100% !important; /* ou o valor que você quiser */
 }
@@ -99,20 +103,28 @@ aside{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 2%;
     border-radius: 0 0.7rem 0.7rem 0;
+    gap:2rem;
     h1 {
         font-size: 2rem;
         font-weight:bolder;
-        margin-top: 1.5rem;
+        text-align: center;
+        margin-top: 1rem;
         color: #3E996F;
     }
     input {
         background-color: #eaeaea;
         border: none;
+        width: 80%;
+        min-width: 0;
+        max-width: 100%;
+        align-self: center;
         border-radius: 0.7rem;
         padding-left: 0.5rem;
         outline: 1px solid #3E996F;
+    }
+    label {
+        align-self: center;
     }
     .cadastrar {
         color: white;
@@ -120,80 +132,42 @@ aside{
         border-radius: 1rem;
         border: none;
         font-size: large;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.2rem;
+        margin-top: 1rem;
+        transform: scale(0.9);
     }
     .cadastrar:hover {
-        transform: scale(1.1);
+        transform: scale(1);
     }
     .cadastrar:active {
-        transform: scale(0.95);
+        transform: scale(0.9);
     }
 }
 
-.DivNome, .DivEndereco, .DivNumero, .DivCompl, .DivCNPJ, .DivCEP, .DivUser, .DivSenha {
+.DivNome, .DivEndereco, .DivNumero, .DivCompl, .DivCNPJ, .DivCEP {
     display: flex;
     flex-direction: column;
     margin-bottom: 0.5rem;
     font-size:medium;
+    width: 90%;
 }
 
-.DivCNPJ {
-    margin-right: 1rem;
-}
-
-.DivCompl {
-    margin-right: 1rem;
+.DivNome, .DivEndereco {
+    align-self: center;
 }
 
 .FormCadastro {
+    width: 100%;
     display: flex;
     flex-direction: column;
     margin-bottom: 1rem;
 }
 
-.DivCNPJCEP {
+.DivNumeroCompl, .DivCNPJCEP {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
-
-.DivNumeroCompl {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.senhaCondicao {
-    height: 5rem;
-    font-size: 0.7rem;
-}
-
-.imgOlho {
-    width: 100%;
-    height: 100%;
-}
-
-.DivOlho {
-    place-self: flex-end;
-    width: 1.5rem;
-    height: 1.5rem;
-    position: absolute;
-    margin-top: 1.5rem;
-    margin-right: 0.2rem;
-    cursor: pointer;
-}
-
-.login {
-    color: #3E996F;
-    text-decoration: none;
-    place-self: center;
-    font-size: small;
-}
-
-.login:hover {
-    text-decoration: underline;
-}
-
 
 @media screen and (max-width: 1024px) {
     .CardCadastro {
@@ -243,7 +217,7 @@ aside{
         border-radius: 0;
     }
     .InputSide {
-        gap: 5rem;
+        gap: 1.5rem;
         width: 100%;
         height: 100%;
         h1 {
