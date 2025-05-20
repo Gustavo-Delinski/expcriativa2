@@ -104,6 +104,34 @@ const Estabelecimento = sequelize.define('Estabelecimento', {
         timestamps: false,
 });
 
+const FotosEstabelecimento = sequelize.define('FotosEstabelecimento', {
+    ID_foto: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+        allowNull: false
+    },
+    Foto: {
+        type: DataTypes.BLOB('medium'),
+        allowNull: true
+    },
+    TipoFoto: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    ID_estabelecimento: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: Estabelecimento,
+            key: 'ID_estabelecimento'
+        },
+        onDelete: 'CASCADE'
+    }}, {
+        tablename: 'FotosEstabelecimento',
+        timestamps: false
+});
+
 const Servico = sequelize.define('Servico', {
     ID_servico: {
         type: DataTypes.INTEGER,
@@ -113,10 +141,6 @@ const Servico = sequelize.define('Servico', {
     },
     Nome: {
         type: DataTypes.STRING,
-        allowNull: false
-    },
-    Descricao: {
-        type: DataTypes.TEXT,
         allowNull: false
     }}, {
         tablename: 'Servico',
@@ -137,7 +161,7 @@ const Oferta = sequelize.define('Oferta', {
     },
     Grandeza: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     ID_servico: {
         type: DataTypes.INTEGER,
@@ -156,6 +180,10 @@ const Oferta = sequelize.define('Oferta', {
             key: 'ID_estabelecimento'
         },
         onDelete: 'CASCADE'
+    },
+    Descricao: {
+        type: DataTypes.TEXT,
+        allowNull: false
     }}, {
         tablename: 'Oferta',
         timestamps: false,
@@ -267,9 +295,14 @@ Oferta.belongsTo(Estabelecimento, { foreignKey: 'ID_estabelecimento', onDelete: 
 Oferta.belongsTo(Servico, { foreignKey: 'ID_servico', onDelete: 'CASCADE' });
 Avaliacao.belongsTo(Oferta, { foreignKey: 'ID_oferta', onDelete: 'CASCADE' });
 Avaliacao.belongsTo(Usuario, { foreignKey: 'ID_usuario', onDelete: 'CASCADE' });
+FotosEstabelecimento.belongsTo(Estabelecimento, { foreignKey: 'ID_estabelecimento', onDelete: 'CASCADE' });
+Favoritos.belongsTo(Usuario, { foreignKey: 'ID_usuario', onDelete: 'CASCADE' });
+Favoritos.belongsTo(Estabelecimento, { foreignKey: 'ID_estabelecimento', onDelete: 'CASCADE' });
+Historico.belongsTo(Usuario, { foreignKey: 'ID_usuario', onDelete: 'CASCADE' });
+Historico.belongsTo(Estabelecimento, { foreignKey: 'ID_estabelecimento', onDelete: 'CASCADE' });
 
 Usuario.hasMany(Favoritos, { foreignKey: 'ID_usuario', as: 'usuario', onDelete: 'CASCADE'},Historico, { foreignKey: 'ID_usuario', as: 'usuario', onDelete: 'CASCADE'});
-Estabelecimento.hasMany(Favoritos, { foreignKey: 'ID_estabelecimento', as: 'estabelecimento', onDelete: 'CASCADE'},Historico, { foreignKey: 'ID_estabelecimento', as: 'estabelecimento', onDelete: 'CASCADE'});
+Estabelecimento.hasMany(Favoritos, { foreignKey: 'ID_estabelecimento', as: 'estabelecimento', onDelete: 'CASCADE'},Historico, { foreignKey: 'ID_estabelecimento', as: 'estabelecimento', onDelete: 'CASCADE'},FotosEstabelecimento, { foreignKey: 'ID_estabelecimento', as: 'estabelecimento', onDelete: 'CASCADE'});
 
 
 // Usuario.hasMany(Estabelecimento, { foreignKey: 'ID_estabelecimento', as: 'estabelecimento', onDelete: 'CASCADE'});

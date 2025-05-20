@@ -152,11 +152,11 @@ function MostrarSenha() {
     if (campoSenha.type === 'password') {
         campoSenha.type = 'text';
         campoSenha2.type = 'text';
-        img.src = '../imagens/olho-fechado.svg';
+        img.src = '../imagens/SVGs/olho-fechado.svg';
     } else {
         campoSenha.type = 'password';
         campoSenha2.type = 'password';
-        img.src = '../imagens/olho-aberto.svg';
+        img.src = '../imagens/SVGs/olho-aberto.svg';
     }
 }
 
