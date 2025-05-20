@@ -126,6 +126,27 @@ rota_usuarios
         TipoFoto:req.file ? req.file.mimetype : usuario.TipoFoto
     })) : res.status(404).end();
 })
+    .put('/api/usuario/:id/Novasenha', async (req, res) => {
+        const { id } = req.params;
+        const { senhaAtual,novaSenha } = req.body;
+        const usuario = await Usuario.findByPk(id);
+        if (usuario) {
+            const checkSenha = await bcrypt.compare(senhaAtual, usuario.Senha);
+            if (!checkSenha) {
+                return res.status(400).json({mensagem:"Senha atual incorreta."});
+            } else {
+                const checkNovaSenha = await bcrypt.compare(novaSenha, usuario.Senha);
+                if (checkNovaSenha) {
+                    return res.status(400).json({mensagem:"Nova senha deve ser diferente da atual."})
+                } else {
+                    return res.json(await usuario.update({Senha: await bcrypt.hash(novaSenha, 10) }))
+                }
+            }
+        } else {
+            console.log("Usuário não encontrado");
+            res.status(404).json({mensagem:"Usuário não encontrado"}).end();
+        }
+    })
 .delete('/api/usuario/:id', async (req, res) => {
     const { id } = req.params;
     const usuario = await Usuario.findByPk(id);

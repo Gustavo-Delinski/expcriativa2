@@ -3,6 +3,27 @@ const mostrarFoto = () => {
     const img = document.getElementById('Perfilimg');
     img.style.backgroundImage = `url(${URL.createObjectURL(input.files[0])})`;
 }
+function MostrarSenha() {
+    const Atual = document.getElementById('senhaAtual');
+    const campoSenha = document.getElementById('novaSenha');
+    const campoSenha2 = document.getElementById('confirmarNovaSenha');
+    const img = document.querySelectorAll('.imgOlho');
+    if (campoSenha.type === 'password') {
+        Atual.type = 'text';
+        campoSenha.type = 'text';
+        campoSenha2.type = 'text';
+        for (let i = 0; i < img.length; i++) {
+        img[i].src = '../imagens/SVGs/olho-fechado.svg';
+        }
+    } else {
+        Atual.type = 'password';
+        campoSenha.type = 'password';
+        campoSenha2.type = 'password';
+        for (let i = 0; i < img.length; i++) {
+            img[i].src = '../imagens/SVGs/olho-aberto.svg';
+        }
+    }
+}
 
 function mascaraCPF(event) {
     let input = event.target;
@@ -78,6 +99,42 @@ function validarEmail(email) {
             'error'
         )
         document.getElementById('email').style.border = '1px solid rgb(202, 50, 121)';
+        return false;
+    }
+    return true;
+}
+function validarSenhas(senha, senhaConfirmar) {
+    let mascara = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*]).{8,}$/
+
+
+    if (senha.length < 8) {
+        Swal.fire(
+            'Senha Fraca',
+            'A senha deve ter pelo menos 8 caracteres.',
+            'error'
+        );
+        document.getElementById('senha').style.outline = '1px solid rgb(202, 50, 121)';
+        document.getElementById('confirmarsenha').style.outline = '1px solid rgb(202, 50, 121)';
+        return false;
+    }
+    if (!mascara.test(senha)) {
+        Swal.fire(
+            'Senha Fraca',
+            'A senha deve ter pelo menos uma letra maiúscula, uma letra minúscula, um número e um símbolo especial.',
+            'error'
+        );
+        document.getElementById('senha').style.outline = '1px solid rgb(202, 50, 121)';
+        document.getElementById('confirmarsenha').style.outline = '1px solid rgb(202, 50, 121)';
+        return false;
+    }
+    if (senha !== senhaConfirmar) {
+        Swal.fire(
+            'Senhas Diferentes',
+            'O campo de senha e confirmação de senha devem ser iguais.',
+            'error'
+        );
+        document.getElementById('senha').style.outline = '1px solid rgb(202, 50, 121)';
+        document.getElementById('confirmarsenha').style.outline = '1px solid rgb(202, 50, 121)';
         return false;
     }
     return true;
@@ -229,9 +286,42 @@ async function UpdateDados() {
     }
 }
 
+async function UpdateSenha() {
+    try {
+        const senhaAtual = document.getElementById('senhaAtual').value;
+        const novaSenha = document.getElementById('novaSenha').value;
+        const confirmarNovaSenha = document.getElementById('confirmarNovaSenha').value;
+        const btns = document.getElementById("btns");
+        if (!validarSenhas(novaSenha, confirmarNovaSenha)) return;
+        const resposta = await fetch("/auth/estado");
+        const dados = await resposta.json();
+        const response = await fetch(`/api/usuario/${dados.usuarioId}/senha`, {
+            method: 'PUT',
+            body: JSON.stringify({ senhaAtual, novaSenha })
+        });
+        if (!response.ok) {
+            let erro = await response.json();
+            Swal.fire({
+                tittle: 'Erro ao atualizar a senha!',
+                text: `${erro.mensagem}`,
+                icon: 'error',
+                confirmButtonText: 'OK'
+            })
+        }
+        Swal.fire({
+            tittle: 'Senha atualizada com sucesso!',
+            text: `${dados.nome}, Sua senha foi atualizada com sucesso.`,
+            icon: 'success',
+            confirmButtonText: 'OK'
+        })
+    } catch (error) {
+        console.log(`Erro ao atualizar a senha do banco.\n${error}`);
+    }
+}
+
 function trocarmodal(Modal) {
     const modal = document.getElementById('informacao');
-    const modais = [`<h1>Meu Perfil</h1><p>Gerenciar a sua conta</p><hr><form id="form"><div class="NomeEmailFoto"><div class="NomeEmail"><div class="nome"><label for="nome">Nome Completo</label><input type="text" id="nome" name="nome" readonly></div><div class="email"><label for="email">Email</label><input type="text" id="email" name="email" readonly ></div></div><div class="InputFoto"><label for="file"><div id="Perfilimg" class="Perfilimg"></div><svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none" id="svgFoto"><path d="M21 11V18C21 19.1046 20.1046 20 19 20H5C3.89543 20 3 19.1046 3 18V9C3 7.89543 3.89543 7 5 7H6.5C7.12951 7 7.72229 6.70361 8.1 6.2L9.15 4.8C9.52771 4.29639 10.1205 4 10.75 4H13.25" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="70%"/><path d="M18.5 4V6.5M18.5 9V6.5M18.5 6.5H16M18.5 6.5H21" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="70%"/><circle cx="12" cy="13" r="4" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="70%"/></svg></label><input type="file" id="file" name="file" accept="image/*" onchange="mostrarFoto()" style="display: none;" disabled></div></div><div class="DtnascCpf"><div class="datanasc"><label for="datanasc">Data de nascimento</label><input type="date" id="datanasc" name="datanasc" readonly></div><div class="cpf"><label for="cpf">CPF</label><input type="text" id="cpf" name="cpf" maxlength="14" oninput="mascaraCPF(event)" onchange="" readonly></div></div><div id="btns"><button type="button" class="mudarcampos" onclick="mudarCampos()">Mudar informações</button></div></form>`,`<h1>Trocar Senha</h1><hr/><form><div class="SenhaAtual"><label for="senhaAtual">Senha Atual</label><input type="password" id="senhaAtual"/></div><div class="NovaSenha"><label for="novaSenha">Nova Senha</label><input type="password" id="novaSenha"/></div><div class="CheckNovaSenha"><label for="confirmarNovaSenha">Corfirmar Nova Senha</label><input type="password" id="confirmarNovaSenha"/></div><div id="btns"><button type="button" class="BtnSalvar" onclick="UpdateDados()">Salvar</button></div></form>`]
+    const modais = [`<h1>Meu Perfil</h1><p>Gerenciar a sua conta</p><hr><form id="form"><div class="NomeEmailFoto"><div class="NomeEmail"><div class="nome"><label for="nome">Nome Completo</label><input type="text" id="nome" name="nome" readonly></div><div class="email"><label for="email">Email</label><input type="text" id="email" name="email" readonly ></div></div><div class="InputFoto"><label for="file"><div id="Perfilimg" class="Perfilimg"></div><svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none" id="svgFoto"><path d="M21 11V18C21 19.1046 20.1046 20 19 20H5C3.89543 20 3 19.1046 3 18V9C3 7.89543 3.89543 7 5 7H6.5C7.12951 7 7.72229 6.70361 8.1 6.2L9.15 4.8C9.52771 4.29639 10.1205 4 10.75 4H13.25" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="70%"/><path d="M18.5 4V6.5M18.5 9V6.5M18.5 6.5H16M18.5 6.5H21" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="70%"/><circle cx="12" cy="13" r="4" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="70%"/></svg></label><input type="file" id="file" name="file" accept="image/*" onchange="mostrarFoto()" style="display: none;" disabled></div></div><div class="DtnascCpf"><div class="datanasc"><label for="datanasc">Data de nascimento</label><input type="date" id="datanasc" name="datanasc" readonly></div><div class="cpf"><label for="cpf">CPF</label><input type="text" id="cpf" name="cpf" maxlength="14" oninput="mascaraCPF(event)" onchange="" readonly></div></div><div id="btns"><button type="button" class="mudarcampos" onclick="mudarCampos()">Mudar informações</button></div></form>`,`<h1>Trocar Senha</h1><hr/><form><div class="SenhaAtual"><label for="senhaAtual">Senha Atual</label><input type="password" id="senhaAtual" name="senhaAtual"/><div class="DivOlho" onclick="MostrarSenha()"><img src="../imagens/SVGs/olho-aberto.svg" alt="Olho fechado" id="olho" class="imgOlho"></div></div><div class="NovaSenha"><label for="novaSenha">Nova Senha</label><input type="password" id="novaSenha" name="novaSenha"/><div class="DivOlho" onclick="MostrarSenha()"><img src="../imagens/SVGs/olho-aberto.svg" alt="Olho fechado" id="olho" class="imgOlho"></div></div><div class="CheckNovaSenha"><label for="confirmarNovaSenha">Corfirmar Nova Senha</label><input type="password" id="confirmarNovaSenha"/><div class="DivOlho" onclick="MostrarSenha()"><img src="../imagens/SVGs/olho-aberto.svg" alt="Olho fechado" id="olho" class="imgOlho"></div></div><div id="btns"><button type="button" class="BtnSalvar" onclick="UpdateSenha()">Salvar</button></div></form>`]
     modal.innerHTML = modais[Modal]
 }
 
