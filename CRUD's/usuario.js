@@ -1,5 +1,10 @@
 import {Router} from "express";
 import {Usuario} from "../db/tabelaDB.js";
+import { Oferta } from "../db/tabelaDB.js";
+import { Estabelecimento } from "../db/tabelaDB.js";
+import { Servico } from "../db/tabelaDB.js";
+import { Avaliacao } from "../db/tabelaDB.js";
+
 import bcrypt from "bcryptjs";
 import multer from "multer";
 
@@ -13,6 +18,15 @@ const upload = multer({
         cb(null,true);
     }
 })
+
+const rota_lojas = Router();
+rota_lojas
+
+.get('api/estabelecimento'), async (req, res) => {
+    const estabelecimento = await Estabelecimento.findAll();
+    res.json(estabelecimento);
+}
+
 
 const rota_usuarios = Router();
 
