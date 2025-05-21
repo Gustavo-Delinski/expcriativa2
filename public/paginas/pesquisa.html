@@ -14,7 +14,7 @@
     <title>LocalTop</title>
 </head>
 
-<body style="background-color: #F7EFE6;">
+<body style="background-color: #F7EFE6; display: flex; flex-direction: column;">
     <header>
         <a href="/" class="logoLink">
             <img src="../imagens/logo/SVG Variações/Branco/Horizontal-Branco-changed.svg" alt="Logo LocalTop"
@@ -41,6 +41,117 @@
     <br>
     <div class="container-fluid" style="display: flex; justify-content: center;">
         <img src="../imagens/bannerpesquisa.webp" style="height: 100%; width: 100%;">
+    </div>
+    <br>
+    <br>
+    <div style="border: 2px solid re; display: flex; margin-left: 2dvi;">
+        <div style="border: 2px solid blu;">
+            <h3 style="color: #302163;"> FILTRO DE OPÇÕES </h3>
+            <hr>
+            <h4 style="color: #3BA06D;"> CATEGORIAS </h4>
+            <input type="checkbox"> BELEZA & BEM ESTAR
+            <br>
+            <input type="checkbox"> PET
+            <br>
+            <input type="checkbox"> RESIDENCIAL
+            <br>
+            <input type="checkbox"> LIMPEZA
+            <br>
+            <input type="checkbox"> TECNOLOGIA
+            <hr>
+            <H4 style="color: #3BA06D;"> PREÇO </H4>
+            <h4> R$ 0 - R$ 10000 </h4>
+            <input type="range">
+            <hr>
+            <h4 style="color: #3BA06D;"> CIDADE </h4>
+            <input list="cidades" id="cidades-choice" name="cidades-choice"
+                style=" width: 10dvi; height: 1.2dvi; border-radius: 1dvi; border: 2px solid #3BA06D;">
+
+            <datalist id="cidades">
+                <option value="Araucaria"></option>
+                <option value="Curitiba"></option>
+                <option value="Dois Vizinhos"></option>
+                <option value="Ponta Grossa"></option>
+                <option value="Londrina"></option>
+            </datalist>
+            <hr>
+            <h4 style="color: #3BA06D;"> AVALIAÇÃO </h4>
+            <input type="checkbox"> 5 ⭐⭐⭐⭐⭐
+            <br>
+            <input type="checkbox"> 4 ⭐⭐⭐⭐
+            <br>
+            <input type="checkbox"> 3 ⭐⭐⭐
+            <br>
+            <input type="checkbox"> 2 ⭐⭐
+            <br>
+            <input type="checkbox"> 1 ⭐
+        </div>
+        <div style="width: 1px; height: 100%dvi; background-color: black; margin-left: 2dvi;">
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; padding-left: 30px; ;"
+            class="container-fluid">
+            <div style="padding-bottom: 2dvi; ; display: flex; justify-content: space-between; width: 90%;">
+                <input type="search" placeholder="Procurando por um estabelecimento especifico?"
+                    style="border-radius: 20px; width: 25dvi; height: 1.6dvi; padding-left: 10px;">
+
+                <select name="ordem" id="ordem-choice" name="ordem-choice"
+                    style="border-radius: 20px; width: 7dvi; height: 1.6dvi; padding-left: 10px; color: black;">
+                    <option value="Ordem"> Ordem</option>
+                    <option value="↓ Preço">↓ Preço</option>
+                    <option value="↑ Preço">↑ Preço</option>
+                    <option value="↓ Avaliação">↓ Avaliação</option>
+                    <option value="↑ Avaliação">↑ Avaliação</option>
+                </select>
+
+            </div>
+            <div class="grade-produtos">
+                <div class="produto">Loja 1</div>
+                <div class="produto">Loja 2</div>
+                <div class="produto">Loja 3</div>
+                <div class="produto">Loja 4</div>
+                <div class="produto">Loja 5</div>
+                <div class="produto">Loja 1</div>
+                <div class="produto">Loja 2</div>
+                <div class="produto">Loja 1</div>
+                <div class="produto">Loja 2</div>
+                <div class="produto">Loja 3</div>
+                <div class="produto">Loja 4</div>
+                <div class="produto">Loja 5</div>
+                <div class="produto">Loja 1</div>
+                <div class="produto">Loja 2</div>
+                <div class="produto">Loja 1</div>
+                <div class="produto">Loja 2</div>
+                <div class="produto">Loja 3</div>
+                <div class="produto">Loja 4</div>
+                <div class="produto">Loja 5</div>
+                <div class="produto">Loja 1</div>
+                <div class="produto">Loja 2</div>
+                <div class="produto">Loja 1</div>
+                <div class="produto">Loja 2</div>
+                <div class="produto">Loja 3</div>
+                <div class="produto">Loja 4</div>
+                <div class="produto">Loja 5</div>
+                <div class="produto">Loja 1</div>
+                <div class="produto">Loja 2</div>
+                <div class="produto">Loja 1</div>
+                <div class="produto">Loja 2</div>
+                <div class="produto">Loja 3</div>
+                <div class="produto">Loja 4</div>
+                <div class="produto">Loja 5</div>
+                <div class="produto">Loja 1</div>
+                <div class="produto">Loja 2</div>
+                <div class="produto">Loja 1</div>
+                <div class="produto">Loja 2</div>
+                <div class="produto">Loja 3</div>
+                <div class="produto">Loja 4</div>
+                <div class="produto">Loja 5</div>
+                <div class="produto">Loja 1</div>
+                <div class="produto">Loja 2</div>
+                <!-- ...e assim por diante -->
+            </div>
+        </div>
+    </div>
+
     </div>
 
     <script>

@@ -356,3 +356,23 @@ footer {
     text-align: end;
   }
 }
+
+.grade-produtos {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(4, 15dvi); /* 4 colunas fixas */
+  gap: 5dvi;
+  flex-direction: column;
+  justify-content: center;
+
+}
+
+.produto {
+  height: 12dvi;
+  background-color: white; 
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

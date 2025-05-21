@@ -87,6 +87,11 @@ app.get("/pesquisa", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "paginas", "pesquisa.html"));
 });
 
+app.get("/estabelecimento", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "paginas", "estabelecimento.html"));
+});
+
+
 app.get("/lojas", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "paginas", "lojas.html"));
 });
