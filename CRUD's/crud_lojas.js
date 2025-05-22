@@ -6,43 +6,88 @@ import { Oferta } from "../db/tabelaDB.js";
 import { FotosEstabelecimento } from "../db/tabelaDB.js";
 import bcrypt from "bcryptjs";
 import { Sequelize } from "sequelize";
+import { Op } from 'sequelize';
 
 
 const rota_lojas = Router();
 
-rota_lojas
-.get('/api/estabelecimentos-completos', async (req, res) => {
-  try {
-    // const estabelecimentos = await Estabelecimento.findAll();
-    const estabelecimentos = await Estabelecimento.findAll({
-      include: [
-        // {
-        //   model: FotosEstabelecimento,
-        //   as: 'FotosEstabelecimentos',
-        //   attributes: ['Foto', 'TipoFoto'],
-        //   limit: 1
-        // },
-        {
-          model: Oferta,
-          as: 'Ofertas',
-          include: [
-            { model: Servico,as:'Servico', attributes: ['Nome'] },
-            { 
-              model: Avaliacao,
-              as: 'Avaliacaos',
-              attributes: ['Nota']
-            }
-          ]
-        }
-      ]
-    })
-    estabelecimentos ? res.json(estabelecimentos) : res.status(400).json({erro: "não há nenhum estabelecimento registrado"});
-    // ... resto da transformação em result e res.json(result)
-  } catch (err) {
-    console.error("Erro no /api/estabelecimentos-completos:", err);
-    res.status(500).json({ erro: "Não foi possível carregar os estabelecimentos" });
+
+rota_lojas.get('/api/estabelecimentos-completos', async (req, res) => {
+  const { search, categorias, avaliacoes, precoMin, precoMax, cidade, ordem } = req.query;
+
+  // where dos modelos
+  const whereEst = {};
+  const whereOferta = {};
+  const whereAvali = {};
+
+  if (search) {
+    whereEst.Nome = { [Op.iLike]: `%${search}%` };
   }
+  if (cidade) {
+    whereEst.endereco = { [Op.iLike]: `%${cidade}%` };
+  }
+  if (precoMin || precoMax) {
+    whereOferta.Valor = {};
+    if (precoMin) whereOferta.Valor[Op.gte] = +precoMin;
+    if (precoMax) whereOferta.Valor[Op.lte] = +precoMax;
+  }
+  if (categorias) {
+    whereOferta.ID_servico = { [Op.in]: categorias.split(',').map(Number) };
+  }
+  if (avaliacoes) {
+    whereAvali.Nota = { [Op.in]: avaliacoes.split(',').map(Number) };
+  }
+
+  // busca com includes
+  const estabelecimentos = await Estabelecimento.findAll({
+    where: whereEst,
+    include: [{
+      model: Oferta, as: 'Ofertas', where: whereOferta,
+      include: [{
+        model: Avaliacao, as: 'Avaliacaos',
+        where: Object.keys(whereAvali).length ? whereAvali : undefined,
+        required: false
+      }]
+    }]
+  });
+
+  // ordenação in-memory
+  if (ordem) {
+    estabelecimentos.sort((a, b) => {
+      // mesma lógica de before…
+      // comparação de preço ou avaliação
+    });
+  }
+
+  res.json(estabelecimentos);
 })
+.post('/api/estabelecimento/filtro', async (req,res) => {
+  const { nome, nota } = req.body;
+
+  const estabelecimentos = await Estabelecimento.findAll();
+  const avaliacoes = await Avaliacao.findAll({ where: { Nota: nota } });
+  const ofertas = await Oferta.findAll();
+
+  // console.log(req.body, avaliacoes, ofertas);
+
+  // Filtro correto
+  const encontrados = estabelecimentos.filter(estab =>
+    ofertas.some(oferta =>
+      oferta.ID_estabelecimento === estab.ID_estabelecimento &&
+      avaliacoes.some(avaliacao =>
+        avaliacao.ID_oferta === oferta.ID_oferta
+      )
+    )
+  );
+
+  const encontradosNome = encontrados.filter(e => 
+     e.Nome.toLowerCase().includes(nome.toLowerCase())
+  )
+  res.status(200).json(encontradosNome);
+
+})
+;
+rota_lojas
 .post('/api/lojas', async (req, res) => {
     const { nome, endereco, numero, complemento, cnpj, cep } = req.body;
     const lojas_cnpj = await Estabelecimento.findOne({ where: { cnpj: cnpj } });
@@ -75,7 +120,7 @@ rota_lojas
         res.status(500).json({ mensagem: `Erro ao cadastrar estabelecimento: ${error}` }); // Retorne JSON
     }
 })
-.get('/api/lojas/:id', async (req, res) => {
+.get('/api/estabelecimento/:id', async (req, res) => {
     const { id } = req.params;
     const loja = await Estabelecimento.findByPk(id);
     return loja ? res.json(loja) : res.status(404).end();

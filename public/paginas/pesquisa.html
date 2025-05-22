@@ -49,15 +49,15 @@
             <h3 style="color: #302163;"> FILTRO DE OPÇÕES </h3>
             <hr>
             <h4 style="color: #3BA06D;"> CATEGORIAS </h4>
-            <input type="checkbox"> BELEZA & BEM ESTAR
+            <input type="checkbox" name="categoria" value="1"> BELEZA & BEM ESTAR
             <br>
-            <input type="checkbox"> PET
+            <input type="checkbox" name="categoria" value="2"> PET
             <br>
-            <input type="checkbox"> RESIDENCIAL
+            <input type="checkbox" name="categoria" value="3"> RESIDENCIAL
             <br>
-            <input type="checkbox"> LIMPEZA
+            <input type="checkbox" name="categoria" value="4"> LIMPEZA
             <br>
-            <input type="checkbox"> TECNOLOGIA
+            <input type="checkbox" name="categoria" value="5"> TECNOLOGIA
             <hr>
             <H4 style="color: #3BA06D;"> PREÇO </H4>
             <h4> R$ 0 - R$ 10000 </h4>
@@ -76,24 +76,26 @@
             </datalist>
             <hr>
             <h4 style="color: #3BA06D;"> AVALIAÇÃO </h4>
-            <input type="checkbox"> 5 ⭐
+            <input type="radio" name="avaliacao" value="5"> 5 ⭐
             <br>
-            <input type="checkbox"> 4 ⭐
+            <input type="radio" name="avaliacao" value="4"> 4 ⭐
             <br>
-            <input type="checkbox"> 3 ⭐
+            <input type="radio" name="avaliacao" value="3"> 3 ⭐
             <br>
-            <input type="checkbox"> 2 ⭐
+            <input type="radio" name="avaliacao" value="2"> 2 ⭐
             <br>
-            <input type="checkbox"> 1 ⭐
+            <input type="radio" name="avaliacao" value="1"> 1 ⭐
         </div>
         <div style="width: 1px; height: 100%dvi; background-color: black; margin-left: 2dvi;">
         </div>
         <div style="display: flex; flex-direction: column; align-items: center; padding-left: 30px; ;"
             class="container-fluid">
             <div style="padding-bottom: 2dvi; ; display: flex; justify-content: space-between; width: 90%;">
-
-                <button style="border-radius: 20px;"> Limpar filtros </button>
-                <input type="search" placeholder="Procurando por um estabelecimento especifico?"
+                <div>
+                    <button id="btnAplicarFiltros" style="border-radius: 20px;" onclick="listarEstabelecimentosComFiltros"> Aplicar filtros </button>
+                    <button id="btnLimparFiltros" style="border-radius: 20px;"> Limpar filtros </button>
+                </div>
+                <input type="search" id="inputSearch" placeholder="Procurando por um estabelecimento especifico?"
                     style="border-radius: 20px; width: 25dvi; height: 1.6dvi; padding-left: 10px;">
 
                 <select name="ordem" id="ordem-choice" name="ordem-choice"
@@ -115,6 +117,99 @@
     </div>
 
     <script>
+        const btnLimpar = document.querySelector('#btnLimparFiltros');
+        const btnAplicar = document.querySelector('#btnAplicarFiltros');
+        const inputSearch = document.querySelector('#inputSearch');
+        const selectOrdem = document.querySelector('#ordem-choice');
+        const chkCategorias = document.querySelectorAll('input[name="categoria"]');
+        const chkAvaliacoes = document.querySelectorAll('input[name="avaliacao"]');
+        const rangePreco = { min: 0, max: 10000 }; // pegue do seu <input type="range"> ou de dois inputs
+        const inputCidade = document.querySelector('#cidades-choice');
+
+        // 2. Função para ler os checks
+        function getChecked(nodeList) {
+            return Array.from(nodeList)
+                .filter(cb => cb.checked)
+                .map(cb => cb.value);
+        }
+
+        async function listarEstabelecimentosComFiltros() {
+            const filtros = {
+                search: inputSearch.value,
+                categorias: getChecked(chkCategorias).join(','),
+                avaliacoes: getChecked(chkAvaliacoes).join(','),
+                precoMin: rangePreco.min,
+                precoMax: rangePreco.max,
+                cidade: inputCidade.value,
+                ordem: selectOrdem.value
+            };
+            const qs = new URLSearchParams(filtros).toString();
+            const resp = await fetch(`/api/estabelecimentos-completos?${qs}`);
+            const dados = await resp.json();
+            renderEstabelecimentos(dados);
+        }
+//listarEstabelecimentosComFiltros
+        btnAplicar.addEventListener('click', async () => {
+            const Search = document.getElementById('inputSearch').value;
+            const chkAvaliacoes = document.querySelectorAll('input[name="avaliacao"]');
+            const response = await fetch('/api/estabelecimento/filtro', {
+                method:'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    nome:Search,
+                    nota:getChecked(chkAvaliacoes).join(',')
+                })
+            
+            })
+            if(response.ok) {
+                const dados =await response.json();
+                console.log(dados)
+                
+                const grade = document.getElementById('grade-produtos');
+                grade.innerHTML = '';
+                dados.forEach(estab => {
+                    const nome = estab.Nome || '—';
+                    const media = estab.Ofertas[0].Avaliacaos[0].Nota || 'Sem avaliações';
+                    const foto = estab.fotoSrc || 'imagens/placeholder.png';
+
+                    // Pega a primeira oferta, se existir
+                    const oferta = (estab.Ofertas && estab.Ofertas[0]) || {};
+                    const servico = oferta.servicoNome || '—';
+                    const desc = oferta.Descricao || 'Sem descrição';
+                    const valor = oferta.Valor != null
+                        ? `R$ ${oferta.Valor.toFixed(2)}`
+                        : 'Preço indisponível';
+
+                    const card = document.createElement('div');
+                    card.className = 'produto';
+
+                    card.innerHTML = `
+        <div class="imagem-container">
+          <img src="${foto}" alt="Foto de ${nome}" />
+          <button class="favorito">❤️</button>
+        </div>
+        <h4><a href="estabelecimento" style="color: black; text-decoration: none"> ${nome} <span class="avaliacao">★ ${media} </a> </span></h4>
+        <h5>${servico}</h5>
+        <p>${desc}</p>
+        <h4>Preço: ${valor}</h4>
+      `;
+                    grade.appendChild(card);
+                })
+            }
+        });
+        btnLimpar.addEventListener('click', () => {
+            // limpa UI e recarrega sem filtros
+            inputSearch.value = '';
+            chkCategorias.forEach(c => c.checked = false);
+            chkAvaliacoes.forEach(c => c.checked = false);
+            selectOrdem.value = 'Ordem';
+            inputCidade.value = '';
+            // (resete rangePreco.min/max conforme seu input)
+            listarEstabelecimentosComFiltros();
+        });
+
+
+
         async function listarEstabelecimentos() {
             try {
                 const resp = await fetch('/api/estabelecimentos-completos');
@@ -173,6 +268,36 @@
         function limparFiltros() {
             window.location.href = '/pesquisa'; // ou atualizar sem filtros via JS
         }
+
+         function renderEstabelecimentos(estabelecimentos) {
+    const container = document.getElementById('lista-estabelecimentos');
+    if (!container) {
+      console.warn('Elemento para listar não encontrado');
+      return;
+    }
+
+    // Limpa resultados antigos
+    container.innerHTML = '';
+
+    if (estabelecimentos.length === 0) {
+      container.innerHTML = '<p>Nenhum estabelecimento encontrado.</p>';
+      return;
+    }
+
+    // Para cada loja, cria um card básico
+    estabelecimentos.forEach(loja => {
+      const card = document.createElement('div');
+      card.classList.add('card', 'mb-3');
+      card.innerHTML = `
+        <h5>${loja.nome}</h5>
+        <p>Cidade: ${loja.cidade}</p>
+        <p>Categoria: ${loja.categoriaNome}</p>
+        <p>Preço médio: R$ ${loja.precoMedio.toFixed(2)}</p>
+        <p>Avaliação: ${loja.avaliacao} ★</p>
+      `;
+      container.appendChild(card);
+    });
+  }
     </script>
 </body>
 
