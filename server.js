@@ -9,11 +9,11 @@ import session from "express-session";
 import multer from "multer";
 import sequelize from "./db/declaracaoBD.js"
 // import { Usuario } from "./db/tabeladb.js";
-import rota_usuarios from "./CRUD's/usuario.js";
-import rota_lojas from "./CRUD's/crud_lojas.js"
+import rota_usuarios from "./CRUDs/usuario.js";
+import rota_lojas from "./CRUDs/crud_lojas.js"
 //Inicialização do servidor Express
 
-import rota_Avaliacao from "./CRUD's/avaliacao.js";
+import rota_Avaliacao from "./CRUDs/avaliacao.js";
 //Comentario
 
 function verificarAutenticacao(req, res, next) {
@@ -40,8 +40,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 // const sessionMaxAge = 10 * 60 * 1000;
 // 1*30*1000 = 30 segs
 //                   min * seg * ms
-//const sessionMaxAge = 60 * 60 * 1000;
-const sessionMaxAge = 999 * 60 * 9999;
+const sessionMaxAge = 60 * 60 * 1000;
 
 app.use(session({
     secret: 'localtop',
@@ -148,7 +147,7 @@ app.get("/logout", (req, res) => {
 
 
 sequelize.sync().then(() => {
-    app.listen(port, () => {
+    app.listen(port,() => {
         console.log(`Servidor rodando http://localhost:${port}`);
     });
 })

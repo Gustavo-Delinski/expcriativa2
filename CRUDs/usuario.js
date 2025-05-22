@@ -97,6 +97,7 @@ rota_usuarios
         res.status(500).json({ mensagem: `Erro ao cadastrar usuário: ${error}` });
     }
 })
+
 .get('/api/usuario/:id', async (req, res) => {
     const usuario = await Usuario.findByPk(req.params.id);
     return usuario ? res.json(usuario) : res.status(404).end();
@@ -140,27 +141,28 @@ rota_usuarios
         TipoFoto:req.file ? req.file.mimetype : usuario.TipoFoto
     })) : res.status(404).end();
 })
-    .put('/api/usuario/:id/Novasenha', async (req, res) => {
-        const { id } = req.params;
-        const { senhaAtual,novaSenha } = req.body;
-        const usuario = await Usuario.findByPk(id);
-        if (usuario) {
-            const checkSenha = await bcrypt.compare(senhaAtual, usuario.Senha);
-            if (!checkSenha) {
-                return res.status(400).json({mensagem:"Senha atual incorreta."});
-            } else {
-                const checkNovaSenha = await bcrypt.compare(novaSenha, usuario.Senha);
-                if (checkNovaSenha) {
-                    return res.status(400).json({mensagem:"Nova senha deve ser diferente da atual."})
-                } else {
-                    return res.json(await usuario.update({Senha: await bcrypt.hash(novaSenha, 10) }))
-                }
-            }
-        } else {
-            console.log("Usuário não encontrado");
-            res.status(404).json({mensagem:"Usuário não encontrado"}).end();
-        }
-    })
+.put('/api/usuario/:id/Novasenha', async (req, res) => {
+    const { id } = req.params;
+    const { novaSenha } = req.body;
+    const usuario = await Usuario.findByPk(id);
+
+    return usuario ? res.json(await usuario.update({Senha: await bcrypt.hash(novaSenha, 10) })) : res.status(404).end();
+})
+.post('/api/usuario/:id/verificarSenha', async (req, res) => {
+    const { id } = req.params;
+    const { senhaAtual,novaSenha } = req.body;
+    const usuario = await Usuario.findByPk(id);
+    const senhaCorreta = await bcrypt.compare(senhaAtual, usuario.Senha);
+    const senhaNovaCorreta = await bcrypt.compare(novaSenha, usuario.Senha);
+    if (!senhaCorreta) {
+        return res.status(401).json({ mensagem: "Senha atual incorreta." });
+    }
+    if (senhaNovaCorreta) {
+        return res.status(401).json({ mensagem: "Nova senha não pode ser igual a senha atual." });
+    }
+    return usuario ? res.status(200).json({mensagem:"Senha atualizada com sucesso."}) : res.status(404).end();
+
+})
 .delete('/api/usuario/:id', async (req, res) => {
     const { id } = req.params;
     const usuario = await Usuario.findByPk(id);

@@ -151,13 +151,14 @@
 //listarEstabelecimentosComFiltros
         btnAplicar.addEventListener('click', async () => {
             const Search = document.getElementById('inputSearch').value;
-            const chkAvaliacoes = document.querySelectorAll('input[name="avaliacao"]');
+            let chkAvaliacoes = document.querySelectorAll('input[name="avaliacao"]');
+            let nota = getChecked(chkAvaliacoes).join(',');
             const response = await fetch('/api/estabelecimento/filtro', {
                 method:'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     nome:Search,
-                    nota:getChecked(chkAvaliacoes).join(',')
+                    nota: nota
                 })
             
             })
@@ -168,8 +169,9 @@
                 const grade = document.getElementById('grade-produtos');
                 grade.innerHTML = '';
                 dados.forEach(estab => {
+
                     const nome = estab.Nome || '—';
-                    const media = estab.Ofertas[0].Avaliacaos[0].Nota || 'Sem avaliações';
+                    const media = estab.Ofertas[0].Avaliacao[0].Nota || 'Sem avaliações';
                     const foto = estab.fotoSrc || 'imagens/placeholder.png';
 
                     // Pega a primeira oferta, se existir
@@ -215,7 +217,7 @@
                 const resp = await fetch('/api/estabelecimentos-completos');
                 if (!resp.ok) { throw new Error(`Status ${resp.status}`); return };
                 const estabelecimentos = await resp.json();
-                console.log('JSON da API →', estabelecimentos);
+                // console.log('JSON da API →', estabelecimentos);
 
                 if (!Array.isArray(estabelecimentos)) {
                     console.error('Esperava um array, recebi:', estabelecimentos);
@@ -227,7 +229,7 @@
 
                 estabelecimentos.forEach(estab => {
                     const nome = estab.Nome || '—';
-                    const media = estab.Ofertas[0].Avaliacaos[0].Nota || 'Sem avaliações';
+                    const media = estab.Ofertas[0].Avaliacao[0].Nota || 'Sem avaliações';
                     const foto = estab.fotoSrc || 'imagens/placeholder.png';
 
                     // Pega a primeira oferta, se existir
@@ -257,6 +259,61 @@
                 console.error('Erro ao chamar /api/estabelecimentos-completos:', err);
             }
         }
+
+        // async function listarEstabelecimentos() {
+        //     try {
+        //         const resp = await fetch('/api/estabelecimentos-completos');
+        //         if (!resp.ok) {
+        //             throw new Error(`Status ${resp.status}`);
+        //         }
+        //
+        //         const estabelecimentos = await resp.json();
+        //
+        //         if (!Array.isArray(estabelecimentos)) {
+        //             console.error('Esperava um array, recebi:', estabelecimentos);
+        //             return;
+        //         }
+        //
+        //         const grade = document.getElementById('grade-produtos');
+        //         grade.innerHTML = '';
+        //
+        //         estabelecimentos.forEach(estab => {
+        //             const nome = estab.Nome || '—';
+        //             const foto = estab.fotoSrc || 'imagens/placeholder.png';
+        //
+        //             // Verificações seguras
+        //             const ofertas = estab.Ofertas || [];
+        //             const primeiraOferta = ofertas[0] || {};
+        //             const avaliacoes = primeiraOferta.Avaliacaos || [];
+        //             const media = avaliacoes[0]?.Nota || 'Sem avaliações';
+        //
+        //             const servico = primeiraOferta.servicoNome || '—';
+        //             const desc = primeiraOferta.Descricao || 'Sem descrição';
+        //             const valor = primeiraOferta.Valor != null
+        //                 ? `R$ ${primeiraOferta.Valor.toFixed(2)}`
+        //                 : 'Preço indisponível';
+        //
+        //             const card = document.createElement('div');
+        //             card.className = 'produto';
+        //
+        //             card.innerHTML = `
+        //         <div class="imagem-container">
+        //             <img src="${foto}" alt="Foto de ${nome}" />
+        //             <button class="favorito">❤️</button>
+        //         </div>
+        //         <h4><a href="/estabelecimento" style="color: black; text-decoration: none">
+        //             ${nome} <span class="avaliacao">★ ${media}</span></a></h4>
+        //         <h5>${servico}</h5>
+        //         <p>${desc}</p>
+        //         <h4>Preço: ${valor}</h4>
+        //     `;
+        //
+        //             grade.appendChild(card);
+        //         });
+        //     } catch (err) {
+        //         console.error('Erro ao chamar /api/estabelecimentos-completos:', err);
+        //     }
+        // }
 
         document.addEventListener('DOMContentLoaded', listarEstabelecimentos);
 

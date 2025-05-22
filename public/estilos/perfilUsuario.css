@@ -5,12 +5,12 @@ html {
 }
 
 body {
+    font-family: Montserrat-bold, sans-serif;
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-family: Montserrat-bold, sans-serif;
     margin: 0;
     background-color: #F7EFE6;
 }
@@ -20,7 +20,7 @@ header {
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: 6rem;
+    height: 100%;
     justify-content: space-between;
     align-items: center;
     margin: 0;
@@ -45,7 +45,6 @@ header {
     width: 30dvi;
     height: 100%;
     gap: 2dvi;
-    padding-bottom: 1.5rem;
     margin-right: 5rem;
     a {
         font-size: 1.1dvi;
@@ -71,7 +70,7 @@ header {
 .infos {
     width: 10dvi;
     height: 100%;
-    padding-bottom: 1.5rem;
+    padding: 1rem 0;
     display: flex;
     align-items: end;
     justify-content: end;
@@ -114,10 +113,9 @@ header {
             border-radius: 0 0 10px 10px;
         }
     }
-    .conta {
-        width: 3dvi;
-        height: 3dvi;
-        border: 2px solid #FFFF;
+    .ImgUsuario {
+        width: 3.5dvi;
+        height: 3.5dvi;
         border-radius: 2dvi;
     }
 }
@@ -126,14 +124,13 @@ main {
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: 35dvi;
+    height: 100%;
     justify-content: center;
-    align-items: center;
+    align-items: start;
     margin: 3rem 0;
     gap: 1dvi;
     aside {
-        width: 30%;
-        height: 100%;
+        width: 25%;
         display: flex;
         flex-direction: column;
         padding: 1rem 2rem;
@@ -143,7 +140,7 @@ main {
             gap: 1dvi;
             .imgPerfil {
                 background-color: #302163;
-                background-image: url(../imagens/GatoSneaky.jpg);
+                background-image: url(../imagens/SVGs/perfil.svg);
                 background-size: cover;
                 background-position: center;
                 width: 5dvi;
@@ -153,13 +150,13 @@ main {
             }
             h4 {
                 margin: 0;
-                font-size: 2dvi;
+                font-size: 1.8dvi;
                 font-weight: bold;
                 color:#3E996F;
             }
             h5 {
                 margin: 0;
-                font-size: 1.5dvi;
+                font-size: 1.3dvi;
                 color: #302163;
             }
         }
@@ -189,10 +186,30 @@ main {
                 padding: 0 0.3dvi;
             }
         }
+        .AddEstabelecimento {
+            display: flex;
+            border:none;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5dvi;
+            width: 100%;
+            color: #3E996F;
+            place-self: center;
+            background-color: transparent;
+            border-radius: 1.5dvi;
+            padding: 0.5dvi 1dvi;
+        }
+        .AddEstabelecimento:hover {
+            background-color: #FFFF;
+            cursor: pointer;
+        }
+        .AddEstabelecimento:active {
+            transform: scale(0.95);
+        }
     }
     .informacao {
         background-color: #FFFF;
-        width: 60%;
+        width: 65%;
         padding: 1dvi;
         place-self: start;
         h1 {
@@ -254,7 +271,7 @@ main {
                 label {
                     .Perfilimg {
                         background-color: #302163;
-                        background-image: url(../imagens/GatoSneaky.jpg);
+                        background-image: url(../imagens/SVGs/perfil.svg);
                         background-size: cover;
                         background-position: center;
                         width: 8dvi;
@@ -372,6 +389,307 @@ main {
             }
 
         }
+        .NomeEmailFotoEstabe {
+            display:flex;
+            flex-direction: row;
+            .NomeEmailEstabele {
+                display:flex;
+                flex-direction: column;
+                width: 65%;
+                gap: 1dvi;
+                padding-right: 1dvi;
+                .nomeEstabele {
+                    display: flex;
+                    flex-direction: column;
+                    label {
+                        font-weight: bold;
+                        font-size: 1.3dvi;
+                        color: #3E996F;
+                        margin-left: 0.5dvi;
+                    }
+                    input {
+                        border:1px solid rgb(62, 62, 62);
+                        border-radius: 0.3dvi;
+                        width: 100%;
+                        padding-left: 0.3dvi;
+                    }
+                }
+                .emailEstabele {
+                    display: flex;
+                    flex-direction: column;
+                    label {
+                        font-weight: bold;
+                        font-size: 1.3dvi;
+                        color: #3E996F;
+                        margin-left: 0.5dvi;
+                    }
+                    input {
+                        border:1px solid rgb(62, 62, 62);
+                        border-radius: 0.3dvi;
+                        width: 100%;
+                        padding-left: 0.3dvi;
+                    }
+                }
+                .TelefoneCnpj {
+                    display:flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    gap:1dvi;
+                    .telefone {
+                        display: flex;
+                        flex-direction: column;
+                        label {
+                            font-weight: bold;
+                            font-size: 1.3dvi;
+                            color: #3E996F;
+                            margin-left: 0.5dvi;
+                        }
+                        input {
+                            border:1px solid rgb(62, 62, 62);
+                            border-radius: 0.3dvi;
+                            width: 100%;
+                            padding-left: 0.3dvi
+                        }
+                    }
+                    .cnpj {
+                        display: flex;
+                        flex-direction: column;
+                        width:  35%;
+                        label {
+                            font-weight: bold;
+                            font-size: 1.3dvi;
+                            color: #3E996F;
+                            margin-left: 0.5dvi;
+                        }
+                        input {
+                            border:1px solid rgb(62, 62, 62);
+                            border-radius: 0.3dvi;
+                            width: 100%;
+                            padding-left: 0.3dvi
+                        }
+                    }
+                    .cep {
+                        display: flex;
+                        flex-direction: column;
+                        width: 27%;
+                        label {
+                            font-weight: bold;
+                            font-size: 1.3dvi;
+                            color: #3E996F;
+                            margin-left: 0.5dvi;
+                        }
+                        input {
+                            border:1px solid rgb(62, 62, 62);
+                            border-radius: 0.3dvi;
+                            width: 100%;
+                            padding-left: 0.3dvi
+                        }
+                    }
+                }
+                .Endereco {
+                    display:flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    gap:1dvi;
+                    .RuaNumero {
+                        display: flex;
+                        flex-direction: row;
+                        gap: 2dvi;
+                        .rua {
+                            display: flex;
+                            flex-direction: column;
+                            width: 75%;
+                            label {
+                                font-weight: bold;
+                                font-size: 1.3dvi;
+                                color: #3E996F;
+                                margin-left: 0.5dvi;
+                            }
+                            input {
+                                border:1px solid rgba(62, 62, 62, 0.3);
+                                border-radius: 0.3dvi;
+                                width: 100%;
+                                padding-left: 0.3dvi
+                            }
+                        }
+                        .numero {
+                            display: flex;
+                            flex-direction: column;
+                            width: 20%;
+                            label {
+                                font-weight: bold;
+                                font-size: 1.3dvi;
+                                color: #3E996F;
+                                margin-left: 0.5dvi;
+                            }
+                            input {
+                                border:1px solid rgb(62, 62, 62);
+                                border-radius: 0.3dvi;
+                                width: 100%;
+                                padding-left: 0.3dvi
+                            }
+                        }
+                    }
+                    .complemento {
+                        display: flex;
+                        flex-direction: column;
+                        width: 100%;
+                        label {
+                            font-weight: bold;
+                            font-size: 1.3dvi;
+                            color: #3E996F;
+                            margin-left: 0.5dvi;
+                        }
+                        input {
+                            border:1px solid rgb(62, 62, 62);
+                            border-radius: 0.3dvi;
+                            width: 100%;
+                            padding-left: 0.3dvi
+                        }
+                    }
+                    .BairroCidadeEstado {
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                        .bairro {
+                            display: flex;
+                            flex-direction: column;
+                            width: 32%;
+                            label {
+                                font-weight: bold;
+                                font-size: 1.3dvi;
+                                color: #3E996F;
+                                margin-left: 0.5dvi;
+                            }
+                            input {
+                                border:1px solid rgba(62, 62, 62, 0.3);
+                                border-radius: 0.3dvi;
+                                width: 100%;
+                                padding-left: 0.3dvi
+                            }
+                        }
+                        .cidade {
+                            display: flex;
+                            flex-direction: column;
+                            width: 32%;
+                            label {
+                                font-weight: bold;
+                                font-size: 1.3dvi;
+                                color: #3E996F;
+                                margin-left: 0.5dvi;
+                            }
+                            input {
+                                border:1px solid rgba(62, 62, 62, 0.3);
+                                border-radius: 0.3dvi;
+                                width: 100%;
+                                padding-left: 0.3dvi
+                            }
+                        }
+                        .estado {
+                            display: flex;
+                            flex-direction: column;
+                            width: 32%;
+                            label {
+                                font-weight: bold;
+                                font-size: 1.3dvi;
+                                color: #3E996F;
+                                margin-left: 0.5dvi;
+                            }
+                            input {
+                                border:1px solid rgba(62, 62, 62, 0.3);
+                                border-radius: 0.3dvi;
+                                width: 100%;
+                                padding-left: 0.3dvi
+                            }
+                        }
+                    }
+                }
+            }
+            .InputFotoEstabele {
+                display:flex;
+                flex-direction: column;
+                padding: 1dvi;
+                width: 35%;
+                height: 33.7dvi;
+                gap: 1dvi;
+                .Estabelecimentoimg {
+                    background-image: url("https://placehold.co/300x400?text=Adicione+sua+foto");
+                    background-size: cover;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    background-color: #3E996F;
+                    width: 100%;
+                    height: 30dvi;
+                    border-radius: 1dvi;
+                    .prevImg {
+                        background-color: rgba(0, 0, 0, 0.18);
+                        position: absolute;
+                        height: 6.203%;
+                        width: 3%;
+                        border: none;
+                        border-radius: 1.5dvi;
+                        margin-top: 11.5dvi;
+                        margin-left: 0.5dvi;
+                    }
+                    .nextImg {
+                        background-color: rgba(0, 0, 0, 0.18);
+                        position: absolute;
+                        height: 6.203%;
+                        width: 3%;
+                        border: none;
+                        border-radius: 1.5dvi ;
+                        margin-top: 11.5dvi;
+                        margin-left: 16.5dvi;
+                    }
+                }
+                p {
+                    padding: 0;
+                    text-align: center;
+                    font-size: 1.2dvi;
+                }
+                label {
+                    text-align: center;
+                    border-radius: 1dvi;
+                    background-color: #3E996F;
+                    color: #FFFF;
+                    cursor: pointer;
+                }
+                label:hover {
+                    transform: scale(1.05);
+                }
+                label:active {
+                    transform: scale(1);
+                }
+            }
+            .IdentifierDelete {
+                display: flex;
+                flex-direction: row;
+                button {
+                    border: none;
+                    background-color: transparent;
+                    height: 100%;
+                    width: 10.12%;
+                    padding:0;
+                }
+                p {
+                    width: 89%;
+                }
+            }
+        }
+        .btnEstabelecimento {
+            margin: 0 4dvi 0 0 !important;
+            place-self: center !important;
+            .criarEstabelecimento {
+                background-color: #3E996F;
+                border: none;
+                border-radius: 1.2dvi;
+                color: #FFFF;
+                font-size: 1.2rem;
+                padding: 0.3dvi 0.5dvi;
+                cursor: pointer;
+                width: 10dvi;
+            }
+        }
     }
 }
 
@@ -380,18 +698,19 @@ footer {
     flex-direction: column;
     background-color: #302163;
     width: 100%;
-    padding: 1dvi;
+    height: 100%;
+    padding: 1%;
     gap: 1dvi;
 }
 
 .footer-top {
     display: flex;
     flex-direction: row;
-    justify-content: end ;
-    gap:12dvi;
+    justify-content: space-between ;
+    gap:12%;
     .linkLogo {
-        width: 15dvi;
-        height: 10dvi;
+        width: 15%;
+        height: 10%;
     }
     .divisor {
         display: flex;
@@ -402,7 +721,7 @@ footer {
         }
     }
     h3 {
-        font-size: 1.8dvi;
+        font-size: 180%;
         color: #F4FA46;
     }
     .redesSociais {

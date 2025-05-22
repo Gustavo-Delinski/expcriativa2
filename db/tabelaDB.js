@@ -1,4 +1,4 @@
-import { DataTypes, INTEGER, Sequelize} from "sequelize";
+import { DataTypes} from "sequelize";
 import sequelize from "./declaracaoBD.js";
 
 const Usuario = sequelize.define('Usuario', {
@@ -42,7 +42,7 @@ const Usuario = sequelize.define('Usuario', {
         type: DataTypes.STRING,
         allowNull: true
     }}, {
-        tablename: 'Usuario',
+        tablenName: 'Usuario',
         timestamps: false,
     }
 );
@@ -63,33 +63,37 @@ const Estabelecimento = sequelize.define('Estabelecimento', {
         allowNull: false,
         unique: true
     },
-    endereco: {
+    Logradouro: {
         type: DataTypes.STRING,
         allowNull: false
     },
     Numero: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     Complemento: {
         type: DataTypes.STRING,
         allowNull: true
     },
-    // Bairro: {
-    //     type: DataTypes.STRING,
-    //     allowNull: false
-    // },
-    // Cidade: {
-    //     type: DataTypes.STRING,
-    //     allowNull: false
-    // },
-    // UF: {
-    //     type: DataTypes.STRING,
-    //     allowNull: false
-    // },
+    Bairro: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    Cidade: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    UF: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     CEP: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    Telefone: {
+        type: DataTypes.STRING,
+        allowNull: true
     },
     ID_usuario: {
         type: DataTypes.INTEGER,
@@ -100,7 +104,7 @@ const Estabelecimento = sequelize.define('Estabelecimento', {
         },
         onDelete: 'CASCADE'
     }}, {
-        tablename: 'Estabelecimento',
+        tablenName: 'Estabelecimento',
         timestamps: false,
 });
 
@@ -128,7 +132,7 @@ const FotosEstabelecimento = sequelize.define('FotosEstabelecimento', {
         },
         onDelete: 'CASCADE'
     }}, {
-        tablename: 'FotosEstabelecimento',
+        tablenName: 'FotosEstabelecimento',
         timestamps: false
 });
 
@@ -143,7 +147,7 @@ const Servico = sequelize.define('Servico', {
         type: DataTypes.STRING,
         allowNull: false
     }}, {
-        tablename: 'Servico',
+        tablenName: 'Servico',
         timestamps: false,
 });
 
@@ -185,7 +189,7 @@ const Oferta = sequelize.define('Oferta', {
         type: DataTypes.TEXT,
         allowNull: false
     }}, {
-        tablename: 'Oferta',
+        tablenName: 'Oferta',
         timestamps: false,
 });
 
@@ -226,7 +230,7 @@ const Avaliacao = sequelize.define('Avaliacao', {
         },
         onDelete: 'CASCADE'
     }}, {
-        tablename: 'Avaliacao',
+        tablenName: 'Avaliacao',
         timestamps: false,
 });
 const Favoritos = sequelize.define('Favoritos', {
@@ -254,7 +258,7 @@ const Favoritos = sequelize.define('Favoritos', {
         },
         onDelete: 'CASCADE'
     }},{
-    tablename: 'Favoritos',
+    tablenName: 'Favoritos',
     timestamps: false,
 });
 const Historico = sequelize.define('Historico', {
@@ -286,7 +290,7 @@ const Historico = sequelize.define('Historico', {
         },
         onDelete: 'CASCADE'
     }},{
-    tablename: 'Historico',
+    tablenName: 'Historico',
     timestamps: false,
 })
 
@@ -331,7 +335,7 @@ Estabelecimento.hasMany(Historico, {
 
 Oferta.hasMany(Avaliacao, {
   foreignKey: 'ID_oferta',
-  as: 'Avaliacaos',
+  as: 'Avaliacao',
   onDelete: 'CASCADE'
 });
 
