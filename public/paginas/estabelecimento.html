@@ -39,8 +39,8 @@
     </header>
 
     <!-- Main -->
-    <main class="container my-5">
-        <button><a href="/pesquisa" style="color: white; text-decoration: none;">Voltar</a></button>
+    <main class="container my-5" style="display: flex; flex-direction: column; align-items: center; justify-content: space-between;">
+        <button style="align-self: self-start;"><a href="/pesquisa" style="color: white; text-decoration: none;">Voltar</a></button>
 
         <div class="row" style="box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);">
             <!-- Carrossel -->
@@ -98,13 +98,11 @@
             </div>
         </div>
 
-        <!-- Avaliações -->
-        <div id="avaliacoes" class="mt-4">
-            <h2>Avaliações:</h2>
-        </div>
-
         <!-- Formulário de Avaliação -->
         <form id="formAvaliacao" class="mt-3">
+            <div id="avaliacoes" class="mt-4">
+                <h2>Avaliações:</h2>
+            </div>
             <label>Avaliação:</label>
             <div class="rating mb-3">
                 <input type="radio" id="estrela5form" name="avaliacao" value="5" />
@@ -149,49 +147,7 @@
             });
         });
 
-        // Função para listar estabelecimentos
-        async function listarEstabelecimentos() {
-            try {
-                const resp = await fetch('/api/estabelecimentos-completos');
-                if (!resp.ok) { throw new Error(`Status ${resp.status}`); }
-                const estabelecimentos = await resp.json();
-                console.log('JSON da API →', estabelecimentos);
 
-                const grade = document.getElementById('grade-produtos');
-                grade.innerHTML = '';
-
-                estabelecimentos.forEach(estab => {
-                    const nome = estab.Nome || '—';
-                    const media = (estab.Ofertas?.[0]?.Avaliacaos?.[0]?.Nota) || 'Sem avaliações';
-                    const foto = estab.fotoSrc || '../imagens/placeholder.png';
-                    const oferta = estab.Ofertas?.[0] || {};
-                    const servico = oferta.servicoNome || '—';
-                    const desc = oferta.Descricao || 'Sem descrição';
-                    const valor = oferta.Valor != null
-                        ? `R$ ${oferta.Valor.toFixed(2)}`
-                        : 'Preço indisponível';
-
-                    const card = document.createElement('div');
-                    card.className = 'produto col-md-3 mb-4';
-
-                    card.innerHTML = `
-                        <div class="imagem-container">
-                            <img src="${foto}" alt="Foto de ${nome}" class="img-fluid rounded">
-                            <button class="favorito">❤️</button>
-                        </div>
-                        <h4><a href="estabelecimento" style="color: black; text-decoration: none">${nome} <span class="avaliacao">★ ${media}</span></a></h4>
-                        <h5>${servico}</h5>
-                        <p>${desc}</p>
-                        <h4>Preço: ${valor}</h4>
-                    `;
-                    grade.appendChild(card);
-                });
-            } catch (err) {
-                console.error('Erro ao chamar /api/estabelecimentos-completos:', err);
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', listarEstabelecimentos);
     </script>
 </body>
 
