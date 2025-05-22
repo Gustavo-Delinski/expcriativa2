@@ -13,6 +13,9 @@ import rota_usuarios from "./CRUD's/usuario.js";
 import rota_lojas from "./CRUD's/crud_lojas.js";
 //Inicialização do servidor Express
 
+import rota_Avaliacao from "./CRUD's/avaliacao.js";
+//Comentario
+
 function verificarAutenticacao(req, res, next) {
     if (req.session.usuarioId) {
         next(); // usuário está logado
@@ -69,6 +72,9 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(rota_usuarios)
 app.use(rota_lojas)
+
+app.use(rota_Avaliacao);
+// Ativa as rotas de avaliações
 
 app.get("/auth/estado", (req, res) => {
     if (req.session && req.session.usuarioId) {
