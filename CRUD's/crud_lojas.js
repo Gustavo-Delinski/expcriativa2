@@ -5,16 +5,44 @@ import { Avaliacao } from "../db/tabelaDB.js";
 import { Oferta } from "../db/tabelaDB.js";
 import { FotosEstabelecimento } from "../db/tabelaDB.js";
 import bcrypt from "bcryptjs";
+import { Sequelize } from "sequelize";
 
 
 const rota_lojas = Router();
 
 rota_lojas
-.get('/api/estabelecimento', async (req, res) => {
-    const lojas = await Estabelecimento.findAll();
-    res.json(lojas);
+.get('/api/estabelecimentos-completos', async (req, res) => {
+  try {
+    // const estabelecimentos = await Estabelecimento.findAll();
+    const estabelecimentos = await Estabelecimento.findAll({
+      include: [
+        // {
+        //   model: FotosEstabelecimento,
+        //   as: 'FotosEstabelecimentos',
+        //   attributes: ['Foto', 'TipoFoto'],
+        //   limit: 1
+        // },
+        {
+          model: Oferta,
+          as: 'Ofertas',
+          include: [
+            { model: Servico,as:'Servico', attributes: ['Nome'] },
+            { 
+              model: Avaliacao,
+              as: 'Avaliacaos',
+              attributes: ['Nota']
+            }
+          ]
+        }
+      ]
+    })
+    estabelecimentos ? res.json(estabelecimentos) : res.status(400).json({erro: "não há nenhum estabelecimento registrado"});
+    // ... resto da transformação em result e res.json(result)
+  } catch (err) {
+    console.error("Erro no /api/estabelecimentos-completos:", err);
+    res.status(500).json({ erro: "Não foi possível carregar os estabelecimentos" });
+  }
 })
-
 .post('/api/lojas', async (req, res) => {
     const { nome, endereco, numero, complemento, cnpj, cep } = req.body;
     const lojas_cnpj = await Estabelecimento.findOne({ where: { cnpj: cnpj } });
@@ -114,8 +142,8 @@ rota_foto
     res.json(fotos)
 });
 
+export default rota_lojas;
 
-
-export default {rota_lojas, rota_avaliacao,rota_foto,rota_oferta,rota_servico};
+//export default {rota_lojas, rota_avaliacao,rota_foto,rota_oferta,rota_servico};
 
 

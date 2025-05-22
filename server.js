@@ -10,7 +10,7 @@ import multer from "multer";
 import sequelize from "./db/declaracaoBD.js"
 // import { Usuario } from "./db/tabeladb.js";
 import rota_usuarios from "./CRUD's/usuario.js";
-import rotas from "./CRUD's/crud_lojas.js"
+import rota_lojas from "./CRUD's/crud_lojas.js"
 //Inicialização do servidor Express
 
 import rota_Avaliacao from "./CRUD's/avaliacao.js";
@@ -71,11 +71,11 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use(rota_usuarios)
-app.use(rotas.rota_lojas)
-app.use(rotas.rota_avaliacao)
-app.use(rotas.rota_servico)
-app.use(rotas.rota_oferta)
-app.use(rotas.rota_foto)
+app.use(rota_lojas)
+// app.use(rotas.rota_avaliacao)
+// app.use(rotas.rota_servico)
+// app.use(rotas.rota_oferta)
+// app.use(rotas.rota_foto)
 
 app.use(rota_Avaliacao);
 // Ativa as rotas de avaliações

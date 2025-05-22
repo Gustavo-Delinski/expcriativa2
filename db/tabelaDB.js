@@ -302,8 +302,40 @@ Historico.belongsTo(Usuario, { foreignKey: 'ID_usuario', onDelete: 'CASCADE' });
 Historico.belongsTo(Estabelecimento, { foreignKey: 'ID_estabelecimento', onDelete: 'CASCADE' });
 
 Usuario.hasMany(Favoritos, { foreignKey: 'ID_usuario', as: 'usuario', onDelete: 'CASCADE'},Historico, { foreignKey: 'ID_usuario', as: 'usuario', onDelete: 'CASCADE'});
-Estabelecimento.hasMany(Favoritos, { foreignKey: 'ID_estabelecimento', as: 'estabelecimento', onDelete: 'CASCADE'},Historico, { foreignKey: 'ID_estabelecimento', as: 'estabelecimento', onDelete: 'CASCADE'},FotosEstabelecimento, { foreignKey: 'ID_estabelecimento', as: 'estabelecimento', onDelete: 'CASCADE'});
+Estabelecimento.hasMany(FotosEstabelecimento, {
+  foreignKey: 'ID_estabelecimento',
+  as: 'FotosEstabelecimentos',
+  onDelete: 'CASCADE'
+});
 
+// Um estabelecimento pode ter várias ofertas
+Estabelecimento.hasMany(Oferta, {
+  foreignKey: 'ID_estabelecimento',
+  as: 'Ofertas',
+  onDelete: 'CASCADE'
+});
+
+// Um estabelecimento pode ter muitos favoritos
+Estabelecimento.hasMany(Favoritos, {
+  foreignKey: 'ID_estabelecimento',
+  as: 'Favoritos',
+  onDelete: 'CASCADE'
+});
+
+// Um estabelecimento pode ter vários acessos no histórico
+Estabelecimento.hasMany(Historico, {
+  foreignKey: 'ID_estabelecimento',
+  as: 'Historicos',
+  onDelete: 'CASCADE'
+});
+
+Oferta.hasMany(Avaliacao, {
+  foreignKey: 'ID_oferta',
+  as: 'Avaliacaos',
+  onDelete: 'CASCADE'
+});
+
+// E você também precisa das inversas para FotosEstabelecimento, Oferta, etc:
 
 // Usuario.hasMany(Estabelecimento, { foreignKey: 'ID_estabelecimento', as: 'estabelecimento', onDelete: 'CASCADE'});
 // Usuario.hasMany(Avaliacao, { foreignKey: 'ID_avaliacao', as:'avaliacao', onDelete: 'CASCADE'});
