@@ -10,7 +10,7 @@ import multer from "multer";
 import sequelize from "./db/declaracaoBD.js"
 // import { Usuario } from "./db/tabeladb.js";
 import rota_usuarios from "./CRUD's/usuario.js";
-import rota_lojas from "./CRUD's/crud_lojas.js";
+import rotas from "./CRUD's/crud_lojas.js"
 //Inicialização do servidor Express
 
 import rota_Avaliacao from "./CRUD's/avaliacao.js";
@@ -71,7 +71,11 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use(rota_usuarios)
-app.use(rota_lojas)
+app.use(rotas.rota_lojas)
+app.use(rotas.rota_avaliacao)
+app.use(rotas.rota_servico)
+app.use(rotas.rota_oferta)
+app.use(rotas.rota_foto)
 
 app.use(rota_Avaliacao);
 // Ativa as rotas de avaliações
@@ -87,6 +91,10 @@ app.get("/auth/estado", (req, res) => {
 //Quando acessar http://localhost:3000/ retorna o arquivo index.html
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "paginas", "index.html"));
+});
+
+app.get("/lojascrud", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "paginas", "lojascrud.html"));
 });
 
 app.get("/pesquisa", (req, res) => {

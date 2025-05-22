@@ -104,8 +104,8 @@
                 </select>
 
             </div>
-            <div class="grade-produtos">
-                <div class="produto">
+            <div class="grade-produtos" id="grade-produtos">
+                <!-- <div class="produto">
                     <div class="imagem-container">
                         <img src="../imagens/fachada-do-estabelecimento.jpg" />
                         <button class="favorito">
@@ -162,7 +162,7 @@
                 <div class="produto">Loja 4</div>
                 <div class="produto">Loja 5</div>
                 <div class="produto">Loja 1</div>
-                <div class="produto">Loja 2</div>
+                <div class="produto">Loja 2</div> -->
                 <!-- ...e assim por diante -->
             </div>
         </div>
@@ -171,45 +171,73 @@
     </div>
 
     <script>
-       /* function listarEstabelecimentos() {
-            fetch('/api/estabelecimentos', {
-                method: 'GET'
-            })
-                .then(response => response.json())
-                .then(data => {
-                    const tabela = document.getElementById('TabelaCorpo');
-                    data.forEach(estabelecimento => {
-                        const linha = document.createElement('tr');
-                            linha.innerHTML = `
-                            <div class="produto" >
-                                <div class="imagem-container">
-                                    <img src="${FotosEstabelecimento.foto}" />
-                                    <button class="favorito"> ❤️ </button>
-                                </div>
-
-                                <h4>
-                                    ${estabelecimento.Nome}
-                                </h4>
-                                <span class="avaliacao"> ★ ${Oferta.avaliacao}
-                                </span>
-                                <h5>
-                                    ${Servico.Nome}
-                                </h5>
-                                <p>
-                                    ${Oferta.Descricao}
-                                </p>
-                                <h4>
-                                    ${Oferta.valor)}
-                                </h4> 
-                                `; 
-                                tabela.appendChild(linha);
-                    });
+        async function listarEstabelecimentos() {
+            try {
+                let oferta = await fetch('/api/oferta', {
+                    method: 'GET'
                 })
+                oferta = oferta.json();
+
+                let avaliacao = await fetch('/api/avaliacao', {
+                    method: 'GET'
+                })
+                avaliacao = avaliacao.json;
+
+
+                let servico = await fetch('/api/servico', {
+                    method: 'GET'
+                })
+                servico = servico.json
+
+                let foto = await fetch('/api/foto', {
+                    method: 'GET'
+                }) 
+                foto = foto.json
+                fetch('/api/estabelecimento', {
+                    method: 'GET'
+                })
+
+                    .then(response => response.json())
+                    .then(data => {
+                        const Grade = document.getElementById('grade-produtos');
+                        data.forEach(estabelecimento => {
+                            const produtoCard = document.createElement('div');
+                            produtoCard.className = 'produto';
+                                produtoCard.innerHTML = `
+                                
+                                    <div class="imagem-container">
+                                        <img src="${foto.Foto}" />
+                                        <button class="favorito"> ❤️ </button>
+                                    </div>
+    
+                                    <h4>
+                                        ${estabelecimento.Nome}
+                                    </h4>
+                                    <span class="avaliacao"> ★ ${avaliacao.Nota} 
+                                    </span>
+                                    <h5>
+                                        ${servico.Nome}
+                                    </h5>
+                                    <p>
+                                        ${oferta.Descricao}
+                                        
+                                    </p>
+                                    <h4>
+                                        ${oferta.Valor}
+                                       
+                                    </h4> 
+                                    `; 
+                                    Grade.appendChild(produtoCard)
+                        });
+                    })
+            } catch (error) {
+                console.log(`erro ao chamar api ${error}`)
+            }
         }
                                 document.addEventListener('DOMContentLoaded', function () {
-                                    listarUsuarios();
+                                    listarEstabelecimentos();
         })
-                                */
+                                
                                 function dropdown() {
             const dropdown = document.querySelector(`.dropdown-content`);
                                 dropdown.style.display === "flex" ? dropdown.style.display = "none" : dropdown.style.display = "flex";

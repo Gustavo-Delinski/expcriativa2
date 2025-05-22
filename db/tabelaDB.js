@@ -311,4 +311,4 @@ Estabelecimento.hasMany(Favoritos, { foreignKey: 'ID_estabelecimento', as: 'esta
 // Oferta.hasMany(Avaliacao, { foreignKey: 'ID_avaliacao', as: 'avaliacao', onDelete: 'CASCADE'});
 // Servico.hasMany(Oferta, { foreignKey: 'ID_oferta', as: 'oferta', onDelete: 'CASCADE'});
 
-export {Usuario, Estabelecimento, Servico, Oferta, Avaliacao};
+export {Usuario, Estabelecimento, Servico, Oferta, Avaliacao, FotosEstabelecimento};
