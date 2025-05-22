@@ -40,7 +40,7 @@
     </header>
 
     <main class="container my-5">
-        <button> Voltar </button>
+        <button> <a href="/pesquisa" style="color: white; text-decoration: none;"> Voltar </a></button>
         <div class="row" style="box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);">
             <!-- Carrossel -->
             <div class="col-md-6 mb-4" style="display: flex; align-items: center; ">
@@ -105,36 +105,37 @@
         <div id="avaliacoes">
             <h2>Avaliações:</h2>
             <!-- avaliações aparecerão aqui -->
-          </div>
-          
-          <form id="formAvaliacao">
+        </div>
+
+        <form id="formAvaliacao">
             Avaliação:
             <br>
             <div class="rating mb-3">
-                    <input type="radio" id="estrela5" name="avaliacao" value="5" />
-                    <label for="estrela5" title="5 estrelas">★</label>
+                <input type="radio" id="estrela5" name="avaliacao" value="5" />
+                <label for="estrela5" title="5 estrelas">★</label>
 
-                    <input type="radio" id="estrela4" name="avaliacao" value="4" />
-                    <label for="estrela4" title="4 estrelas">★</label>
+                <input type="radio" id="estrela4" name="avaliacao" value="4" />
+                <label for="estrela4" title="4 estrelas">★</label>
 
-                    <input type="radio" id="estrela3" name="avaliacao" value="3" />
-                    <label for="estrela3" title="3 estrelas">★</label>
+                <input type="radio" id="estrela3" name="avaliacao" value="3" />
+                <label for="estrela3" title="3 estrelas">★</label>
 
-                    <input type="radio" id="estrela2" name="avaliacao" value="2" />
-                    <label for="estrela2" title="2 estrelas">★</label>
+                <input type="radio" id="estrela2" name="avaliacao" value="2" />
+                <label for="estrela2" title="2 estrelas">★</label>
 
-                    <input type="radio" id="estrela1" name="avaliacao" value="1" />
-                    <label for="estrela1" title="1 estrela">★</label>
-                </div>
-                <br>
+                <input type="radio" id="estrela1" name="avaliacao" value="1" />
+                <label for="estrela1" title="1 estrela">★</label>
+            </div>
+            <br>
             <label for="comentario">Comentário:</label>
             <textarea id="comentario" name="comentario" required></textarea>
-          
-            <button type="button" onclick="console.log(document.getElementById('comentario').value)">Enviar avaliação</button>
-          </form>
-          
-          <script src="/scripts/estabelecimento.js"></script>
-          
+
+            <button type="button" onclick="console.log(document.getElementById('comentario').value)">Enviar
+                avaliação</button>
+        </form>
+
+        <script src="/scripts/estabelecimento.js"></script>
+
 
         <script>
             const estrelas = document.querySelectorAll('input[name="avaliacao"]');
@@ -144,45 +145,56 @@
                 });
             });
 
-            /* function listarEstabelecimentos() {
-            fetch('/api/estabelecimentos', {
-                method: 'GET'
-            })
-                .then(response => response.json())
-                .then(data => {
-                    const tabela = document.getElementById('TabelaCorpo');
-                    data.forEach(estabelecimento => {
-                        const linha = document.createElement('tr');
-                            linha.innerHTML = `
-                            <div class="produto" >
-                                <div class="imagem-container">
-                                    <img src="${FotosEstabelecimento.foto}" />
-                                    <button class="favorito"> ❤️ </button>
-                                </div>
+            async function listarEstabelecimentos() {
+                try {
+                    const resp = await fetch('/api/estabelecimentos-completos');
+                    if (!resp.ok) { throw new Error(`Status ${resp.status}`); return };
+                    const estabelecimentos = await resp.json();
+                    console.log('JSON da API →', estabelecimentos);
 
-                                <h4>
-                                    ${estabelecimento.Nome}
-                                </h4>
-                                <span class="avaliacao"> ★ ${Oferta.avaliacao}
-                                </span>
-                                <h5>
-                                    ${Servico.Nome}
-                                </h5>
-                                <p>
-                                    ${Oferta.Descricao}
-                                </p>
-                                <h4>
-                                    ${Oferta.valor)}
-                                </h4> 
-                                `; 
-                                tabela.appendChild(linha);
+                    if (!Array.isArray(estabelecimentos)) {
+                        console.error('Esperava um array, recebi:', estabelecimentos);
+                        return;
+                    }
+
+                    const grade = document.getElementById('grade-produtos');
+                    grade.innerHTML = '';
+
+                    estabelecimentos.forEach(estab => {
+                        const nome = estab.Nome || '—';
+                        const media = estab.Ofertas[0].Avaliacaos[0].Nota || 'Sem avaliações';
+                        const foto = estab.fotoSrc || 'imagens/placeholder.png';
+
+                        // Pega a primeira oferta, se existir
+                        const oferta = (estab.Ofertas && estab.Ofertas[0]) || {};
+                        const servico = oferta.servicoNome || '—';
+                        const desc = oferta.Descricao || 'Sem descrição';
+                        const valor = oferta.Valor != null
+                            ? `R$ ${oferta.Valor.toFixed(2)}`
+                            : 'Preço indisponível';
+
+                        const card = document.createElement('div');
+                        card.className = 'produto';
+
+                        card.innerHTML = `
+        <div class="imagem-container">
+          <img src="${foto}" alt="Foto de ${nome}" />
+          <button class="favorito">❤️</button>
+        </div>
+        <h4><a href="estabelecimento" style="color: black; text-decoration: none"> ${nome} <span class="avaliacao">★ ${media} </a> </span></h4>
+        <h5>${servico}</h5>
+        <p>${desc}</p>
+        <h4>Preço: ${valor}</h4>
+      `;
+                        grade.appendChild(card);
                     });
-                })
-        }
-                                document.addEventListener('DOMContentLoaded', function () {
-                                    listarUsuarios();
-        })
-                                */
+                } catch (err) {
+                    console.error('Erro ao chamar /api/estabelecimentos-completos:', err);
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', listarEstabelecimentos);
+
 
             function dropdown() {
                 const dropdown = document.querySelector(`.dropdown-content`);

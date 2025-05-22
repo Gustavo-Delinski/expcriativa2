@@ -91,6 +91,8 @@
         <div style="display: flex; flex-direction: column; align-items: center; padding-left: 30px; ;"
             class="container-fluid">
             <div style="padding-bottom: 2dvi; ; display: flex; justify-content: space-between; width: 90%;">
+
+                <button style="border-radius: 20px;"> Limpar filtros </button>
                 <input type="search" placeholder="Procurando por um estabelecimento especifico?"
                     style="border-radius: 20px; width: 25dvi; height: 1.6dvi; padding-left: 10px;">
 
@@ -105,65 +107,7 @@
 
             </div>
             <div class="grade-produtos" id="grade-produtos">
-                <!-- <div class="produto">
-                    <div class="imagem-container">
-                        <img src="../imagens/fachada-do-estabelecimento.jpg" />
-                        <button class="favorito">
-                            ❤️
-                        </button>
-                    </div>
 
-                    <h4>
-                        Nome Estabelecimento
-                        <span class="avaliacao">★ 4.5</span>
-                    </h4>
-
-                    <h5>Categorias</h5>
-                    <p>Lorem ipsum</p>
-
-                    <h4> Preço: </h3>
-                </div>
-                <div class="produto">Loja 3</div>
-                <div class="produto">Loja 4</div>
-                <div class="produto">Loja 5</div>
-                <div class="produto">Loja 1</div>
-                <div class="produto">Loja 2</div>
-                <div class="produto">Loja 1</div>
-                <div class="produto">Loja 2</div>
-                <div class="produto">Loja 3</div>
-                <div class="produto">Loja 4</div>
-                <div class="produto">Loja 5</div>
-                <div class="produto">Loja 1</div>
-                <div class="produto">Loja 2</div>
-                <div class="produto">Loja 1</div>
-                <div class="produto">Loja 2</div>
-                <div class="produto">Loja 3</div>
-                <div class="produto">Loja 4</div>
-                <div class="produto">Loja 5</div>
-                <div class="produto">Loja 1</div>
-                <div class="produto">Loja 2</div>
-                <div class="produto">Loja 1</div>
-                <div class="produto">Loja 2</div>
-                <div class="produto">Loja 3</div>
-                <div class="produto">Loja 4</div>
-                <div class="produto">Loja 5</div>
-                <div class="produto">Loja 1</div>
-                <div class="produto">Loja 2</div>
-                <div class="produto">Loja 1</div>
-                <div class="produto">Loja 2</div>
-                <div class="produto">Loja 3</div>
-                <div class="produto">Loja 4</div>
-                <div class="produto">Loja 5</div>
-                <div class="produto">Loja 1</div>
-                <div class="produto">Loja 2</div>
-                <div class="produto">Loja 1</div>
-                <div class="produto">Loja 2</div>
-                <div class="produto">Loja 3</div>
-                <div class="produto">Loja 4</div>
-                <div class="produto">Loja 5</div>
-                <div class="produto">Loja 1</div>
-                <div class="produto">Loja 2</div> -->
-                <!-- ...e assim por diante -->
             </div>
         </div>
     </div>
@@ -174,7 +118,7 @@
         async function listarEstabelecimentos() {
             try {
                 const resp = await fetch('/api/estabelecimentos-completos');
-                if (!resp.ok) {throw new Error(`Status ${resp.status}`);return };
+                if (!resp.ok) { throw new Error(`Status ${resp.status}`); return };
                 const estabelecimentos = await resp.json();
                 console.log('JSON da API →', estabelecimentos);
 
@@ -207,7 +151,7 @@
           <img src="${foto}" alt="Foto de ${nome}" />
           <button class="favorito">❤️</button>
         </div>
-        <h4>${nome} <span class="avaliacao">★ ${media}</span></h4>
+        <h4><a href="estabelecimento" style="color: black; text-decoration: none"> ${nome} <span class="avaliacao">★ ${media} </a> </span></h4>
         <h5>${servico}</h5>
         <p>${desc}</p>
         <h4>Preço: ${valor}</h4>
@@ -225,6 +169,10 @@
             const dropdown = document.querySelector(`.dropdown-content`);
             dropdown.style.display === "flex" ? dropdown.style.display = "none" : dropdown.style.display = "flex";
         };
+
+        function limparFiltros() {
+            window.location.href = '/pesquisa'; // ou atualizar sem filtros via JS
+        }
     </script>
 </body>
 
