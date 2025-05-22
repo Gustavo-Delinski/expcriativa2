@@ -120,6 +120,46 @@
                 });
             });
 
+            /* function listarEstabelecimentos() {
+            fetch('/api/estabelecimentos', {
+                method: 'GET'
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const tabela = document.getElementById('TabelaCorpo');
+                    data.forEach(estabelecimento => {
+                        const linha = document.createElement('tr');
+                            linha.innerHTML = `
+                            <div class="produto" >
+                                <div class="imagem-container">
+                                    <img src="${FotosEstabelecimento.foto}" />
+                                    <button class="favorito"> ❤️ </button>
+                                </div>
+
+                                <h4>
+                                    ${estabelecimento.Nome}
+                                </h4>
+                                <span class="avaliacao"> ★ ${Oferta.avaliacao}
+                                </span>
+                                <h5>
+                                    ${Servico.Nome}
+                                </h5>
+                                <p>
+                                    ${Oferta.Descricao}
+                                </p>
+                                <h4>
+                                    ${Oferta.valor)}
+                                </h4> 
+                                `; 
+                                tabela.appendChild(linha);
+                    });
+                })
+        }
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    listarUsuarios();
+        })
+                                */
+
             function dropdown() {
                 const dropdown = document.querySelector(`.dropdown-content`);
                 dropdown.style.display === "flex" ? dropdown.style.display = "none" : dropdown.style.display = "flex";

@@ -1,11 +1,16 @@
 import {Router} from "express";
 import {Estabelecimento} from "../db/tabelaDB.js";
+import { Servico } from "../db/tabelaDB.js";
+import { Avaliacao } from "../db/tabelaDB.js";
+import { Oferta } from "../db/tabelaDB.js";
+import { FotosEstabelecimento } from "../db/tabelaDB.js";
 import bcrypt from "bcryptjs";
+
 
 const rota_lojas = Router();
 
 rota_lojas
-.get('/api/lojas', async (req, res) => {
+.get('/api/estabelecimento', async (req, res) => {
     const lojas = await Estabelecimento.findAll();
     res.json(lojas);
 })
@@ -76,4 +81,41 @@ rota_lojas
     const loja = await Estabelecimento.findByPk(id);
     return loja ? res.json(await loja.destroy()) : res.status(404).end();
 });
-export default rota_lojas;
+
+const rota_servico = Router();
+rota_servico
+
+.get('/api/servico', async (req, res) => {
+    const servicos = await Servico.findAll();
+    res.json(servicos)
+});
+
+const rota_oferta = Router();
+rota_oferta
+
+.get('/api/oferta', async (req, res) => {
+    const ofertas = await Oferta.findAll();
+    res.json(ofertas)
+});
+
+const rota_avaliacao = Router();
+rota_avaliacao
+
+.get('/api/avaliacao', async (req, res) => {
+    const avaliacaos = await Avaliacao.findAll();
+    res.json(avaliacaos)
+});
+
+const rota_foto = Router();
+rota_foto
+
+.get('/api/foto', async (req, res) => {
+    const fotos = await FotosEstabelecimento.findAll();
+    res.json(fotos)
+});
+
+
+
+export default {rota_lojas, rota_avaliacao,rota_foto,rota_oferta,rota_servico};
+
+
