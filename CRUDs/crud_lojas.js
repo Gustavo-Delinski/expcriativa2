@@ -208,10 +208,10 @@ rota_lojas.get('/api/estabelecimentos-completos', async (req, res) => {
     res.status(500).json({ erro: "Não foi possível carregar os estabelecimentos" });
   }
 })
-.post('/api/CriarEstabelecimento', async (req, res) => {
-    const { Nome,Email,Telefone,Estado,Cidade,Bairro, Endereco, Numero, Complemento, CNPJ, CEP, usuarioId} = req.body;
-    const lojas = await Estabelecimento.findOne({ where: { Cnpj: CNPJ } });
-    // const id_usuario = 1 //req.session?.usuarioId;
+.post('/api/lojas', async (req, res) => {
+    const { nome, endereco, numero, complemento, cnpj, cep } = req.body;
+    const lojas_cnpj = await Estabelecimento.findOne({ where: { cnpj: cnpj } });
+    const id_usuario = req.session?.usuarioId;
 
     if (lojas) {
         return res.status(400).json({mensagem:"CNPJ ja cadastrado."});
@@ -222,7 +222,6 @@ rota_lojas.get('/api/estabelecimentos-completos', async (req, res) => {
     try {
         await Estabelecimento.create({
             Nome: Nome,
-            Email:Email,
             Cnpj: CNPJ,
             Logradouro: Endereco,
             Numero: Numero ? Numero : null,

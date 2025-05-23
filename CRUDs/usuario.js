@@ -104,12 +104,11 @@ rota_usuarios
 })
 .get('/api/usuario/:id/foto', async (req, res) => {
     const usuario = await Usuario.findByPk(req.params.id);
-    console.log(usuario)
     if (!usuario) {
         return res.status(404).send('Usuario não encontrada');
     }
     if (!usuario.Foto) {
-        return res.status(204).send(null);
+        return res.status(202).send(null);
     }
     res.set('Content-Type', usuario.TipoFoto || 'image/png');
     res.send(usuario.Foto); // envia o blob diretamente

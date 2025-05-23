@@ -24,11 +24,20 @@
   </a>
   <nav class="servicos" >
     <a href="pesquisa" class="encontrar">Encontrar <p>LocalTop</p></a>
-    <a href="/perfil">Divulgar Serviço</a>
+    <a href="/">Divulgar Serviço</a>
     <a href="/#sobre">Sobre Nós</a>
   </nav>
-  <nav class="infos" id="infos">
-    <a href="/login" class="logar">Login</a><a href="/signup" class="cadastrar">Cadastrar-se</a>
+  <nav class="infos">
+    <h3 id="nomeUsu">Nome Usuário </h3>
+    <div class="usuario">
+      <button class="dropdownUsuario" id="BtnDropdown" onclick="dropdown()">
+        <img src="../imagens/SVGs/perfil.svg" alt="Minha Conta" class="conta">
+      </button>
+      <div class="dropdown-content">
+        <a href="/perfil">Meu Perfil</a>
+        <button id="logoutBtn">Sair</button>
+      </div>
+    </div>
   </nav>
 </header>
   
@@ -222,23 +231,9 @@
     // Verifica o estado de login e, se estiver logado, ativa o monitoramento de sessão
     const inicializarVerificacaoDeSessao = async () => {
       try {
-        const infos = document.getElementById("infos");
         const resposta = await fetch("/auth/estado");
         const dados = await resposta.json();
-        if (!dados.logado) {
-          infos.innerHTML = `<a href="/login" class="logar">Login</a><a href="/signup" class="cadastrar">Cadastrar-se</a>`
-        }
         if (dados.logado) {
-        infos.innerHTML = `<h3 id="nomeUsu">Nome Usuário </h3>
-    <div class="usuario">
-      <button class="dropdownUsuario" id="BtnDropdown" onclick="dropdown()">
-        <img src="../imagens/SVGs/perfil.svg" alt="Minha Conta" class="conta">
-      </button>
-      <div class="dropdown-content">
-        <a href="/perfil">Meu Perfil</a>
-        <button id="logoutBtn" onclick="logout()">Sair</button>
-      </div>
-    </div>`
           ativarMonitoramento();
         }
       } catch (err) {
@@ -297,38 +292,11 @@
         console.error("Erro ao fazer logout:", err);
       }
     }
+    document.getElementById("logoutBtn").addEventListener("click", logout);
     function dropdown() {
       const dropdown = document.querySelector(`.dropdown-content`);
       dropdown.style.display === "flex" ? dropdown.style.display = "none" : dropdown.style.display = "flex";
     }
-    async function pegarDados() {
-      try {
-        const resposta = await fetch("/auth/estado");
-        const dados = await resposta.json();
-        const response = await fetch(`/api/usuario/${dados.usuarioId}`, {
-          method: 'GET'
-        })
-        const usuario = await response.json();
-        document.getElementById("nomeUsu").innerHTML = `Olá, ${usuario.Nome.split(" ")[0] }`;
-        const responseImg = await fetch(`/api/usuario/${dados.usuarioId}/foto`,{
-          method: 'GET'
-        })
-        if (responseImg.status === 202) {
-          return;
-        }
-        else if (responseImg.ok) {
-          // Tem imagem, exibe
-          const img = await responseImg.blob();
-          document.querySelector(".conta").src = URL.createObjectURL(img);
-        } else {
-          console.error(`Erro ao carregar imagem. Status: ${responseImg.status}`);
-        }
-      } catch (error) {
-        console.log(`Erro ao requisitar os dados do banco.\n${error}`);
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', pegarDados())
   </script>
 </body>
 

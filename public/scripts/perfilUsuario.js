@@ -193,16 +193,15 @@ async function pegarDados() {
         document.getElementById('email').value = usuario.Email;
         document.getElementById('cpf').value = formatarCPF(usuario.CPF);
         document.getElementById('datanasc').value = formatarData(usuario.DataNasc);
-        displayNome.innerHTML = `<h4>${usuario.Nome.split(" ")[0].charAt(0).toUpperCase() + usuario.Nome.split(" ")[0].slice(1)}</h4><h5>${usuario.Email}</h5>`;
+        displayNome.innerHTML = `<h4>${usuario.Nome}</h4><h5>${usuario.Email}</h5>`;
         nome.innerHTML = usuario.Nome.split(" ")[0].charAt(0).toUpperCase() + usuario.Nome.split(" ")[0].slice(1);
         const responseImg = await fetch(`/api/usuario/${dados.usuarioId}/foto`,{
             method: 'GET'
         })
-        console.log(responseImg)
-        if (responseImg.status === 204 || responseImg.status === 404) {
-            console.log("Sem imagem de perfil");
+        if (responseImg.status === 202) {
             return;
-        } else if (responseImg.ok) {
+        }
+        else if (responseImg.ok) {
             // Tem imagem, exibe
             const img = await responseImg.blob();
             const url = URL.createObjectURL(img);
@@ -838,7 +837,6 @@ async function adicionarLocalTop() {
     } else {
         Swal.fire({
             title: 'Erro ao criar estabelecimento',
-            text: `Verifique os dados e tente novamente${response.status}`,
             icon: 'error'
         });
     }

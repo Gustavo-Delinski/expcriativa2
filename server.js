@@ -20,14 +20,14 @@ function verificarAutenticacao(req, res, next) {
     if (req.session.usuarioId) {
         next(); // usuário está logado
     } else {
-        res.redirect("/login");
+        res.status(401).json({ mensagem: 'Você precisa estar logado para acessar esta rota.' });
     }
 }
 function verificarAdm(req, res, next) {
     if (req.session.adm) {
         next(); // usuário está logado
     } else {
-        res.redirect("/");
+        res.status(401).json({ mensagem: 'Você não tem permissão para acessar esta rota.' });
     }
 }
 const app = express();
@@ -40,7 +40,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 // const sessionMaxAge = 10 * 60 * 1000;
 // 1*30*1000 = 30 segs
 //                   min * seg * ms
-const sessionMaxAge = 99 * 60 * 1000;
+const sessionMaxAge = 60 * 60 * 1000;
 
 app.use(session({
     secret: 'localtop',
@@ -92,12 +92,21 @@ app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "paginas", "index.html"));
 });
 
+app.get("/lojascrud", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "paginas", "lojascrud.html"));
+});
+
 app.get("/pesquisa", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "paginas", "pesquisa.html"));
 });
 
 app.get("/estabelecimento", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "paginas", "estabelecimento.html"));
+});
+
+
+app.get("/lojas", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "paginas", "lojas.html"));
 });
 
 app.get("/signup", (req, res) => {
@@ -111,16 +120,16 @@ app.get("/perfil", (req,res) => {
     res.sendFile(path.join(__dirname, "public", "paginas", "perfilUsuario.html"));
 })
 
-// app.get("/lista",(req, res) => {
-//     res.sendFile(path.join(__dirname, "public", "paginas", "usuariocrud.html"));
-// });
-
-app.get("/listaLojas",verificarAdm,(req, res) => {
-    res.sendFile(path.join(__dirname, "public", "paginas", "lojascrud.html"));
-});
-app.get("/listaUsuarios",verificarAdm, (req, res) => {
+app.get("/lista",(req, res) => {
     res.sendFile(path.join(__dirname, "public", "paginas", "usuariocrud.html"));
 });
+
+app.get("/lista_lojas",(req, res) => {
+    res.sendFile(path.join(__dirname, "public", "paginas", "lojascrud.html"));
+});
+// app.get("/lista",verificarAdm, (req, res) => {
+//     res.sendFile(path.join(__dirname, "public", "paginas", "usuariocrud.html"));
+// });
 
 app.get("/sessao", (req, res) => {
     res.json(req.session.usuarioId == null ? {Resposta: "Não há sessão ativa"} : {usuarioId: req.session.usuarioId, nome: req.session.nome});

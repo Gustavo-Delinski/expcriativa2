@@ -158,35 +158,3 @@ async function editarUsuario(id) {
         console.log(`Erro ao editar o usuário: ${error}`)
     }
 }
-
-async function acessarAreaAdm() {
-    try {
-        const res = await fetch('/listaUsuarios'); // substitua pela rota real
-
-        if (!res.ok) {
-            const erro = await res.json();
-            if (res.status === 401) {
-                Swal.fire({
-                    title: "Acesso negado",
-                    text: "Você não tem permissão para acessar essa área.",
-                    icon: "error",
-                    confirmButtonText: "OK"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = '/';
-                    }
-                });
-            } else {
-                window.location.href = '/';
-            }
-            return;
-        }
-
-        // Se autorizado, redireciona ou faz algo
-        const dados = await res.json();
-        console.log(dados); // ou redirecionar
-    } catch (err) {
-        console.error('Erro na requisição:', err);
-        mostrarPopup('Erro de conexão.');
-    }
-}
