@@ -73,7 +73,15 @@ header {
     align-items: end;
     justify-content: end;
     gap: 1dvi;
-
+    .logar,.cadastrar {
+        text-decoration: none;
+        color: #FFFF;
+        font-size: 1.1dvi;
+        padding: 0.5rem 1rem;
+        border-radius: 10px;
+        background-color: #25A675;
+        transition: 0.3s;
+    }
     h3 {
         font-size: 1.1dvi;
         color: #FFFF;
