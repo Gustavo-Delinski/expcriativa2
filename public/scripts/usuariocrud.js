@@ -30,8 +30,6 @@ async function abrirModalEdicao(id) {
         document.getElementById('editDataNasc').value = "";
     }
 
-    document.getElementById('editSenha').value = usuario.Senha || "";
-
     const modal = new bootstrap.Modal(document.getElementById('modalEdicaoUsuario'));
     modal.show();
 }

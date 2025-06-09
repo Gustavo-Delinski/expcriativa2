@@ -12,6 +12,25 @@
     </style>
     <link rel="icon" type="image/x-icon" href="../imagens/logo/Símbolo.svg">
     <title>LocalTop</title>
+
+    <style>
+  .navbar {
+    background-color: #302163;
+  }
+
+  table th, table td {
+    border: 1px solid #333;
+    padding: 10px;
+    text-align: center;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+  }
+</style>
+    
 </head>
 <body style="background-color:#F7EFE6;">
     <div>
@@ -80,10 +99,6 @@
                 <label for="editDataNasc" class="form-label">Data de Nascimento</label>
                 <input type="date" class="form-control" id="editDataNasc">
               </div>
-              <div class="mb-3">
-                <label for="editSenha" class="form-label">Senha</label>
-                <input type="password" class="form-control" id="editSenha">
-              </div>
             </form>
           </div>
           <div class="modal-footer">
@@ -114,7 +129,7 @@
           document.getElementById('editDataNasc').value = "";
         }
 
-        document.getElementById('editSenha').value = "";
+
 
         const modal = new bootstrap.Modal(document.getElementById('modalEdicaoUsuario'));
         modal.show();
@@ -126,11 +141,10 @@
         const email = document.getElementById('editEmail').value;
         const cpf = document.getElementById('editCPF').value.replace(/\D/g, '');
         const dataNascimento = document.getElementById('editDataNasc').value;
-        const senha = document.getElementById('editSenha').value;
 
         const body = { nome, email, cpf };
         if (dataNascimento) body.dataNascimento = dataNascimento;
-        if (senha) body.senha = senha;
+        
 
         const response = await fetch(`/api/usuario/${id}`, {
           method: 'PUT',
