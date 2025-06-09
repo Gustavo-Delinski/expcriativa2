@@ -14,6 +14,64 @@ function mascaraCPF(event) {
     input.value = cpf;
 }
 
+async function abrirModalEdicao(id) {
+    const response = await fetch(`/api/usuario/${id}`);
+    const usuario = await response.json();
+
+    document.getElementById('editId').value = usuario.ID_usuario;
+    document.getElementById('editNome').value = usuario.Nome;
+    document.getElementById('editEmail').value = usuario.Email;
+    document.getElementById('editCPF').value = usuario.CPF.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+
+    const data = new Date(usuario.DataNasc);
+    if (!isNaN(data.getTime())) {
+        document.getElementById('editDataNasc').value = data.toISOString().split('T')[0];
+    } else {
+        document.getElementById('editDataNasc').value = "";
+    }
+
+    document.getElementById('editSenha').value = usuario.Senha || "";
+
+    const modal = new bootstrap.Modal(document.getElementById('modalEdicaoUsuario'));
+    modal.show();
+}
+
+function listarUsuarios() {
+    fetch('/api/usuarios', {
+        method: 'GET'
+    })
+        .then(response => response.json())
+        .then(data => {
+            const tabela = document.getElementById('TabelaCorpo');
+            tabela.innerHTML = ''; // limpa antes de inserir
+            data.forEach(usuario => {
+                const dataFormatada = new Date(usuario.DataNasc).toLocaleDateString('pt-BR');
+                const linha = document.createElement('tr');
+                linha.innerHTML = `
+                    <td>${usuario.ID_usuario}</td>
+                    <td>${usuario.Nome}</td>
+                    <td>${usuario.Email}</td>
+                    <td>${formatarCPF(usuario.CPF)}</td>
+                    <td>${dataFormatada}</td>
+                    <td>${usuario.Senha ? '••••••••' : '(sem senha)'}</td>
+                    <td>
+                        <button onclick="PopUpDelete(${usuario.ID_usuario})"
+                            style="width:100%; padding: 6px; background-color: red; color: white; border: none;">X</button>
+                    </td>
+                    <td>
+                        <button onclick="abrirModalEdicao(${usuario.ID_usuario})"
+                            style="width:100%; padding: 6px; background-color: dodgerblue; color: white; border: none;">🔄</button>
+                    </td>
+                `;
+                tabela.appendChild(linha);
+            });
+        });
+}
+
+
+
+
+
 function validaCPF(cpf) {
     cpf = cpf.replace(/\D/g, '');
 
@@ -33,6 +91,41 @@ function validaCPF(cpf) {
 
     return dig1 === parseInt(cpf[9]) && dig2 === parseInt(cpf[10]);
 }
+
+async function salvarEdicaoUsuario() {
+    const id = document.getElementById('editId').value;
+    const nome = document.getElementById('editNome').value;
+    const email = document.getElementById('editEmail').value;
+    const cpf = document.getElementById('editCPF').value.replace(/\D/g, '');
+    const dataNascimentoRaw = document.getElementById('editDataNasc').value;
+
+    let dataNascimento = "";
+    if (dataNascimentoRaw) {
+        const [ano, mes, dia] = dataNascimentoRaw.split('-');
+        dataNascimento = `${ano}-${mes}-${dia}T00:00:00Z`;
+    }
+
+    const body = { nome, email, cpf };
+    if (dataNascimento) body.dataNascimento = dataNascimento;
+
+    const response = await fetch(`/api/usuario/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+    });
+
+    if (response.ok) {
+        Swal.fire('Usuário atualizado com sucesso!');
+        bootstrap.Modal.getInstance(document.getElementById('modalEdicaoUsuario')).hide();
+        document.getElementById('TabelaCorpo').innerHTML = '';
+        listarUsuarios(); // atualiza a tabela
+    } else {
+        const erro = await response.json();
+        Swal.fire('Erro', erro.mensagem || 'Erro ao atualizar usuário', 'error');
+    }
+}
+
+
 
 function formatarCPF(cpf) {
     cpf = cpf.toString().padStart(11, '0');
@@ -54,31 +147,7 @@ function msgValidaCPF() {
     return true;
 }
 
-function listarUsuarios() {
-    fetch('/api/usuarios', {
-        method: 'GET'
-    })
-        .then(response => response.json())
-        .then(data => {
-            const tabela = document.getElementById('TabelaCorpo');
-            data.forEach(usuario => {
-                const linha = document.createElement('tr');
-                linha.innerHTML = `
-                    <td class="linha" >${usuario.ID_usuario}</td>
-                    <td class="linha" >${usuario.Nome}</td>
-                    <td class="linha" >${usuario.Email}</td>
-                    <td class="linha" >${formatarCPF(usuario.CPF)}</td>
-                    <td style="border: 2px solid #333; padding: 0;">
-                        <button type="button" style="width: 100%; height: 100%; padding: 12px; background-color: red; border: none; color: white; font-weight: bold; cursor: pointer;" id="delete" onclick="PopUpDelete(${usuario.ID_usuario})">X</button>
-                    </td>
-                    <td style="border: 2px solid #333; padding: 0;">
-                        <button type="button" style="width: 100%; height: 100%; padding: 12px; background-color: dodgerblue; border: none; color: white; font-weight: bold; cursor: pointer;" id="update" onclick="trocarTipo()">🔄</button>
-                    </td>
-                `;
-                tabela.appendChild(linha);
-            });
-        })
-}
+
 document.addEventListener('DOMContentLoaded', function () {
     listarUsuarios();
 })

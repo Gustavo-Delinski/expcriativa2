@@ -32,7 +32,7 @@ function verificarAdm(req, res, next) {
 const app = express();
 app.use(express.json());
 //Porta em que o servidor rodará
-const port = 3000;
+const port = 3001;
 //diretório atual onde o servidor está rodando
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
