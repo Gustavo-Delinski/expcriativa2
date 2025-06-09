@@ -4,7 +4,7 @@ import { Servico } from "../db/tabelaDB.js";
 import { Avaliacao } from "../db/tabelaDB.js";
 import { Oferta } from "../db/tabelaDB.js";
 import { FotosEstabelecimento } from "../db/tabelaDB.js";
-// import bcrypt from "bcryptjs";npm
+// import bcrypt from "bcryptjs";
 import { Op } from "sequelize";
 import multer from "multer";
 
