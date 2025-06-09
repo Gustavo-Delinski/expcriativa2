@@ -2,6 +2,7 @@ html {
     margin: 0;
     padding: 0;
     scroll-behavior: smooth;
+    height: 100%;
 }
 
 body {
@@ -24,12 +25,12 @@ header {
     justify-content: space-between;
     align-items: center;
     margin: 0;
-    padding: 0 3rem;
+    padding: 0 3.21dvi;
 }
 
 .logoLink {
     display: flex;
-    align-items: end;
+    align-items: center;
     height: 100%;
     width: 15dvi;
     .logo {
@@ -40,7 +41,7 @@ header {
 
 .servicos {
     display: flex;
-    align-items: end;
+    align-items: center;
     justify-content: space-between;
     width: 30dvi;
     height: 100%;
@@ -619,7 +620,7 @@ main {
                     background-repeat: no-repeat;
                     background-color: #3E996F;
                     width: 100%;
-                    height: 30dvi;
+                    height: 26dvi;
                     border-radius: 1dvi;
                     .prevImg {
                         background-color: rgba(0, 0, 0, 0.18);
@@ -642,28 +643,13 @@ main {
                         margin-left: 16.5dvi;
                     }
                 }
-                p {
-                    padding: 0;
-                    text-align: center;
-                    font-size: 1.2dvi;
-                }
-                label {
-                    text-align: center;
-                    border-radius: 1dvi;
-                    background-color: #3E996F;
-                    color: #FFFF;
-                    cursor: pointer;
-                }
-                label:hover {
-                    transform: scale(1.05);
-                }
-                label:active {
-                    transform: scale(1);
-                }
             }
             .IdentifierDelete {
                 display: flex;
                 flex-direction: row;
+                label:hover {
+                    cursor: pointer;
+                }
                 button {
                     border: none;
                     background-color: transparent;
@@ -672,7 +658,58 @@ main {
                     padding:0;
                 }
                 p {
-                    width: 89%;
+                    padding: 0;
+                }
+                .spans {
+                    display: flex;
+                    width: 100%;
+                    overflow-x: auto;
+                    align-items: center;
+                    justify-content: center;
+                }
+                span {
+                    display: flex;
+                    width: 1rem;
+                    height:  1rem;
+                    background-color: transparent;
+                    border-radius: 0.5dvi;
+                    border: 2px solid #3E996F;
+                    flex-shrink: 0;
+                    margin: 0 5px;
+                }
+            }
+            .SelectServicos {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                label {
+                    font-weight: bold;
+                    font-size: 1.3dvi;
+                    color: #3E996F;
+                    margin-left: 0.5dvi;
+                    text-align: center;
+                }
+                select {
+                    appearance: none; /* Remove o estilo padrão */
+                    -webkit-appearance: none; /* Para Safari */
+                    -moz-appearance: none;
+                    border:1px solid rgb(62, 62, 62);
+                    border-radius: 0.5dvi;
+                    background-color: white;
+                    background-image: url('data:image/svg+xml;utf8,<svg fill="black" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+                    background-repeat: no-repeat;
+                    background-position: right 0 center;
+                    background-size: 20px;
+                    width: 30%;
+                    padding-left: 0.3dvi ;
+                }select:hover {
+                    border:1px solid rgb(62, 62, 62);
+                    border-radius: 0.5dvi;
+                }
+                input {
+                    border:1px solid rgb(62, 62, 62);
+                    border-radius: 0.3dvi;
+                    padding-left: 0.3dvi
                 }
             }
         }
@@ -710,7 +747,8 @@ footer {
     gap:12%;
     .linkLogo {
         width: 15%;
-        height: 10%;
+        margin-left: 3%;
+        margin-top: 2%;
     }
     .divisor {
         display: flex;
@@ -721,7 +759,7 @@ footer {
         }
     }
     h3 {
-        font-size: 180%;
+        font-size: 1.9dvi;
         color: #F4FA46;
     }
     .redesSociais {
@@ -754,6 +792,7 @@ footer {
         text-align: end;
     }
 }
+
 
 /*Amarelo: #F4FA46*/
 /*Azul escuro: #302163*/
