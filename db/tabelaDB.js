@@ -305,7 +305,17 @@ Favoritos.belongsTo(Estabelecimento, { foreignKey: 'ID_estabelecimento', onDelet
 Historico.belongsTo(Usuario, { foreignKey: 'ID_usuario', onDelete: 'CASCADE' });
 Historico.belongsTo(Estabelecimento, { foreignKey: 'ID_estabelecimento', onDelete: 'CASCADE' });
 
-Usuario.hasMany(Favoritos, { foreignKey: 'ID_usuario', as: 'usuario', onDelete: 'CASCADE'},Historico, { foreignKey: 'ID_usuario', as: 'usuario', onDelete: 'CASCADE'});
+Usuario.hasMany(Favoritos, {
+    foreignKey: 'ID_usuario',
+    as: 'Favoritos',
+    onDelete: 'CASCADE'
+});
+
+Usuario.hasMany(Historico, {
+    foreignKey: 'ID_usuario',
+    as: 'Historico',
+    onDelete: 'CASCADE'
+});
 Estabelecimento.hasMany(FotosEstabelecimento, {
   foreignKey: 'ID_estabelecimento',
   as: 'FotosEstabelecimentos',
@@ -329,7 +339,7 @@ Estabelecimento.hasMany(Favoritos, {
 // Um estabelecimento pode ter vários acessos no histórico
 Estabelecimento.hasMany(Historico, {
   foreignKey: 'ID_estabelecimento',
-  as: 'Historicos',
+  as: 'Historico',
   onDelete: 'CASCADE'
 });
 

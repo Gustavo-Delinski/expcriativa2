@@ -22,7 +22,8 @@ const upload = multer({
 const rota_lojas = Router();
 
 
-rota_lojas.get('/api/estabelecimentos-completos', async (req, res) => {
+rota_lojas
+.get('/api/estabelecimentos-completos', async (req, res) => {
   const { search, categorias, avaliacoes, precoMin, precoMax, cidade, ordem } = req.query;
 
   // where dos modelos
@@ -60,7 +61,6 @@ rota_lojas.get('/api/estabelecimentos-completos', async (req, res) => {
       }]
     }]
   });
-    console.log(estabelecimentos);
   // ordenação in-memory
   // if (ordem) {
   //   estabelecimentos.sort((a, b) => {
@@ -71,53 +71,36 @@ rota_lojas.get('/api/estabelecimentos-completos', async (req, res) => {
 
   res.json(estabelecimentos);
 })
-    .post('/api/estabelecimento/filtro', async (req, res) => {
-        const { nome, nota } = req.body;
+.post('/api/estabelecimento/filtro', async (req, res) => {
+    const { nome, nota } = req.body;
 
-        try {
-            // Filtra avaliações pela nota
-            const avaliacoes = await Avaliacao.findAll({ where: { Nota: nota } });
-            const ofertas = await Oferta.findAll();
-            const estabelecimentos = await Estabelecimento.findAll();
+    try {
+        // Filtra avaliações pela nota
+        const avaliacoes = await Avaliacao.findAll({ where: { Nota: nota } });
+        const ofertas = await Oferta.findAll();
+        const estabelecimentos = await Estabelecimento.findAll();
 
-            // Filtra os estabelecimentos que possuem ofertas com avaliações com a nota informada
-            let encontrados = estabelecimentos.filter(estab =>
-                ofertas.some(oferta =>
-                    oferta.ID_estabelecimento === estab.ID_estabelecimento &&
-                    avaliacoes.some(avaliacao =>
-                        avaliacao.ID_oferta === oferta.ID_oferta &&
-                        avaliacao.Nota === nota
-                    )
+        // Filtra os estabelecimentos que possuem ofertas com avaliações com a nota informada
+        let encontrados = estabelecimentos.filter(estab =>
+            ofertas.some(oferta =>
+                oferta.ID_estabelecimento === estab.ID_estabelecimento &&
+                avaliacoes.some(avaliacao =>
+                    avaliacao.ID_oferta === oferta.ID_oferta &&
+                    avaliacao.Nota === nota
                 )
+            )
+        );
+        // Filtro por nome
+        if (encontrados.length !== 0) {
+            let encontradosNome = encontrados.filter(e =>
+                e.Nome.toLowerCase().includes(nome.toLowerCase())
             );
-            // Filtro por nome
-            if (encontrados.length !== 0) {
-                let encontradosNome = encontrados.filter(e =>
-                    e.Nome.toLowerCase().includes(nome.toLowerCase())
-                );
 
-                // Lista de IDs dos estabelecimentos encontrados
-                let ids = encontradosNome.map(e => e.ID_estabelecimento);
-
-                // Buscar todos os dados com os includes
-                let final = await Estabelecimento.findAll({
-                    where: {
-                        ID_estabelecimento: ids
-                    },
-                    include: [{
-                        model: Oferta,
-                        as: 'Ofertas',
-                        include: [{
-                            model: Avaliacao,
-                            as: 'Avaliacao'
-                        }]
-                    }]
-                })
-                return res.status(200).json(final).end();
-            }
-            let encontradosNome = estabelecimentos.filter(e => e.Nome.toLowerCase().includes(nome.toLowerCase()));
+            // Lista de IDs dos estabelecimentos encontrados
             let ids = encontradosNome.map(e => e.ID_estabelecimento);
-            let finalNome = await Estabelecimento.findAll({
+
+            // Buscar todos os dados com os includes
+            let final = await Estabelecimento.findAll({
                 where: {
                     ID_estabelecimento: ids
                 },
@@ -130,13 +113,30 @@ rota_lojas.get('/api/estabelecimentos-completos', async (req, res) => {
                     }]
                 }]
             })
-            res.status(200).json(finalNome).end();
-
-        } catch (error) {
-            console.error(error);
-            res.status(500).json({ error: 'Erro interno do servidor' });
+            return res.status(200).json(final).end();
         }
-    });
+        let encontradosNome = estabelecimentos.filter(e => e.Nome.toLowerCase().includes(nome.toLowerCase()));
+        let ids = encontradosNome.map(e => e.ID_estabelecimento);
+        let finalNome = await Estabelecimento.findAll({
+            where: {
+                ID_estabelecimento: ids
+            },
+            include: [{
+                model: Oferta,
+                as: 'Ofertas',
+                include: [{
+                    model: Avaliacao,
+                    as: 'Avaliacao'
+                }]
+            }]
+        })
+        res.status(200).json(finalNome).end();
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Erro interno do servidor' });
+    }
+})
 // .post('/api/estabelecimento/filtro', async (req,res) => {
 //   const { nome, nota } = req.body;
 //
@@ -176,7 +176,24 @@ rota_lojas.get('/api/estabelecimentos-completos', async (req, res) => {
 // }
 // })
   rota_lojas
-.get('/api/estabelecimentos-completos', async (req, res) => {
+.get('/api/estabelecimento/imagem/:id', async (req, res) => {
+    let ArrayFotos = [];
+    const { id } = req.params;
+    const fotos = await FotosEstabelecimento.findAll({
+      where: { ID_estabelecimento: id }
+    });
+    console.log(id,fotos)
+    if (fotos.length === 0) {
+      return res.status(200).json('https://placehold.co/200x200');
+    }
+    // for (const img in fotos) {
+    //     let aux = {'Contet-Type':img.TipoFoto, 'Foto':img.Foto}
+    //     ArrayFotos.append(aux)
+    // }
+    res.set('Content-Type', fotos[0].TipoFoto || 'image/png');
+    res.send(fotos[0].Foto)
+})
+.get('/api/estabelecimentos', async (req, res) => {
   try {
     // const estabelecimentos = await Estabelecimento.findAll();
     const estabelecimentos = await Estabelecimento.findAll({

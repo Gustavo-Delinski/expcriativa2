@@ -229,16 +229,31 @@
           infos.innerHTML = `<a href="/login" class="logar">Login</a><a href="/signup" class="cadastrar">Cadastrar-se</a>`
         }
         if (dados.logado) {
-        infos.innerHTML = `<h3 id="nomeUsu">Nome Usuário </h3>
-    <div class="usuario">
-      <button class="dropdownUsuario" id="BtnDropdown" onclick="dropdown()">
-        <img src="../imagens/SVGs/perfil.svg" alt="Minha Conta" class="conta">
-      </button>
-      <div class="dropdown-content">
-        <a href="/perfil">Meu Perfil</a>
-        <button id="logoutBtn" onclick="logout()">Sair</button>
-      </div>
-    </div>`
+          if (dados.adm) {
+            infos.innerHTML = `<h3 id="nomeUsu">Nome Usuário </h3>
+            <div class="usuario">
+              <button class="dropdownUsuario" id="BtnDropdown" onclick="dropdown()">
+                <img src="../imagens/SVGs/perfil.svg" alt="Minha Conta" class="conta">
+              </button>
+              <div class="dropdown-content">
+                <a href="/perfil">Meu Perfil</a>
+                <a href="/listaUsuarios">Usuários</a>
+                <a href="/listaLojas">Estabelecimentos</a>
+                <button id="logoutBtn" onclick="logout()">Sair</button>
+              </div>
+            </div>`
+          } else {
+            infos.innerHTML = `<h3 id="nomeUsu">Nome Usuário </h3>
+            <div class="usuario">
+              <button class="dropdownUsuario" id="BtnDropdown" onclick="dropdown()">
+                <img src="../imagens/SVGs/perfil.svg" alt="Minha Conta" class="conta">
+              </button>
+              <div class="dropdown-content">
+                <a href="/perfil">Meu Perfil</a>
+                <button id="logoutBtn" onclick="logout()">Sair</button>
+              </div>
+            </div>`
+          }
           ativarMonitoramento();
         }
       } catch (err) {
@@ -317,6 +332,9 @@
           return;
         }
         else if (responseImg.ok) {
+          if (responseImg.status === 204) {
+           return;
+          }
           // Tem imagem, exibe
           const img = await responseImg.blob();
           document.querySelector(".conta").src = URL.createObjectURL(img);

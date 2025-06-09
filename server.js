@@ -10,9 +10,8 @@ import multer from "multer";
 import sequelize from "./db/declaracaoBD.js"
 // import { Usuario } from "./db/tabeladb.js";
 import rota_usuarios from "./CRUDs/usuario.js";
-import rota_lojas from "./CRUDs/crud_lojas.js"
-//Inicialização do servidor Express
-
+import rota_lojas from "./CRUDs/estabelecimento.js"
+import rota_servicos from "./CRUDs/servicos.js"
 import rota_Avaliacao from "./CRUDs/avaliacao.js";
 //Comentario
 
@@ -71,6 +70,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(rota_usuarios)
 app.use(rota_lojas)
+app.use(rota_servicos)
 // app.use(rotas.rota_avaliacao)
 // app.use(rotas.rota_servico)
 // app.use(rotas.rota_oferta)
@@ -81,9 +81,9 @@ app.use(rota_Avaliacao);
 
 app.get("/auth/estado", (req, res) => {
     if (req.session && req.session.usuarioId) {
-        res.json({ logado: true, usuarioId: req.session.usuarioId, nome: req.session.nome });
+        res.json({ logado: true, usuarioId: req.session.usuarioId, nome: req.session.nome, adm: req.session.adm });
     } else {
-        res.json({ logado: false });
+        res.json({ logado: false});
     }
 });
 
@@ -115,10 +115,10 @@ app.get("/perfil", (req,res) => {
 //     res.sendFile(path.join(__dirname, "public", "paginas", "usuariocrud.html"));
 // });
 
-app.get("/listaLojas",verificarAdm,(req, res) => {
+app.get("/listaLojas",(req, res) => {
     res.sendFile(path.join(__dirname, "public", "paginas", "lojascrud.html"));
 });
-app.get("/listaUsuarios",verificarAdm, (req, res) => {
+app.get("/listaUsuarios", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "paginas", "usuariocrud.html"));
 });
 
@@ -135,7 +135,6 @@ app.get("/logout", (req, res) => {
         res.redirect("/login");
     });
 });
-
 
 sequelize.sync().then(() => {
     app.listen(port,() => {
