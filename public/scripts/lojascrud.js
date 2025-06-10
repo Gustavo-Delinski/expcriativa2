@@ -230,12 +230,13 @@ async function PopUpDelete(id) {
     confirmButtonText: "Deletar"
     });
     if (result.isConfirmed) {
-        await deletarUsuario(id)
+        await deletarLoja(id)
         await Swal.fire({
             title: "Deleted!",
             text: "Your file has been deleted.",
             icon: "success"
         });
+        listarLojas();
     }
 }
 
