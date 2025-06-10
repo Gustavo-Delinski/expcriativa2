@@ -169,8 +169,9 @@ function ValidarData(data) {
     return true;
 }
 function formatarData(dataString) {
+    dataString = dataString.split("T")[0];
     const data = new Date(dataString);
-
+    console.log(data)
     const dia = String(data.getDate()).padStart(2, '0');
     const mes = String(data.getMonth() + 1).padStart(2, '0'); // meses começam do 0
     const ano = String(data.getFullYear());
@@ -180,7 +181,6 @@ function formatarData(dataString) {
 async function pegarDados() {
     try {
         const displayNome = document.getElementById('NomeEmail');
-        const nome = document.getElementById('nomeUsu');
         const resposta = await fetch("/auth/estado");
         const dados = await resposta.json();
         console.log(dados)
@@ -191,9 +191,10 @@ async function pegarDados() {
         document.getElementById('nome').value = usuario.Nome;
         document.getElementById('email').value = usuario.Email;
         document.getElementById('cpf').value = formatarCPF(usuario.CPF);
+        console.log(usuario.DataNasc)
         document.getElementById('datanasc').value = formatarData(usuario.DataNasc);
         displayNome.innerHTML = `<h4>${usuario.Nome.split(" ")[0].charAt(0).toUpperCase() + usuario.Nome.split(" ")[0].slice(1)}</h4><h5>${usuario.Email}</h5>`;
-        nome.innerHTML = usuario.Nome.split(" ")[0].charAt(0).toUpperCase() + usuario.Nome.split(" ")[0].slice(1);
+        document.getElementById('nomeUsu').innerHTML = usuario.Nome.split(" ")[0].charAt(0).toUpperCase() + usuario.Nome.split(" ")[0].slice(1);
         const responseImg = await fetch(`/api/usuario/${dados.usuarioId}/foto`,{
             method: 'GET'
         })
@@ -212,11 +213,12 @@ async function pegarDados() {
             console.error(`Erro ao carregar imagem. Status: ${responseImg.status}`);
         }
     } catch (error) {
+        throw error;
         console.log(`Erro ao requisitar os dados do banco.\n${error}`);
     }
 }
 
-document.addEventListener('DOMContentLoaded', pegarDados())
+document.addEventListener('DOMContentLoaded',inicializarVerificacaoDeSessao().then(pegarDados()))
 
 const Cancelar = () => {
     const btns = document.getElementById("btns");

@@ -66,10 +66,6 @@ function listarUsuarios() {
         });
 }
 
-
-
-
-
 function validaCPF(cpf) {
     cpf = cpf.replace(/\D/g, '');
 
@@ -130,8 +126,6 @@ async function salvarEdicaoUsuario() {
         Swal.fire('Erro', erro.mensagem || 'Erro ao atualizar usuário', 'error');
     }
 }
-
-
 
 function formatarCPF(cpf) {
     cpf = cpf.toString().padStart(11, '0');

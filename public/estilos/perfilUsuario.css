@@ -8,7 +8,6 @@ html {
 body {
     font-family: Montserrat-bold, sans-serif;
     width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -21,21 +20,22 @@ header {
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: 100%;
+    height: 6rem;
     justify-content: space-between;
     align-items: center;
     margin: 0;
-    padding: 0 3.21dvi;
+    padding: 0 3rem;
 }
 
 .logoLink {
     display: flex;
-    align-items: center;
+    align-items: end;
     height: 100%;
     width: 15dvi;
+
     .logo {
         width: 100%;
-        height: 75%;
+        height: 100%;
     }
 }
 
@@ -47,20 +47,26 @@ header {
     height: 100%;
     gap: 2dvi;
     margin-right: 5rem;
+
     a {
         font-size: 1.1dvi;
         text-decoration: none;
         color: #FFFF;
     }
+
     a:hover {
         transform: scale(1.1);
-    }a:active {
+    }
+
+    a:active {
         transform: scale(0.95);
     }
+
     .encontrar {
         display: flex;
         flex-direction: row;
         align-items: end;
+
         p {
             font-weight: Bolder;
             margin: 0 0 0 0.3rem;
@@ -135,6 +141,7 @@ header {
         border-radius: 2dvi;
     }
 }
+
 
 main {
     display: flex;
@@ -774,7 +781,6 @@ footer {
     flex-direction: column;
     background-color: #302163;
     width: 100%;
-    height: 100%;
     padding: 1%;
     gap: 1dvi;
 }
