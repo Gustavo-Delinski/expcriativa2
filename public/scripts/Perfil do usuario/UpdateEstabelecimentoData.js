@@ -73,11 +73,11 @@ async function abrirAbaEstabelecimento(id) {
                 <div class="RightUpdtForm">
                     <div class="InputFotoEstabele" >
                         <div id="EstabelecimentoimgUpdt" class="EstabelecimentoUpdtImg">
-                            <button class="UpdtprevImg" id="prevImg" type="button"  onclick="AnteriorFoto()">
+                            <button class="UpdtprevImg" id="prevImg" type="button"  onclick="AnteriorFotoUpdt()">
                                 <img src="../imagens/SVGs/AnteriorSeta.svg" alt="imagem anterior"/>
                             </button>
 <!--                            <img id="imgEstabele" src="https://placehold.co/300x400?text=Adicione+sua+foto" alt="Imagens do Estabelecimento">-->
-                                <button class="UpdtnextImg" id="nextImg" type="button"  onclick="ProximaFoto()">
+                                <button class="UpdtnextImg" id="nextImg" type="button"  onclick="ProximaFotoUpdt()">
                                     <img src="../imagens/SVGs/ProximaSeta.svg" alt="proxima imagem"/>
                                 </button>
                         </div>
@@ -384,14 +384,14 @@ function adicionarUpdtFoto() {
     console.log(fotosEstabelecimento, fotoShowedEstabelecimento);
 }
 
-function ProximaFoto() {
+function ProximaFotoUpdt() {
     if (fotosEstabelecimento.length === 0) return;
     fotoShowedEstabelecimento = (fotoShowedEstabelecimento + 1) % fotosEstabelecimento.length;
     ShowImage(fotoShowedEstabelecimento);
     atualizarEstiloSpans();
 }
 
-function AnteriorFoto() {
+function AnteriorFotoUpdt() {
     if (fotosEstabelecimento.length === 0) return;
     fotoShowedEstabelecimento = (fotoShowedEstabelecimento - 1 + fotosEstabelecimento.length) % fotosEstabelecimento.length;
     ShowImage(fotoShowedEstabelecimento);

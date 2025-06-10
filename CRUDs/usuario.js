@@ -112,7 +112,6 @@ rota_usuarios
 })
 .get('/api/usuario/:id/foto', async (req, res) => {
     const usuario = await Usuario.findByPk(req.params.id);
-    console.log(usuario)
     if (!usuario) {
         return res.status(404).send('Usuario não encontrada');
     }

@@ -22,7 +22,7 @@ const Usuario = sequelize.define('Usuario', {
         unique: true
     },
     DataNasc: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: false
     },
     Senha: {

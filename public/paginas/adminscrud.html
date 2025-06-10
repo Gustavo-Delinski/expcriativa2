@@ -23,28 +23,20 @@
     <link rel="icon" type="image/x-icon" href="../imagens/logo/Símbolo.svg" />
     <title>LocalTop</title>
 </head>
+<header style="display: flex; align-items: center;">
+    <a href="/" class="logoLink">
+        <img src="../imagens/logo/SVG Variações/Branco/Horizontal-Branco-changed.svg" alt="Logo LocalTop" class="logo">
+    </a>
+    <nav class="servicos" >
+        <a href="pesquisa" class="encontrar">Encontrar <p>LocalTop</p></a>
+        <a href="/perfil">Divulgar Serviço</a>
+        <a href="/#sobre">Sobre Nós</a>
+    </nav>
+    <nav class="infos" id="infos">
+        <a href="/login" class="logar">Login</a><a href="/signup" class="cadastrar">Cadastrar-se</a>
+    </nav>
+</header>
 <body style="background-color:#F7EFE6;">
-    <div>
-        <nav class="navbar navbar-expand-lg">
-            <div class="container-fluid">
-                <a href="/" class="logoContainer"><img src="../imagens/logo/Principal.svg" alt="logo" class="logo"></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
-                    <div class="dropdown-center">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">Admins</button>
-                        <ul class="dropdown-menu dropdown-menu-end">                     
-                            <li><a class="dropdown-item" href="listausuarios">Usuarios</a></li>
-                            <li><a class="dropdown-item" href="listalojas">Estabelecimentos</a></li>
-                            <li><a class="dropdown-item" href="/">Pagina principal</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </nav>
-    </div>
 
     <div class="tabela" style="margin: 60px;">
       <table id="tabela" style="border-collapse: collapse; width: 100%; border: 2px solid #333; background-color: white;">
@@ -206,6 +198,88 @@
           Swal.fire('Erro', 'Erro ao carregar dados do usuário.', 'error');
         }
       }
+      function ValidarNome(nome) {
+          const regex = /^[A-Za-zÀ-ÿ]+(?:\s+[A-Za-zÀ-ÿ]+)+$/;
+          if (nome.length < 8 || !regex.test(nome)) {
+              Swal.fire(
+                  'Nome Inválido',
+                  'Por favor, insira um nome completo.',
+                  'error'
+              );
+              document.getElementById('nome').style.border = '1px solid rgb(202, 50, 121)';
+              return false;
+          }
+          return true;
+      }
+      function validaCPF(cpf) {
+          cpf = cpf.replace(/\D/g, '');
+
+          if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) return false;
+
+          const calcDig = (factor, max) => {
+              let total = 0;
+              for (let i = 0; i < max; i++) {
+                  total += parseInt(cpf[i]) * (factor--);
+              }
+              let resto = (total * 10) % 11;
+              return resto === 10 ? 0 : resto;
+          };
+
+          const dig1 = calcDig(10, 9);
+          const dig2 = calcDig(11, 10);
+
+          return dig1 === parseInt(cpf[9]) && dig2 === parseInt(cpf[10]);
+      }
+
+      function formatarCPF(cpf) {
+          cpf = cpf.toString().padStart(11, '0');
+          return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+      }
+
+      function msgValidaCPF() {
+          const cpf = document.getElementById('cpf').value;
+
+          if (!validaCPF(cpf)) {
+              Swal.fire(
+                  'CPF Inválido',
+                  '',
+                  'error'
+              );
+              document.getElementById('cpf').style.outline = '1px solid rgb(202, 50, 121)';
+              return false;
+          }
+          return true;
+      }
+      function ValidarData(data) {
+          let today = new Date();
+          let dataNasc = new Date(data);
+
+          let idade = today.getFullYear() - dataNasc.getFullYear();
+          let m = today.getMonth() - dataNasc.getMonth();
+          let d = today.getDate() - dataNasc.getDate();
+          if (isNaN(dataNasc.getTime())) {
+              Swal.fire(
+                  'Data Inválida',
+                  'Por favor, insira uma data v&aacute;lida.',
+                  'error'
+              );
+              document.getElementById('datanasc').style.border = '1px solid rgb(202, 50, 121)';
+              return false;
+          }
+          if (m < 0 || (m === 0 && d < 0)) {
+              idade--;
+          }
+          if (idade < 18) {
+              Swal.fire(
+                  'Menor de idade',
+                  'Apenas maiores de idade podem se cadastrar.',
+                  'error'
+              );
+              document.getElementById('datanasc').style.border = '1px solid rgb(202, 50, 121)';
+              return false;
+          }
+          return true;
+      }
 
       async function salvarEdicaoUsuario() {
         const id = document.getElementById('editId').value;
@@ -257,6 +331,138 @@
       }
 
       window.onload = carregarAdmins;
+
+      let podeVerificar = true;
+
+      // Verifica o estado de login e, se estiver logado, ativa o monitoramento de sessão
+      const inicializarVerificacaoDeSessao = async () => {
+          try {
+              const infos = document.getElementById("infos");
+              const resposta = await fetch("/auth/estado");
+              const dados = await resposta.json();
+              if (!dados.logado) {
+                  infos.innerHTML = `<a href="/login" class="logar">Login</a><a href="/signup" class="cadastrar">Cadastrar-se</a>`
+              }
+              if (dados.logado) {
+                  if (dados.adm) {
+                      infos.innerHTML = `<h3 id="nomeUsu">Nome Usuário </h3>
+            <div class="usuario">
+              <button class="dropdownUsuario" id="BtnDropdown" onclick="dropdown()">
+                <img src="../imagens/SVGs/perfil.svg" alt="Minha Conta" class="conta">
+              </button>
+              <div class="dropdown-content">
+                <a href="/perfil">Meu Perfil</a>
+                <a href="/listaUsuarios">Usuários</a>
+                <a href="/listaLojas">Estabelecimentos</a>
+                <a href="/listaadmins">Admins</a>
+                <button id="logoutBtn" onclick="logout()">Sair</button>
+              </div>
+            </div>`
+                  } else {
+                      infos.innerHTML = `<h3 id="nomeUsu">Nome Usuário </h3>
+            <div class="usuario">
+              <button class="dropdownUsuario" id="BtnDropdown" onclick="dropdown()">
+                <img src="../imagens/SVGs/perfil.svg" alt="Minha Conta" class="conta">
+              </button>
+              <div class="dropdown-content">
+                <a href="/perfil">Meu Perfil</a>
+                <button id="logoutBtn" onclick="logout()">Sair</button>
+              </div>
+            </div>`
+                  }
+                  ativarMonitoramento();
+              }
+          } catch (err) {
+              console.error("Erro ao verificar login inicial:", err);
+          }
+      };
+      const verificarSessao = async () => {
+          if (!podeVerificar) return;
+          podeVerificar = false;
+          try {
+              const resposta = await fetch("/auth/estado");
+              const dados = await resposta.json();
+              if (!dados.logado) {
+                  Swal.fire({
+                      icon: 'error',
+                      title: 'Sua sessão expirou',
+                      text: 'Aperte OK para ser redirecionado para a tela de login ou espere para ser redirecionado.',
+                      timer:5000,
+                      timerProgressBar: true
+                  }).then((result) => {
+                      sessionStorage.clear();
+                      if (result.isConfirmed) {
+                          window.location.href = "/login";
+                      }
+                      if (result.dismiss === Swal.DismissReason.timer) {
+                          window.location.href = "/login";
+                      }
+                  })
+              }
+          } catch (err) {
+              console.error("Erro ao verificar sessão:", err);
+          }
+          setTimeout(() => {
+              podeVerificar = true;
+          }, 10000); // 10 segundos entre verificações
+      };
+      const ativarMonitoramento = () => {
+          ['click', 'keydown', 'mousemove', 'scroll'].forEach(evento => {
+              document.addEventListener(evento, verificarSessao);
+          });
+      };
+      // Inicia tudo ao carregar a página
+      inicializarVerificacaoDeSessao();
+      async function logout() {
+          try {
+              const resposta = await fetch("/logout", {
+                  method: "GET",
+              });
+              if (resposta.ok) {
+                  // Quando o logout for bem-sucedido, redireciona para o login ou página inicial
+                  window.location.href = "/login";
+              } else {
+                  alert("Erro ao fazer logout.");
+              }
+          } catch (err) {
+              console.error("Erro ao fazer logout:", err);
+          }
+      }
+      function dropdown() {
+          const dropdown = document.querySelector(`.dropdown-content`);
+          dropdown.style.display === "flex" ? dropdown.style.display = "none" : dropdown.style.display = "flex";
+      }
+      async function pegarDados() {
+          try {
+              const resposta = await fetch("/auth/estado");
+              const dados = await resposta.json();
+              const response = await fetch(`/api/usuario/${dados.usuarioId}`, {
+                  method: 'GET'
+              })
+              const usuario = await response.json();
+              document.getElementById("nomeUsu").innerHTML = `Olá, ${usuario.Nome.split(" ")[0] }`;
+              const responseImg = await fetch(`/api/usuario/${dados.usuarioId}/foto`,{
+                  method: 'GET'
+              })
+              if (responseImg.status === 202) {
+                  return;
+              }
+              else if (responseImg.ok) {
+                  if (responseImg.status === 204) {
+                      return;
+                  }
+                  // Tem imagem, exibe
+                  const img = await responseImg.blob();
+                  document.querySelector(".conta").src = URL.createObjectURL(img);
+              } else {
+                  console.error(`Erro ao carregar imagem. Status: ${responseImg.status}`);
+              }
+          } catch (error) {
+              console.log(`Erro ao requisitar os dados do banco.\n${error}`);
+          }
+      }
+
+      document.addEventListener('DOMContentLoaded', pegarDados())
     </script>
 </body>
 </html>
