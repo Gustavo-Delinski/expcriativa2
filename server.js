@@ -12,6 +12,7 @@ import sequelize from "./db/declaracaoBD.js"
 import rota_usuarios from "./CRUDs/usuario.js";
 import rota_lojas from "./CRUDs/estabelecimento.js"
 import rota_servicos from "./CRUDs/servicos.js"
+import rota_oferta from "./CRUDs/oferta.js"
 import rota_Avaliacao from "./CRUDs/avaliacao.js";
 //Comentario
 
@@ -32,7 +33,7 @@ function verificarAdm(req, res, next) {
 const app = express();
 app.use(express.json());
 //Porta em que o servidor rodará
-const port = 3001;
+const port = 3000;
 //diretório atual onde o servidor está rodando
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -71,6 +72,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(rota_usuarios)
 app.use(rota_lojas)
 app.use(rota_servicos)
+app.use(rota_oferta)
 // app.use(rotas.rota_avaliacao)
 // app.use(rotas.rota_servico)
 // app.use(rotas.rota_oferta)

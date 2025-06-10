@@ -42,7 +42,7 @@ const Usuario = sequelize.define('Usuario', {
         type: DataTypes.STRING,
         allowNull: true
     }}, {
-        tablenName: 'Usuario',
+        tableName: 'Usuario',
         timestamps: false,
     }
 );
@@ -55,6 +55,10 @@ const Estabelecimento = sequelize.define('Estabelecimento', {
         allowNull: false
     },
     Nome: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    Email: {
         type: DataTypes.STRING,
         allowNull: false
     },
@@ -104,7 +108,7 @@ const Estabelecimento = sequelize.define('Estabelecimento', {
         },
         onDelete: 'CASCADE'
     }}, {
-        tablenName: 'Estabelecimento',
+        tableName: 'Estabelecimento',
         timestamps: false,
 });
 
@@ -132,7 +136,7 @@ const FotosEstabelecimento = sequelize.define('FotosEstabelecimento', {
         },
         onDelete: 'CASCADE'
     }}, {
-        tablenName: 'FotosEstabelecimento',
+        tableName: 'FotosEstabelecimento',
         timestamps: false
 });
 
@@ -147,7 +151,7 @@ const Servico = sequelize.define('Servico', {
         type: DataTypes.STRING,
         allowNull: false
     }}, {
-        tablenName: 'Servico',
+        tableName: 'Servico',
         timestamps: false,
 });
 
@@ -189,7 +193,7 @@ const Oferta = sequelize.define('Oferta', {
         type: DataTypes.TEXT,
         allowNull: false
     }}, {
-        tablenName: 'Oferta',
+        tableName: 'Oferta',
         timestamps: false,
 });
 
@@ -230,7 +234,7 @@ const Avaliacao = sequelize.define('Avaliacao', {
         },
         onDelete: 'CASCADE'
     }}, {
-        tablenName: 'Avaliacao',
+        tableName: 'Avaliacao',
         timestamps: false,
 });
 const Favoritos = sequelize.define('Favoritos', {
@@ -258,7 +262,7 @@ const Favoritos = sequelize.define('Favoritos', {
         },
         onDelete: 'CASCADE'
     }},{
-    tablenName: 'Favoritos',
+    tableName: 'Favoritos',
     timestamps: false,
 });
 const Historico = sequelize.define('Historico', {
@@ -290,7 +294,7 @@ const Historico = sequelize.define('Historico', {
         },
         onDelete: 'CASCADE'
     }},{
-    tablenName: 'Historico',
+    tableName: 'Historico',
     timestamps: false,
 })
 

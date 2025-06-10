@@ -70,141 +70,355 @@
             </div>
             <hr>
             <button type="button" id="AddEstabelecimento" class="AddEstabelecimento" value="2" ><img src="../imagens/SVGs/Loja.svg" alt="SvgLoja" >+ADICIONAR LOCALTOP</button>
+            <div class="estabelecimentos" id="estabelecimentos">
+                <button type="button" class="estabelecimento"><img src="../imagens/SVGs/Loja.svg" alt="Adicionar Estabelecimento"/> NOME ESTABELECIMENTO</button>
+                <button type="button" class="estabelecimento" onclick="abrirAbaEstabelecimento()">
+                    <svg width="25px" height="25px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" >
+                        <g id="Icon-Set" transform="translate(-360.000000, -723.000000)" fill="#3E996F">
+                            <path d="M362.04,733 L366.699,725 L385.271,725 L390.029,733 L362.04,733 L362.04,733 Z M390,737 C389.985,738.381 388.394,739.001 387,739 C385.393,738.999 383.945,738.026 383.945,737 L383,737 C383,738.009 381.209,739 379.667,739 C378.188,739 376.468,737.978 376.468,737 L375.499,737 C375.499,738.009 373.749,739 372.271,739 C370.729,739 368.969,738.29 368.969,737 L368.022,737 C368.022,738.006 366.478,739.031 364.995,739.031 C363.491,739.031 362,738.381 362,737 L362,735 L390,735 L390,737 L390,737 Z M389,747 L363.003,747 L363,741 L364.964,741 C366.038,741 367.741,740.042 368.462,738.576 C369.271,740.001 370.781,741 372.223,741 C373.746,741 375.423,740.094 375.983,738.784 C376.544,740.063 378.186,741 379.678,741 C381.158,741 382.691,739.912 383.467,738.426 C384.374,739.926 385.106,741 387,741 C387.293,741 388.744,741.048 389,741 L389,747 L389,747 Z M389,751 C389,752.104 387.95,753 386.811,753 L365.156,753 C364.017,753 363.003,752.104 363.003,751 L363.003,749 L389,749 L389,751 L389,751 Z M386.154,723 L365.813,723 L360,733 L360,737 C360,738.065 360.383,739.229 361.001,740 L361.031,751 C361.031,753.209 362.878,755 365.156,755 L386.811,755 C389.089,755 391,753.209 391,751 L391,740 C391.7,739.176 392,738.33 392,737 L392,733 L386.154,723 L386.154,723 Z" id="shop">
+                            </path>
+                        </g>
+                    </g>
+                </svg> Barbearia</button>
+            </div>
         </aside>
         <div class="informacao" id="informacao">
-<!--            <h1>Meu Perfil</h1>-->
-<!--            <p>Gerenciar a sua conta</p>-->
-<!--            <hr>-->
-<!--            <form id="form">-->
-<!--                <div class="NomeEmailFoto">-->
-<!--                    <div class="NomeEmail">-->
-<!--                        <div class="nome">-->
-<!--                            <label for="nome">Nome Completo</label>-->
-<!--                            <input type="text" id="nome" name="nome" readonly>-->
-<!--                        </div>-->
-<!--                        <div class="email">-->
+            <h1>Meu Perfil</h1>
+            <p>Gerenciar a sua conta</p>
+            <hr>
+            <form id="form">
+                <div class="NomeEmailFoto">
+                    <div class="NomeEmail">
+                        <div class="nome">
+                            <label for="nome">Nome Completo</label>
+                            <input type="text" id="nome" name="nome" readonly>
+                        </div>
+                        <div class="email">
+                            <label for="email">Email</label>
+                            <input type="text" id="email" name="email" readonly >
+                        </div>
+                    </div>
+                    <div class="InputFoto">
+                        <label for="file">
+                            <div id="Perfilimg" class="Perfilimg"></div>
+                            <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none" id="svgFoto">
+                                <path d="M21 11V18C21 19.1046 20.1046 20 19 20H5C3.89543 20 3 19.1046 3 18V9C3 7.89543 3.89543 7 5 7H6.5C7.12951 7 7.72229 6.70361 8.1 6.2L9.15 4.8C9.52771 4.29639 10.1205 4 10.75 4H13.25" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="70%"/>
+                                <path d="M18.5 4V6.5M18.5 9V6.5M18.5 6.5H16M18.5 6.5H21" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="70%"/>
+                                <circle cx="12" cy="13" r="4" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="70%"/>
+                            </svg>
+                        </label>
+                        <input type="file" id="file" name="file" accept="image/*" onchange="mostrarFoto()" style="display: none;" disabled>
+                    </div>
+                </div>
+                <div class="DtnascCpf">
+                    <div class="datanasc">
+                        <label for="datanasc">Data de nascimento</label>
+                        <input type="date" id="datanasc" name="datanasc" readonly>
+                    </div>
+                    <div class="cpf">
+                        <label for="cpf">CPF</label>
+                        <input type="text" id="cpf" name="cpf" maxlength="14" oninput="mascaraCPF(this)" readonly>
+                    </div>
+                </div>
+                <div id="btns">
+                    <button type="button" class="mudarcampos" onclick="mudarCampos()">Mudar informações</button>
+                </div>
+            </form>
+<!--            <h1 id="nomeEstabelecimento">Nome do Estabelecimento</h1>-->
+<!--            <p id="cnpjEstabelecimento">CNPJ do estabelecimento</p>-->
+<!--            <hr class="horizontalRule">-->
+<!--            <form>-->
+<!--                <div class="UpperUpdtForm">-->
+<!--                    <div class="LeftUpdtForm">-->
+<!--                        <h5>Dados Cadastrais</h5>-->
+<!--                        <div class="UPDEmail">-->
 <!--                            <label for="email">Email</label>-->
-<!--                            <input type="text" id="email" name="email" readonly >-->
+<!--                            <input type="text" id="email" name="email" readonly>-->
+<!--                        </div>-->
+<!--                        <div class="TelCep">-->
+<!--                            <div class="UPDTelefone">-->
+<!--                                <label for="telefone">Número de Telefone</label>-->
+<!--                                <input type="text" id="telefone" name="telefone" maxlength="15" oninput="mascaraTelefone(this)" onchange="mascaraTelefone(this)" readonly>-->
+<!--                            </div>-->
+<!--                            <div class="UpdtCNPJ">-->
+<!--                                <label for="cnpj">CNPJ</label>-->
+<!--                                <input type="text" id="cnpj" name="cnpj" maxlength="17" oninput="mascaraCNPJ(this)" onchange="mascaraCNPJ(this)" readonly>-->
+<!--                            </div>-->
+<!--                            <div class="UPDCep">-->
+<!--                                <label for="cep">CEP</label>-->
+<!--                                <input type="text" id="cep" name="cep" oninput="mascaraCEP(this)" onchange="mascaraCEP(this)" readonly>-->
+<!--                                <button type="button" style="display:none; position: absolute;border: none;background-color: transparent;width: 1.6dvi;height: 1.6dvi;padding:0; margin: 0 0.2dvi 0.2dvi 0" onclick="buscarCEP(document.getElementById('cep').value)" id="searchCEP">-->
+<!--                                    <img src="../imagens/SVGs/pesquisar.svg" alt='Procurar CEP' style="height: 100%; width: 100%"/>-->
+<!--                                </button>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="EstadoCidadeBairro">-->
+<!--                            <div class="UpdtEstado">-->
+<!--                                <label for="estado">Estado</label>-->
+<!--                                <input type="text" id="estado" name="estado" readonly>-->
+<!--                            </div>-->
+<!--                            <div class="UpdtCidade">-->
+<!--                                <label for="cidade">Cidade</label>-->
+<!--                                <input type="text" id="cidade" name="cidade" readonly>-->
+<!--                            </div>-->
+<!--                            <div class="UpdtBairro">-->
+<!--                                <label for="bairro">Bairro</label>-->
+<!--                                <input type="text" id="bairro" name="bairro" readonly>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="EnderecoNumero">-->
+<!--                            <div class="UpdtEndereco">-->
+<!--                                <label for="endereco">Endereço</label>-->
+<!--                                <input type="text" id="endereco" name="endereco" readonly>-->
+<!--                            </div>-->
+<!--                            <div class="UpdtNumero">-->
+<!--                                <label for="numero">Número</label>-->
+<!--                                <input type="text" id="numero" name="numero" readonly>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="UpdtComplemento">-->
+<!--                            <label for="complemento">Complemento</label>-->
+<!--                            <input type="text" id="complemento" name="complemento" readonly>-->
 <!--                        </div>-->
 <!--                    </div>-->
-<!--                    <div class="InputFoto">-->
-<!--                        <label for="file">-->
-<!--                            <div id="Perfilimg" class="Perfilimg"></div>-->
-<!--                            <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none" id="svgFoto">-->
-<!--                                <path d="M21 11V18C21 19.1046 20.1046 20 19 20H5C3.89543 20 3 19.1046 3 18V9C3 7.89543 3.89543 7 5 7H6.5C7.12951 7 7.72229 6.70361 8.1 6.2L9.15 4.8C9.52771 4.29639 10.1205 4 10.75 4H13.25" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="70%"/>-->
-<!--                                <path d="M18.5 4V6.5M18.5 9V6.5M18.5 6.5H16M18.5 6.5H21" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="70%"/>-->
-<!--                                <circle cx="12" cy="13" r="4" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="70%"/>-->
-<!--                            </svg>-->
-<!--                        </label>-->
-<!--                        <input type="file" id="file" name="file" accept="image/*" onchange="mostrarFoto()" style="display: none;" disabled>-->
+<!--                    <div class="RightUpdtForm">-->
+<!--                        <div class="InputFotoEstabele" >-->
+<!--                            <div id="Estabelecimentoimg" class="EstabelecimentoUpdtImg">-->
+<!--                                <button class="UpdtprevImg" id="prevImg" type="button"  onclick="AnteriorFoto()">-->
+<!--                                    <img src="../imagens/SVGs/AnteriorSeta.svg" alt="imagem anterior"/>-->
+<!--                                </button>-->
+<!--                                <img id="imgEstabele" src="https://placehold.co/300x400?text=Adicione+sua+foto" alt="Imagens do Estabelecimento">-->
+<!--                                <button class="UpdtnextImg" id="nextImg" type="button"  onclick="ProximaFoto()">-->
+<!--                                    <img src="../imagens/SVGs/ProximaSeta.svg" alt="proxima imagem"/>-->
+<!--                                </button>-->
+<!--                            </div>-->
+<!--                            <div class="IdentifierDelete">-->
+<!--                                <label for="fileEstabeleUpdt" id="addImg" style="display: none">-->
+<!--                                    <svg width="30px" height="30px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none">-->
+<!--                                        <path fill="#3E996F" fill-rule="evenodd" d="M9 17a1 1 0 102 0v-6h6a1 1 0 100-2h-6V3a1 1 0 10-2 0v6H3a1 1 0 000 2h6v6z"/>-->
+<!--                                    </svg>-->
+<!--                                </label>-->
+<!--                                <div class="spans" id="spansUpdt">-->
+<!--                                    <p>Nenhuma imagem Adicionada</p>-->
+<!--                                </div>-->
+<!--                                <button type="button" class="deleteImgUpdt" id="deleteImgUpdt" onclick="DeletarFoto()" style="display: none"><img src="../imagens/SVGs/delete.svg" alt="excluir imagem"/></button>-->
+<!--                            </div>-->
+<!--                            <input type="file" id="fileEstabeleUpdt" name="file" accept="image/*" onchange="adicionarUpdtFoto()" style="display: none" multiple>-->
+<!--                        </div>-->
 <!--                    </div>-->
 <!--                </div>-->
-<!--                <div class="DtnascCpf">-->
-<!--                    <div class="datanasc">-->
-<!--                        <label for="datanasc">Data de nascimento</label>-->
-<!--                        <input type="date" id="datanasc" name="datanasc" readonly>-->
+<!--                <br/>-->
+<!--                <div class="LowerUpdtForm">-->
+<!--                    <div class="lowerside-btns">-->
+<!--                        <button type="button" class="DeleteEstabelecimentoUpdt" id="DeleteEstabelecimentoUpdt" onclick="">Excluir Estabelecimento</button>-->
+<!--                        <div class="UpdtEstabeleBtn">-->
+<!--                            <button type="button" class="cancelUpdt" id="cancelUpdt">Cancelar</button>-->
+<!--                            <button type="button" class="SaveUpdt" id="SaveUpdt">Salvar</button>-->
+<!--                            <button type="button" class="ChangeCampos" id='changecampos'>Editar informações</button>-->
+<!--                        </div>-->
 <!--                    </div>-->
-<!--                    <div class="cpf">-->
-<!--                        <label for="cpf">CPF</label>-->
-<!--                        <input type="text" id="cpf" name="cpf" maxlength="14" oninput="mascaraCPF(this)" readonly>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div id="btns">-->
-<!--                    <button type="button" class="mudarcampos" onclick="mudarCampos()">Mudar informações</button>-->
 <!--                </div>-->
 <!--            </form>-->
-                        <h1 id="nomeEstabelecimento">Nome do Estabelecimento</h1>
-                        <p id="cnpjEstabelecimento">CNPJ do estabelecimento</p>
-                        <hr class="horizontalRule">
-            <form>
-                <div class="UpperUpdtForm">
-                    <div class="LeftUpdtForm">
-                        <h5>Dados Cadastrais</h5>
-                        <div class="UPDEmail">
-                            <label for="email">Email</label>
-                            <input type="text" id="email" name="email" readonly>
-                        </div>
-                        <div class="TelCep">
-                            <div class="UPDTelefone">
-                                <label for="telefone">Número de Telefone</label>
-                                <input type="text" id="telefone" name="telefone" readonly>
-                            </div>
-                            <div class="UpdtCNPJ">
-                                <label for="cnpj">CNPJ</label>
-                                <input type="text" id="cnpj" name="cnpj" readonly>
-                            </div>
-                            <div class="UPDCep">
-                                <label for="cep">CEP</label>
-                                <input type="text" id="cep" name="cep"  readonly>
-                                <button type="button" style="display:none; position: absolute;border: none;background-color: transparent;width: 1.6dvi;height: 1.6dvi;padding:0; margin: 0 0.2dvi 0.2dvi 0" onclick="buscarCEP(document.getElementById('cep').value)">
-                                    <img src="../imagens/SVGs/pesquisar.svg" alt='Procurar CEP' style="height: 100%; width: 100%"/>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="EstadoCidadeBairro">
-                            <div class="UpdtEstado">
-                                <label for="estado">Estado</label>
-                                <input type="text" id="estado" name="estado" readonly>
-                            </div>
-                            <div class="UpdtCidade">
-                                <label for="cidade">Cidade</label>
-                                <input type="text" id="cidade" name="cidade" readonly>
-                            </div>
-                            <div class="UpdtBairro">
-                                <label for="bairro">Bairro</label>
-                                <input type="text" id="bairro" name="bairro" readonly>
-                            </div>
-                        </div>
-                        <div class="EnderecoNumero">
-                            <div class="UpdtEndereco">
-                                <label for="endereco">Endereço</label>
-                                <input type="text" id="endereco" name="endereco" readonly>
-                            </div>
-                            <div class="UpdtNumero">
-                                <label for="numero">Número</label>
-                                <input type="text" id="numero" name="numero" readonly>
-                            </div>
-                        </div>
-                        <div class="UpdtComplemento">
-                            <label for="complemento">Complemento</label>
-                            <input type="text" id="complemento" name="complemento" readonly>
-                        </div>
-                    </div>
-                    <div class="RightUpdtForm">
-                        <div class="InputFotoEstabele" >
-                            <div id="Estabelecimentoimg" class="EstabelecimentoUpdtImg">
-                                <button class="UpdtprevImg" id="prevImg" type="button"  onclick="AnteriorFoto()">
-                                    <img src="../imagens/SVGs/AnteriorSeta.svg" alt="imagem anterior"/>
-                                </button>
-                                <img id="imgEstabele" src="https://placehold.co/300x400?text=Adicione+sua+foto" alt="Imagens do Estabelecimento">
-                                <button class="UpdtnextImg" id="nextImg" type="button"  onclick="ProximaFoto()">
-                                    <img src="../imagens/SVGs/ProximaSeta.svg" alt="proxima imagem"/>
-                                </button>
-                            </div>
-                            <div class="IdentifierDelete">
-                                <label for="fileEstabele" style="display: none">
-                                    <svg width="30px" height="30px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none">
-                                        <path fill="#3E996F" fill-rule="evenodd" d="M9 17a1 1 0 102 0v-6h6a1 1 0 100-2h-6V3a1 1 0 10-2 0v6H3a1 1 0 000 2h6v6z"/>
-                                    </svg>
-                                </label>
-                                <div class="spans" id="spans">
-                                    <p>Nenhuma imagem Adicionada</p>
-                                </div>
-                                <button type="button" class="deleteImgUpdt" id="deleteImgUpdt" onclick="DeletarFoto()" style="display: none"><img src="../imagens/SVGs/delete.svg" alt="excluir imagem"/></button>
-                            </div>
-                            <input type="file" id="fileEstabele" name="file" accept="image/*" onchange="adicionarFoto()" style="display: none" multiple>
-                        </div>
-                    </div>
-                </div>
-                <br/>
-                <div class="LowerUpdtForm">
-                    <div class="lowerside-btns">
-                        <button type="button" class="DeleteEstabelecimentoUpdt" id="DeleteEstabelecimentoUpdt" onclick="">Excluir Estabelecimento</button>
-                        <button type="button" class="ChangeCampos">Editar informações</button>
-                    </div>
-                </div>
-                <hr>
-            </form>
+<!--            <hr>-->
+<!--            <div class="LowerSide">-->
+<!--                <h4>Serviços</h4>-->
+<!--                <div class="middleLowerSide">-->
+<!--                    <div class="searchBar">-->
+<!--                        <label for="pesquisaServico">-->
+<!--                            <svg id="Camada_2" data-name="Camada 2" width="25px" height="25px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 39.94 40" >-->
+<!--                                <g id="Camada_1-2">-->
+<!--                                    <path class="cls-1" d="M39.37,36.68l-8.29-8.3c2.4-2.99,3.83-6.79,3.83-10.92C34.91,7.81,27.09,0,17.45,0S0,7.81,0,17.45s7.81,17.45,17.45,17.45c4.11,0,7.88-1.42,10.86-3.79l8.3,8.31c.38.38.88.57,1.38.57s1-.19,1.38-.57c.76-.76.76-1.99,0-2.75ZM17.45,31.16c-7.57,0-13.71-6.14-13.71-13.71S9.88,3.75,17.45,3.75s13.71,6.14,13.71,13.71-6.14,13.71-13.71,13.71Z" fill="#00000";/>-->
+<!--                                </g>-->
+<!--                            </svg>-->
+<!--                        </label>-->
+<!--                        <input type="search" id="pesquisaServico"/>-->
+<!--                    </div>-->
+<!--                    <div class="ControllerBtns">-->
+<!--                        <button type="button" class="addServico" id="addServico">-->
+<!--                            <svg width="25px" height="25px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none">-->
+<!--                                <path fill="#3E996F" fill-rule="evenodd" d="M10 3a7 7 0 100 14 7 7 0 000-14zm-9 7a9 9 0 1118 0 9 9 0 01-18 0zm14 .069a1 1 0 01-1 1h-2.931V14a1 1 0 11-2 0v-2.931H6a1 1 0 110-2h3.069V6a1 1 0 112 0v3.069H14a1 1 0 011 1z"/>-->
+<!--                            </svg>-->
+<!--                        </button>-->
+<!--                        <button type="button" class="editServico" id="ToggleEditServico">-->
+<!--                            <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--                                <path d="M11 4H7.2C6.0799 4 5.51984 4 5.09202 4.21799C4.71569 4.40974 4.40973 4.7157 4.21799 5.09202C4 5.51985 4 6.0799 4 7.2V16.8C4 17.9201 4 18.4802 4.21799 18.908C4.40973 19.2843 4.71569 19.5903 5.09202 19.782C5.51984 20 6.0799 20 7.2 20H16.8C17.9201 20 18.4802 20 18.908 19.782C19.2843 19.5903 19.5903 19.2843 19.782 18.908C20 18.4802 20 17.9201 20 16.8V12.5M15.5 5.5L18.3284 8.32843M10.7627 10.2373L17.411 3.58902C18.192 2.80797 19.4584 2.80797 20.2394 3.58902C21.0205 4.37007 21.0205 5.6364 20.2394 6.41745L13.3774 13.2794C12.6158 14.0411 12.235 14.4219 11.8012 14.7247C11.4162 14.9936 11.0009 15.2162 10.564 15.3882C10.0717 15.582 9.54378 15.6885 8.48793 15.9016L8 16L8.04745 15.6678C8.21536 14.4925 8.29932 13.9048 8.49029 13.3561C8.65975 12.8692 8.89125 12.4063 9.17906 11.9786C9.50341 11.4966 9.92319 11.0768 10.7627 10.2373Z" stroke="#3E996F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                            </svg>-->
+<!--                        </button>-->
+<!--                        <button type="button" class="deleteServico" id="toggleDeleteServico">-->
+<!--                            <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--                                <path d="M10 11V17" stroke="#f12525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                <path d="M14 11V17" stroke="#f12525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                <path d="M4 7H20" stroke="#f12525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                <path d="M6 7H12H18V18C18 19.6569 16.6569 21 15 21H9C7.34315 21 6 19.6569 6 18V7Z" stroke="#f12525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                <path d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z" stroke="#f12525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                            </svg>-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="servicosEstabelecimento">-->
+<!--                    <div class="servico">-->
+<!--                        <div style="display: flex; flex-direction: row; height: 100%; align-items: center; gap: 1rem;">-->
+<!--                            <div class="marker"></div>-->
+<!--                            <button type="button" class="deleteServico">-->
+<!--                                <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--                                <path d="M10 11V17" stroke="#f12525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                <path d="M14 11V17" stroke="#f12525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                <path d="M4 7H20" stroke="#f12525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                <path d="M6 7H12H18V18C18 19.6569 16.6569 21 15 21H9C7.34315 21 6 19.6569 6 18V7Z" stroke="#f12525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                <path d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z" stroke="#f12525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                </svg>-->
+<!--                            </button>-->
+<!--                            <button type="button" class="editServico" >-->
+<!--                                <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--                                <path d="M11 4H7.2C6.0799 4 5.51984 4 5.09202 4.21799C4.71569 4.40974 4.40973 4.7157 4.21799 5.09202C4 5.51985 4 6.0799 4 7.2V16.8C4 17.9201 4 18.4802 4.21799 18.908C4.40973 19.2843 4.71569 19.5903 5.09202 19.782C5.51984 20 6.0799 20 7.2 20H16.8C17.9201 20 18.4802 20 18.908 19.782C19.2843 19.5903 19.5903 19.2843 19.782 18.908C20 18.4802 20 17.9201 20 16.8V12.5M15.5 5.5L18.3284 8.32843M10.7627 10.2373L17.411 3.58902C18.192 2.80797 19.4584 2.80797 20.2394 3.58902C21.0205 4.37007 21.0205 5.6364 20.2394 6.41745L13.3774 13.2794C12.6158 14.0411 12.235 14.4219 11.8012 14.7247C11.4162 14.9936 11.0009 15.2162 10.564 15.3882C10.0717 15.582 9.54378 15.6885 8.48793 15.9016L8 16L8.04745 15.6678C8.21536 14.4925 8.29932 13.9048 8.49029 13.3561C8.65975 12.8692 8.89125 12.4063 9.17906 11.9786C9.50341 11.4966 9.92319 11.0768 10.7627 10.2373Z" stroke="#3E996F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                </svg>-->
+<!--                            </button>-->
+<!--                            <p><strong>HIDRATAÇÃO</strong></p>-->
+<!--                        </div>-->
+<!--                        <div class="center">-->
+<!--                            <h5>Descrição</h5>-->
+<!--                            <p class="descricao">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus malesuada tellus sit amet enim tincidunt, vel pretium erat dignissim. Suspendisse finibus, nisl ac interdum blandit, nibh tortor mattis augue, id imperdiet enim tortor eget sapien.</p>-->
+<!--                        </div>-->
+<!--                        <p>R$ 80,00 - R$ 90,00</p>-->
+<!--                    </div>-->
+<!--                    <div class="servico">-->
+<!--                        <div style="display: flex; flex-direction: row; height: 100%; align-items: center; gap: 1rem;">-->
+<!--                            <div class="marker"></div>-->
+<!--                            <button type="button" class="deleteServico">-->
+<!--                                <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--                                    <path d="M10 11V17" stroke="#f12525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                    <path d="M14 11V17" stroke="#f12525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                    <path d="M4 7H20" stroke="#f12525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                    <path d="M6 7H12H18V18C18 19.6569 16.6569 21 15 21H9C7.34315 21 6 19.6569 6 18V7Z" stroke="#f12525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                    <path d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z" stroke="#f12525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                </svg>-->
+<!--                            </button>-->
+<!--                            <button type="button" class="editServico" >-->
+<!--                                <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--                                    <path d="M11 4H7.2C6.0799 4 5.51984 4 5.09202 4.21799C4.71569 4.40974 4.40973 4.7157 4.21799 5.09202C4 5.51985 4 6.0799 4 7.2V16.8C4 17.9201 4 18.4802 4.21799 18.908C4.40973 19.2843 4.71569 19.5903 5.09202 19.782C5.51984 20 6.0799 20 7.2 20H16.8C17.9201 20 18.4802 20 18.908 19.782C19.2843 19.5903 19.5903 19.2843 19.782 18.908C20 18.4802 20 17.9201 20 16.8V12.5M15.5 5.5L18.3284 8.32843M10.7627 10.2373L17.411 3.58902C18.192 2.80797 19.4584 2.80797 20.2394 3.58902C21.0205 4.37007 21.0205 5.6364 20.2394 6.41745L13.3774 13.2794C12.6158 14.0411 12.235 14.4219 11.8012 14.7247C11.4162 14.9936 11.0009 15.2162 10.564 15.3882C10.0717 15.582 9.54378 15.6885 8.48793 15.9016L8 16L8.04745 15.6678C8.21536 14.4925 8.29932 13.9048 8.49029 13.3561C8.65975 12.8692 8.89125 12.4063 9.17906 11.9786C9.50341 11.4966 9.92319 11.0768 10.7627 10.2373Z" stroke="#3E996F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                </svg>-->
+<!--                            </button>-->
+<!--                            <p><strong>HIDRATAÇÃO</strong></p>-->
+<!--                        </div>-->
+<!--                        <div class="center">-->
+<!--                            <h5>Descrição</h5>-->
+<!--                            <p class="descricao">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus malesuada tellus sit amet enim tincidunt, vel pretium erat dignissim. Suspendisse finibus, nisl ac interdum blandit, nibh tortor mattis augue, id imperdiet enim tortor eget sapien.</p>-->
+<!--                        </div>-->
+<!--                        <p>R$ 80,00 - R$ 90,00</p>-->
+<!--                    </div>-->
+<!--                    <div class="servico">-->
+<!--                        <div style="display: flex; flex-direction: row; height: 100%; align-items: center; gap: 1rem;">-->
+<!--                            <div class="marker"></div>-->
+<!--                            <button type="button" class="deleteServico">-->
+<!--                                <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--                                    <path d="M10 11V17" stroke="#f12525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                    <path d="M14 11V17" stroke="#f12525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                    <path d="M4 7H20" stroke="#f12525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                    <path d="M6 7H12H18V18C18 19.6569 16.6569 21 15 21H9C7.34315 21 6 19.6569 6 18V7Z" stroke="#f12525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                    <path d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z" stroke="#f12525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                </svg>-->
+<!--                            </button>-->
+<!--                            <button type="button" class="editServico" >-->
+<!--                                <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--                                    <path d="M11 4H7.2C6.0799 4 5.51984 4 5.09202 4.21799C4.71569 4.40974 4.40973 4.7157 4.21799 5.09202C4 5.51985 4 6.0799 4 7.2V16.8C4 17.9201 4 18.4802 4.21799 18.908C4.40973 19.2843 4.71569 19.5903 5.09202 19.782C5.51984 20 6.0799 20 7.2 20H16.8C17.9201 20 18.4802 20 18.908 19.782C19.2843 19.5903 19.5903 19.2843 19.782 18.908C20 18.4802 20 17.9201 20 16.8V12.5M15.5 5.5L18.3284 8.32843M10.7627 10.2373L17.411 3.58902C18.192 2.80797 19.4584 2.80797 20.2394 3.58902C21.0205 4.37007 21.0205 5.6364 20.2394 6.41745L13.3774 13.2794C12.6158 14.0411 12.235 14.4219 11.8012 14.7247C11.4162 14.9936 11.0009 15.2162 10.564 15.3882C10.0717 15.582 9.54378 15.6885 8.48793 15.9016L8 16L8.04745 15.6678C8.21536 14.4925 8.29932 13.9048 8.49029 13.3561C8.65975 12.8692 8.89125 12.4063 9.17906 11.9786C9.50341 11.4966 9.92319 11.0768 10.7627 10.2373Z" stroke="#3E996F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                </svg>-->
+<!--                            </button>-->
+<!--                            <p><strong>HIDRATAÇÃO</strong></p>-->
+<!--                        </div>-->
+<!--                        <div class="center">-->
+<!--                            <h5>Descrição</h5>-->
+<!--                            <p class="descricao">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus malesuada tellus sit amet enim tincidunt, vel pretium erat dignissim. Suspendisse finibus, nisl ac interdum blandit, nibh tortor mattis augue, id imperdiet enim tortor eget sapien.</p>-->
+<!--                        </div>-->
+<!--                        <p>R$ 80,00 - R$ 90,00</p>-->
+<!--                    </div>-->
+<!--                    <div class="servico">-->
+<!--                        <div style="display: flex; flex-direction: row; height: 100%; align-items: center; gap: 1rem;">-->
+<!--                            <div class="marker"></div>-->
+<!--                            <button type="button" class="deleteServico">-->
+<!--                                <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--                                    <path d="M10 11V17" stroke="#f12525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                    <path d="M14 11V17" stroke="#f12525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                    <path d="M4 7H20" stroke="#f12525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                    <path d="M6 7H12H18V18C18 19.6569 16.6569 21 15 21H9C7.34315 21 6 19.6569 6 18V7Z" stroke="#f12525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                    <path d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z" stroke="#f12525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                </svg>-->
+<!--                            </button>-->
+<!--                            <button type="button" class="editServico" >-->
+<!--                                <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--                                    <path d="M11 4H7.2C6.0799 4 5.51984 4 5.09202 4.21799C4.71569 4.40974 4.40973 4.7157 4.21799 5.09202C4 5.51985 4 6.0799 4 7.2V16.8C4 17.9201 4 18.4802 4.21799 18.908C4.40973 19.2843 4.71569 19.5903 5.09202 19.782C5.51984 20 6.0799 20 7.2 20H16.8C17.9201 20 18.4802 20 18.908 19.782C19.2843 19.5903 19.5903 19.2843 19.782 18.908C20 18.4802 20 17.9201 20 16.8V12.5M15.5 5.5L18.3284 8.32843M10.7627 10.2373L17.411 3.58902C18.192 2.80797 19.4584 2.80797 20.2394 3.58902C21.0205 4.37007 21.0205 5.6364 20.2394 6.41745L13.3774 13.2794C12.6158 14.0411 12.235 14.4219 11.8012 14.7247C11.4162 14.9936 11.0009 15.2162 10.564 15.3882C10.0717 15.582 9.54378 15.6885 8.48793 15.9016L8 16L8.04745 15.6678C8.21536 14.4925 8.29932 13.9048 8.49029 13.3561C8.65975 12.8692 8.89125 12.4063 9.17906 11.9786C9.50341 11.4966 9.92319 11.0768 10.7627 10.2373Z" stroke="#3E996F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                </svg>-->
+<!--                            </button>-->
+<!--                            <p><strong>HIDRATAÇÃO</strong></p>-->
+<!--                        </div>-->
+<!--                        <div class="center">-->
+<!--                            <h5>Descrição</h5>-->
+<!--                            <p class="descricao">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus malesuada tellus sit amet enim tincidunt, vel pretium erat dignissim. Suspendisse finibus, nisl ac interdum blandit, nibh tortor mattis augue, id imperdiet enim tortor eget sapien.</p>-->
+<!--                        </div>-->
+<!--                        <p>R$ 80,00 - R$ 90,00</p>-->
+<!--                    </div>-->
+<!--                    <div class="servico">-->
+<!--                        <div style="display: flex; flex-direction: row; height: 100%; align-items: center; gap: 1rem;">-->
+<!--                            <div class="marker"></div>-->
+<!--                            <button type="button" class="deleteServico">-->
+<!--                                <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--                                    <path d="M10 11V17" stroke="#f12525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                    <path d="M14 11V17" stroke="#f12525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                    <path d="M4 7H20" stroke="#f12525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                    <path d="M6 7H12H18V18C18 19.6569 16.6569 21 15 21H9C7.34315 21 6 19.6569 6 18V7Z" stroke="#f12525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                    <path d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z" stroke="#f12525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                </svg>-->
+<!--                            </button>-->
+<!--                            <button type="button" class="editServico" >-->
+<!--                                <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--                                    <path d="M11 4H7.2C6.0799 4 5.51984 4 5.09202 4.21799C4.71569 4.40974 4.40973 4.7157 4.21799 5.09202C4 5.51985 4 6.0799 4 7.2V16.8C4 17.9201 4 18.4802 4.21799 18.908C4.40973 19.2843 4.71569 19.5903 5.09202 19.782C5.51984 20 6.0799 20 7.2 20H16.8C17.9201 20 18.4802 20 18.908 19.782C19.2843 19.5903 19.5903 19.2843 19.782 18.908C20 18.4802 20 17.9201 20 16.8V12.5M15.5 5.5L18.3284 8.32843M10.7627 10.2373L17.411 3.58902C18.192 2.80797 19.4584 2.80797 20.2394 3.58902C21.0205 4.37007 21.0205 5.6364 20.2394 6.41745L13.3774 13.2794C12.6158 14.0411 12.235 14.4219 11.8012 14.7247C11.4162 14.9936 11.0009 15.2162 10.564 15.3882C10.0717 15.582 9.54378 15.6885 8.48793 15.9016L8 16L8.04745 15.6678C8.21536 14.4925 8.29932 13.9048 8.49029 13.3561C8.65975 12.8692 8.89125 12.4063 9.17906 11.9786C9.50341 11.4966 9.92319 11.0768 10.7627 10.2373Z" stroke="#3E996F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                </svg>-->
+<!--                            </button>-->
+<!--                            <p><strong>HIDRATAÇÃO</strong></p>-->
+<!--                        </div>-->
+<!--                        <div class="center">-->
+<!--                            <h5>Descrição</h5>-->
+<!--                            <p class="descricao">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus malesuada tellus sit amet enim tincidunt, vel pretium erat dignissim. Suspendisse finibus, nisl ac interdum blandit, nibh tortor mattis augue, id imperdiet enim tortor eget sapien.</p>-->
+<!--                        </div>-->
+<!--                        <p>R$ 80,00 - R$ 90,00</p>-->
+<!--                    </div>-->
+<!--                    <div class="servico">-->
+<!--                        <div style="display: flex; flex-direction: row; height: 100%; align-items: center; gap: 1rem;">-->
+<!--                            <div class="marker"></div>-->
+<!--                            <button type="button" class="deleteServico">-->
+<!--                                <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--                                    <path d="M10 11V17" stroke="#f12525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                    <path d="M14 11V17" stroke="#f12525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                    <path d="M4 7H20" stroke="#f12525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                    <path d="M6 7H12H18V18C18 19.6569 16.6569 21 15 21H9C7.34315 21 6 19.6569 6 18V7Z" stroke="#f12525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                    <path d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z" stroke="#f12525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                </svg>-->
+<!--                            </button>-->
+<!--                            <button type="button" class="editServico" >-->
+<!--                                <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--                                    <path d="M11 4H7.2C6.0799 4 5.51984 4 5.09202 4.21799C4.71569 4.40974 4.40973 4.7157 4.21799 5.09202C4 5.51985 4 6.0799 4 7.2V16.8C4 17.9201 4 18.4802 4.21799 18.908C4.40973 19.2843 4.71569 19.5903 5.09202 19.782C5.51984 20 6.0799 20 7.2 20H16.8C17.9201 20 18.4802 20 18.908 19.782C19.2843 19.5903 19.5903 19.2843 19.782 18.908C20 18.4802 20 17.9201 20 16.8V12.5M15.5 5.5L18.3284 8.32843M10.7627 10.2373L17.411 3.58902C18.192 2.80797 19.4584 2.80797 20.2394 3.58902C21.0205 4.37007 21.0205 5.6364 20.2394 6.41745L13.3774 13.2794C12.6158 14.0411 12.235 14.4219 11.8012 14.7247C11.4162 14.9936 11.0009 15.2162 10.564 15.3882C10.0717 15.582 9.54378 15.6885 8.48793 15.9016L8 16L8.04745 15.6678C8.21536 14.4925 8.29932 13.9048 8.49029 13.3561C8.65975 12.8692 8.89125 12.4063 9.17906 11.9786C9.50341 11.4966 9.92319 11.0768 10.7627 10.2373Z" stroke="#3E996F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                                </svg>-->
+<!--                            </button>-->
+<!--                            <p><strong>HIDRATAÇÃO</strong></p>-->
+<!--                        </div>-->
+<!--                        <div class="center">-->
+<!--                            <h5>Descrição</h5>-->
+<!--                            <p class="descricao">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus malesuada tellus sit amet enim tincidunt, vel pretium erat dignissim. Suspendisse finibus, nisl ac interdum blandit, nibh tortor mattis augue, id imperdiet enim tortor eget sapien.</p>-->
+<!--                        </div>-->
+<!--                        <p>R$ 80,00 - R$ 90,00</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="ServicosPages">-->
+<!--                    <button type="button" class="pages">-->
+<!--                        <span></span>-->
+<!--                        1-->
+<!--                    </button>-->
+<!--                    <button type="button" class="pages">-->
+<!--                        <span></span>-->
+<!--                        2-->
+<!--                    </button>-->
+<!--                </div>-->
+<!--            </div>-->
 <!--            <h1>Adicionar LocalTop</h1>-->
 <!--            <p>Crie um perfil para o seu negócio</p>-->
 <!--            <hr>-->

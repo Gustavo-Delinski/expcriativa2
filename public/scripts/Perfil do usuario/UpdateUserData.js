@@ -216,7 +216,7 @@ async function pegarDados() {
     }
 }
 
-// document.addEventListener('DOMContentLoaded', pegarDados())
+document.addEventListener('DOMContentLoaded', pegarDados())
 
 const Cancelar = () => {
     const btns = document.getElementById("btns");

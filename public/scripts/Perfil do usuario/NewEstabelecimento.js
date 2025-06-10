@@ -141,8 +141,6 @@ function msgCNPJ(cnpj) {
 
 function mostrarFotoEstabelecimento(index) {
     const foto = document.getElementById('Estabelecimentoimg');
-    const indexFoto = document.getElementById('indexFoto');
-    const spans = document.querySelectorAll('[data-value]')
     if (fotos[index]) {
         fotoMostrada = index
         foto.style.backgroundImage = `url(${URL.createObjectURL(fotos[index])})`;
@@ -281,7 +279,7 @@ async function adicionarLocalTop() {
         })
     })
     if (response.ok) {
-        Swal.fire({
+        await Swal.fire({
             title: 'Estabelecimento criado com sucesso',
             icon: 'success'
         })
@@ -297,7 +295,7 @@ async function adicionarLocalTop() {
                 body: formData
             })
             if (resposta.ok) {
-                Swal.fire({
+                await Swal.fire({
                     title: 'Fotos adicionadas com sucesso',
                     icon: 'success'
                 })

@@ -1,5 +1,3 @@
-
-
 function trocarmodal(Modal) {
     const modal = document.getElementById('informacao');
     const modais = [`<h1>Meu Perfil</h1>
@@ -168,11 +166,10 @@ function trocarmodal(Modal) {
     //pegarDados()
 }
 
-document.getElementById('conta').addEventListener('click', function () {trocarmodal(this.value);});
+document.getElementById('conta').addEventListener('click', function () {trocarmodal(this.value);pegarDados();});
 document.getElementById('trocarsenha').addEventListener('click', function () {trocarmodal(this.value);});
 document.getElementById('AddEstabelecimento').addEventListener('click', async function () {
     await trocarmodal(this.value);
-    //pegarServicos()
 });
 
 
@@ -243,3 +240,43 @@ async function logout() {
     }
 }
 document.getElementById("logoutBtn").addEventListener("click", logout);
+
+async function PegarEstabelecimentos() {
+    const estabelecimentos = document.getElementById('estabelecimentos');
+    const resposta = await fetch("/auth/estado");
+    const dados = await resposta.json();
+    const response = await fetch(`/api/Usuarioestabelecimentos/${dados.usuarioId}`, {
+        method: 'GET'
+    });
+    const data = await response.json();
+    estabelecimentos.innerHTML = '';
+    data.forEach(estabelecimento => {
+        const novo = document.createElement("button");
+        novo.type = "button";
+        novo.className = "estabelecimento";
+        novo.onclick = () => abrirAbaEstabelecimento(estabelecimento.ID_estabelecimento);
+        novo.innerHTML = `<svg width="25px" height="25px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" >
+                        <g id="Icon-Set" transform="translate(-360.000000, -723.000000)" fill="#3E996F">
+                            <path d="M362.04,733 L366.699,725 L385.271,725 L390.029,733 L362.04,733 L362.04,733 Z M390,737 C389.985,738.381 388.394,739.001 387,739 C385.393,738.999 383.945,738.026 383.945,737 L383,737 C383,738.009 381.209,739 379.667,739 C378.188,739 376.468,737.978 376.468,737 L375.499,737 C375.499,738.009 373.749,739 372.271,739 C370.729,739 368.969,738.29 368.969,737 L368.022,737 C368.022,738.006 366.478,739.031 364.995,739.031 C363.491,739.031 362,738.381 362,737 L362,735 L390,735 L390,737 L390,737 Z M389,747 L363.003,747 L363,741 L364.964,741 C366.038,741 367.741,740.042 368.462,738.576 C369.271,740.001 370.781,741 372.223,741 C373.746,741 375.423,740.094 375.983,738.784 C376.544,740.063 378.186,741 379.678,741 C381.158,741 382.691,739.912 383.467,738.426 C384.374,739.926 385.106,741 387,741 C387.293,741 388.744,741.048 389,741 L389,747 L389,747 Z M389,751 C389,752.104 387.95,753 386.811,753 L365.156,753 C364.017,753 363.003,752.104 363.003,751 L363.003,749 L389,749 L389,751 L389,751 Z M386.154,723 L365.813,723 L360,733 L360,737 C360,738.065 360.383,739.229 361.001,740 L361.031,751 C361.031,753.209 362.878,755 365.156,755 L386.811,755 C389.089,755 391,753.209 391,751 L391,740 C391.7,739.176 392,738.33 392,737 L392,733 L386.154,723 L386.154,723 Z" id="shop">
+                            </path>
+                        </g>
+                    </g>
+                </svg>${estabelecimento.Nome.toUpperCase()}`;
+        estabelecimentos.appendChild(novo);
+    })
+
+
+}
+document.addEventListener('DOMContentLoaded', PegarEstabelecimentos)
+
+const buttons = document.querySelectorAll('.estabelecimentos .estabelecimento');
+buttons.forEach(button => {
+    button.addEventListener('click', () => {
+        // Remove a classe "ative" de todos os botões
+        buttons.forEach(btn => btn.classList.remove('active'));
+
+        // Adiciona a classe "ative" somente ao botão clicado
+        button.classList.add('active');
+    });
+});

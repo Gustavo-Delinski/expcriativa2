@@ -66,10 +66,6 @@ function listarUsuarios() {
         });
 }
 
-
-
-
-
 function validaCPF(cpf) {
     cpf = cpf.replace(/\D/g, '');
 
@@ -123,8 +119,6 @@ async function salvarEdicaoUsuario() {
     }
 }
 
-
-
 function formatarCPF(cpf) {
     cpf = cpf.toString().padStart(11, '0');
     return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
@@ -144,7 +138,6 @@ function msgValidaCPF() {
     }
     return true;
 }
-
 
 document.addEventListener('DOMContentLoaded', function () {
     listarUsuarios();

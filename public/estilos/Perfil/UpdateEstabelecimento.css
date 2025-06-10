@@ -6,6 +6,7 @@
 
 .LeftUpdtForm {
     width: 65%;
+    height: 30dvi ;
     padding-left: 1.1dvi;
     #nomeEstabelecimento {
         padding: 0;
@@ -153,11 +154,12 @@
 .RightUpdtForm {
     width: 32.3%;
     .EstabelecimentoUpdtImg {
-        #imgEstabele {
-            width: 20.1dvi;
-            height: 26.76dvi;
-            border-radius: 1rem;
-        }
+        width: 20.1dvi;
+        height: 26.76dvi;
+        border-radius: 1rem;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
         .UpdtprevImg {
             background: linear-gradient(90deg, rgba(0, 0, 0, 0.18), transparent);
             height: 26.76dvi;
@@ -182,7 +184,7 @@
         padding-top: 1rem;
         display: flex;
         flex-direction: row;
-        justify-content: center;
+        justify-content: space-evenly;
         img {
             width: 100%;
             height: 100%;
@@ -193,9 +195,27 @@
         .deleteImgUpdt {
             border: none;
             background: none;
+            padding: 0;
         }
         p {
             padding: 0 !important;
+        }
+        .spans {
+            display: flex;
+            width: 100%;
+            overflow-x: auto;
+            align-items: center;
+            justify-content: center;
+        }
+        span {
+            display: flex;
+            width: 1rem;
+            height:  1rem;
+            background-color: transparent;
+            border-radius: 0.5dvi;
+            border: 2px solid #3E996F;
+            flex-shrink: 0;
+            margin: 0 5px;
         }
     }
 }
@@ -233,6 +253,249 @@
         .DeleteEstabelecimentoUpdt:hover {
             transform: scale(1.05);
         }
+        .cancelUpdt {
+            display: none;
+            background-color: #f12525;
+            border: none;
+            border-radius: 1dvi;
+            color: #FFFF;
+            font-size: 1.1dvi;
+            padding: 0.3dvi 0.5dvi;
+            cursor: pointer;
+        }
+        .cancelUpdt:hover {
+            transform: scale(1.05);
+        }
+        .cancelUpdt:active {
+            transform: scale(1);
+        }
+        .SaveUpdt {
+            display: none;
+            background-color: #3E996F;
+            border: none;
+            border-radius: 1dvi;
+            color: #FFFF;
+            font-size: 1.1dvi;
+            padding: 0.3dvi 0.5dvi;
+            cursor: pointer;
+        }
+        .SaveUpdt:hover {
+            transform: scale(1.05);
+        }
+        .SaveUpdt:active {
+            transform: scale(1);
+        }
+        .UpdtEstabeleBtn {
+            display: flex;
+            flex-direction: row;
+            gap: 0.5dvi;
+        }
     }
 }
+
+.LowerSide {
+    margin: 0 1dvi;
+    h4 {
+        color:#302163;
+    }
+    .middleLowerSide {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        .searchBar {
+            width: 60%;
+            label {
+                position: absolute;
+                margin-left: 0.5dvi;
+                margin-top: 0.1dvi;
+            }
+            input {
+                width: 50%;
+                padding-left: 2.5dvi;
+                border-radius: 2dvi;
+                outline: none;
+            }
+        }
+        .ControllerBtns {
+            button {
+                padding:0;
+                background: none;
+                border: none;
+            }
+        }
+    }
+    .servicosEstabelecimento {
+        width: 100%;
+        max-height: 42dvi;
+        margin:2dvi 0;
+        .servico {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            background-color: #f3f3f3;
+            height: 5dvi;
+            margin: 1dvi 0;
+            padding: 0 1dvi 0 0.5dvi;
+            border-radius: 0.5dvi;
+            align-items: center;
+            p {
+                font-size: medium;
+                color: #302163;
+                padding:0;
+            }
+            .marker {
+                height: 80%;
+                width: 0.5dvi;
+                background-color:#F4FA46;
+                border: 2px solid #F4FA46;
+                border-radius: 2dvi;
+            }
+            .deleteServico {
+                border: none;
+                background: none;
+                padding: 0 ;
+                display: none;
+            }
+            .editServico {
+                border: none;
+                background: none;
+                padding: 0 ;
+                display: none;
+            }
+            .center {
+                width: 30%;
+                h5 {
+                    width: 100%;
+                }
+            }
+            }
+            .descricao {
+                width: 100%;
+                align-items: center;
+                white-space: nowrap;
+                overflow-x: hidden;
+            }
+
+    }
+    .ServicosPages {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 0.5dvi;
+        .pages {
+            display: flex;
+            flex-direction: column;
+            background: none ;
+            border: none;
+            span {
+                width: 20px;
+                height: 20px;
+                border: 2px solid #302163;
+                border-radius: 2dvi;
+            }
+        }
+    }
+}
+
+.popUp {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(110, 109, 109, 0.24);
+    z-index: 999;
+    .Modal {
+        width: 35%;
+        height: 60%;
+        background-color: #ffffff;
+        border-radius: 1dvi;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.42);
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: center;
+        padding: 2dvi 0;
+        gap: 1dvi;
+        h1 {
+            color: #302163;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 90%;
+            .NomeModal,.DescricaoModal,.ValorMinModal,.ValorMaxModal {
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 1dvi;
+                label {
+                    font-weight: bold;
+                    font-size: 1.3dvi;
+                    color: #3E996F;
+                    margin-left: 0.5dvi;
+                }
+                input {
+                    border:1px solid rgb(62, 62, 62);
+                    border-radius: 0.3dvi;
+                    width: 100%;
+                    padding-left: 0.3dvi
+                }
+            }
+            .DescricaoModal {
+                textarea {
+                    resize: none;
+                    border:1px solid rgb(62, 62, 62);
+                    border-radius: 0.3dvi;
+                    padding-left: 0.3dvi
+                }
+            }
+            .ValorModal {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                .spacer {
+                    height: 0.1dvi;
+                    width: 3%;
+                    background-color: rgba(26, 26, 26, 0.73);
+                    border-radius: 1dvi;
+                    border: 1px solid rgb(62, 62, 62);
+                }
+                .ValorMinModal,.ValorMaxModal {
+                    width:43%;
+                }
+                input {
+                    width: 100%;
+                }
+            }
+            .modalBtns {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                gap: 1dvi;
+                margin-top:0.5dvi;
+                .AddBtn {
+                    background-color: #302163;
+                    border: none;
+                    border-radius: 1dvi;
+                    color: #FFFF;
+                    font-size: 1.1dvi;
+                    padding: 0.3dvi 0.5dvi;
+                    cursor: pointer;
+                }
+                .CancelBtn {
+                    background-color: #f12525;
+                    border: none;
+                    border-radius: 1dvi;
+                    color: #FFFF;
+                    font-size: 1.1dvi;
+                    padding: 0.3dvi 0.5dvi;
+                    cursor: pointer
+                }
+            }
+        }
+    }
+}
+
 
