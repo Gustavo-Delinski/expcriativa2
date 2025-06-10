@@ -133,7 +133,7 @@
 }
 
 function msgValidaCPF() {
-    const cpf = document.getElementById('cpf').value;
+
 
     if (!validaCPF(cpf)) {
         Swal.fire(
@@ -141,7 +141,7 @@ function msgValidaCPF() {
             '',
             'error'
         );
-        document.getElementById('cpf').style.outline = '1px solid rgb(202, 50, 121)';
+        
         return false;
     }
     return true;
@@ -155,7 +155,7 @@ function ValidarNome(nome) {
             'Por favor, insira um nome completo.',
             'error'
         );
-        document.getElementById('nome').style.outline = '1px solid rgb(202, 50, 121)';
+      
         return false;
     }
     return true;
@@ -169,7 +169,7 @@ function validarEmail(email) {
             'Por favor, insira um email v&aacute;lido.',
             'error'
         )
-        document.getElementById('email').style.outline = '1px solid rgb(202, 50, 121)';
+        
         return false;
     }
     return true;
@@ -185,8 +185,7 @@ function validarSenhas(senha, senhaConfirmar) {
             'A senha deve ter pelo menos 8 caracteres.',
             'error'
         );
-        document.getElementById('senha').style.outline = '1px solid rgb(202, 50, 121)';
-        document.getElementById('confirmarsenha').style.outline = '1px solid rgb(202, 50, 121)';
+   
         return false;
     }
     if (!mascara.test(senha)) {
@@ -225,7 +224,7 @@ function ValidarData(data) {
             'Por favor, insira uma data v&aacute;lida.',
             'error'
         );
-        document.getElementById('datanasc').style.outline = '1px solid rgb(202, 50, 121)';
+       
         return false;
     }
     if (m < 0 || (m === 0 && d < 0)) {
@@ -237,7 +236,7 @@ function ValidarData(data) {
             'Apenas maiores de idade podem se cadastrar.',
             'error'
         );
-        document.getElementById('datanasc').style.outline = '1px solid rgb(202, 50, 121)';
+       
         return false;
     }
     return true;

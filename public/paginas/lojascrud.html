@@ -12,6 +12,21 @@
       </style>
     <link rel="icon" type="image/x-icon" href="../imagens/logo/Símbolo.svg">
     <title>LocalTop</title>
+        <style>
+      .navbar {
+        background-color: #302163;
+      }
+      table th, table td {
+        border: 1px solid #333;
+        padding: 10px;
+        text-align: center;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: white;
+      }
+    </style>
 </head>
 
 
@@ -30,6 +45,7 @@
                     <!-- <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/">Lojas</a>
                     </li> -->
+                    
                   </ul>
                   <div class="dropdown-center">
                     <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">Estabelecimentos
@@ -55,14 +71,13 @@
           <tr>
             <th style="border: 2px solid #333; padding: 10px; background-color: #f0f0f0;">ID</th>
             <th style="border: 2px solid #333; padding: 10px; background-color: #f0f0f0;">Nome</th>
-            <th style="border: 2px solid #333; padding: 10px; background-color: #f0f0f0;">Endereço</th>
             <th style="border: 2px solid #333; padding: 10px; background-color: #f0f0f0;">Número</th>
             <th style="border: 2px solid #333; padding: 10px; background-color: #f0f0f0;">Complemento</th>
             <th style="border: 2px solid #333; padding: 10px; background-color: #f0f0f0;">CNPJ</th>
             <th style="border: 2px solid #333; padding: 10px; background-color: #f0f0f0;">CEP</th>
             <th style="border: 2px solid #333; padding: 10px; background-color: #f0f0f0;">Delete</th>
             <th style="border: 2px solid #333; padding: 10px; background-color: #f0f0f0;">Update</th>
-            <th style="border: 2px solid #333; padding: 10px; background-color: #f0f0f0;">Salvar</th>
+
         </thead>
         <tbody id="TabelaCorpo">
           <!-- <tr>
@@ -84,6 +99,62 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../scripts/lojascrud.js"></script>
+
+
+<!-- Modal de Edição de Estabelecimento -->
+<div class="modal fade" id="modalEdicaoLoja" tabindex="-1" aria-labelledby="modalEdicaoLojaLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar Estabelecimento</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="formEdicaoLoja">
+          <input type="hidden" id="editLojaId">
+          <div class="mb-3">
+            <label for="editLojaNome" class="form-label">Nome</label>
+            <input type="text" class="form-control" id="editLojaNome" required>
+          </div>
+          <div class="mb-3">
+            <label for="editLojaNumero" class="form-label">Número</label>
+            <input type="text" class="form-control" id="editLojaNumero">
+          </div>
+          <div class="mb-3">
+            <label for="editLojaComplemento" class="form-label">Complemento</label>
+            <input type="text" class="form-control" id="editLojaComplemento">
+          </div>
+          <div class="mb-3">
+            <label for="editLojaCnpj" class="form-label">CNPJ</label>
+            <input type="text" class="form-control" id="editLojaCnpj" required>
+          </div>
+          <div class="mb-3">
+            <label for="editLojaCep" class="form-label">CEP</label>
+            <input type="text" class="form-control" id="editLojaCep" required>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button class="btn btn-primary" onclick="salvarEdicaoLoja()">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 </body>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    listarLojas();
+  });
+</script>
+</body>
+<script src="../scripts/lojascrud.js"></script>
+
 
 </html>

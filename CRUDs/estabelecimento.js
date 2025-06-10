@@ -21,6 +21,22 @@ const upload = multer({
 
 const rota_lojas = Router();
 
+rota_lojas.put('/api/estabelecimentos/:id', async (req, res) => {
+  const { id } = req.params;
+  const { Nome, Numero, Complemento, Cnpj, CEP } = req.body;
+
+  const loja = await Estabelecimento.findByPk(id);
+  if (!loja) return res.status(404).json({ mensagem: 'Loja não encontrada.' });
+
+  try {
+    await loja.update({ Nome, Numero, Complemento, Cnpj, CEP });
+    return res.json({ mensagem: 'Loja atualizada com sucesso.', updated: loja });
+  } catch (error) {
+    console.error('Erro no PUT /api/estabelecimentos/:id', error);
+    return res.status(500).json({ mensagem: 'Erro ao atualizar loja.' });
+  }
+});
+
 
 rota_lojas
 .get('/api/estabelecimentos-completos', async (req, res) => {
@@ -210,7 +226,7 @@ rota_lojas
             { model: Servico,as:'Servico', attributes: ['Nome'] },
             { 
               model: Avaliacao,
-              as: 'Avaliacaos',
+              as: 'Avaliacao',
               attributes: ['Nota']
             }
           ]
@@ -240,7 +256,6 @@ rota_lojas
             Nome: Nome,
             Email:Email,
             Cnpj: CNPJ,
-            Logradouro: Endereco,
             Numero: Numero ? Numero : null,
             Complemento: Complemento ? Complemento : null,
             Bairro: Bairro,
@@ -303,41 +318,45 @@ rota_lojas
 
     res.json(fotosFormatadas);
 })
+
+
+
 .put('/api/Updtestabelecimento/:id', async (req, res) => {
     const { id } = req.params;
-    const { Nome, Email, Telefone, CNPJ, CEP, Estado, Cidade, Bairro, Endereco, Numero, Complemento } = req.body;
-    const estabelecimento = await Estabelecimento.findByPk(id);
+    const { Nome, Email, Telefone, CNPJ, CEP, Estado, Cidade, Bairro, Numero, Complemento } = req.body;
 
-    console.log(req.body);
+    const estabelecimento = await Estabelecimento.findByPk(id);
 
     if (!estabelecimento) {
         return res.status(404).json({ mensagem: 'Loja não encontrada.' });
     }
     
-    const updated = await estabelecimento.update({
-        Nome: Nome,
-        Email: Email,
-        Telefone: Telefone,
-        Cnpj: CNPJ,
-        CEP: CEP,
-        UF: Estado,
-        Cidade: Cidade,
-        Bairro: Bairro,
-        Logradouro: Endereco,
-        Numero: Numero,
-        Complemento: Complemento
-    });
-
-    console.log(updated);
-
-    return res.status(200).json({ mensagem: 'Loja atualizada com sucesso.' });
+    try {
+        const updated = await estabelecimento.update({
+            Nome: Nome,
+            Email: Email,
+            Telefone: Telefone,
+            Cnpj: CNPJ,
+            CEP: CEP,
+            UF: Estado,
+            Cidade: Cidade,
+            Bairro: Bairro,
+            Numero: Numero,
+            Complemento: Complemento
+        });
+        return res.status(200).json({ mensagem: 'Loja atualizada com sucesso.', updated });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ mensagem: 'Erro ao atualizar loja.' });
+    }
 })
-.delete('/api/lojas/:id', async (req, res) => {
-    const { id } = req.params;
-    const loja = await Estabelecimento.findByPk(id);
-    return loja ? res.json(await loja.destroy()) : res.status(404).end();
+.delete('/api/estabelecimentos/:id', async (req, res) => {
+  const { id } = req.params;
+  const loja = await Estabelecimento.findByPk(id);
+  if (!loja) return res.status(404).end();
+  await loja.destroy();
+  res.json({ mensagem: 'Loja deletada.' });
 });
-
 
 export default rota_lojas;
 

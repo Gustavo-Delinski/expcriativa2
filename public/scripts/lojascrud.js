@@ -55,74 +55,49 @@ function msgValidaCPF() {
 }
 
 function listarLojas() {
-    fetch('/api/lojas', {
-        method: 'GET'
-    })
-        .then(response => response.json())
-        .then(data => {
-            const tabela = document.getElementById('TabelaCorpo');
-            data.forEach(estabelecimento => {
-                const linha = document.createElement('tr');
-                linha.innerHTML = `
-                <td class="linha">${estabelecimento.ID_estabelecimento}</td>
-                <td class="linha"><input type="text" id="nome-${estabelecimento.ID_estabelecimento}" value="${estabelecimento.Nome}" readonly></td>
-                <td class="linha"><input type="text" id="endereco-${estabelecimento.ID_estabelecimento}" value="${estabelecimento.endereco}" readonly></td>
-                <td class="linha"><input type="text" id="numero-${estabelecimento.ID_estabelecimento}" value="${estabelecimento.Numero}" readonly></td>
-                <td class="linha"><input type="text" id="compl-${estabelecimento.ID_estabelecimento}" value="${estabelecimento.Complemento || ''}" readonly></td>
-                <td class="linha"><input type="text" id="cnpj-${estabelecimento.ID_estabelecimento}" value="${estabelecimento.Cnpj}" readonly></td>
-                <td class="linha"><input type="text" id="cep-${estabelecimento.ID_estabelecimento}" value="${estabelecimento.CEP}" readonly></td>
-                <td style="border: 2px solid #333; padding: 0;">
-                    <button type="button" style="width: 100%; height: 100%; padding: 12px; background-color: red; border: none; color: white; font-weight: bold; cursor: pointer;" id="delete" onclick="PopUpDelete(${estabelecimento.ID_estabelecimento})">X</button>
-                </td>
-                <td style="border: 2px solid #333; padding: 0;">
-                    <button type="button" style="width: 100%; height: 100%; padding: 12px; background-color: dodgerblue; border: none; color: white; font-weight: bold; cursor: pointer;" id="update" onclick="habilitarEdicao(${estabelecimento.ID_estabelecimento})">🔄</button>
-                    </td>
-                <td style="border: 2px solid #333; padding: 0;">
-                    <button type="button" style="width: 100%; height: 100%; padding: 12px; background-color: green; border: none; color: white; font-weight: bold; cursor: pointer;" id="salvar" onclick="editarLoja(${estabelecimento.ID_estabelecimento})">💾</button>
-                </td>
-                `;
-                tabela.appendChild(linha);
-            });
-        })
+  fetch('/api/estabelecimentos', {
+    method: 'GET'
+  })
+    .then(response => response.json())
+    .then(data => {
+      const tabela = document.getElementById('TabelaCorpo');
+      tabela.innerHTML = ''; // limpa antes
+      data.forEach(estabelecimento => {
+        const linha = document.createElement('tr');
+        linha.innerHTML = `
+          <td>${estabelecimento.ID_estabelecimento}</td>
+          <td>${estabelecimento.Nome}</td>
+          <td>${estabelecimento.Numero || ''}</td>
+          <td>${estabelecimento.Complemento || ''}</td>
+          <td>${estabelecimento.Cnpj || ''}</td>
+          <td>${estabelecimento.CEP || ''}</td>
+          <td>
+            <button class="btn btn-danger" onclick="PopUpDelete(${estabelecimento.ID_estabelecimento}) ">X</button>
+          </td>
+<td>
+  <button 
+    class="btn btn-primary" 
+    data-bs-toggle="modal" 
+    data-bs-target="#modalEdicaoLoja"
+    onclick="abrirModalEdicaoLoja(${estabelecimento.ID_estabelecimento})">
+    🔄
+  </button>
+</td>
+        `;
+        tabela.appendChild(linha);
+      });
+    });
 }
+
+
 document.addEventListener('DOMContentLoaded', function () {
     listarLojas();
 })
 
-async function deletarLoja(id) {
-    try {
-        const response = await fetch(`/api/lojas/${id}`, {
-            method: 'DELETE'
-        })
-        const result = await response.json()
-        console.log(result.mensagem)
-    } catch (error) {
-        console.log(`Erro ao excluir o usuário: ${error}`)
-    }
-}
 
-async function PopUpDelete(id) {
-    const result = await Swal.fire({
-    title: "Deseja deletar essa Loja?",
-    text: "Não será possível reverter essa ação!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Deletar"
-    });
-    if (result.isConfirmed) {
-        await deletarLoja(id)
-        await Swal.fire({
-            title: "Deleted!",
-            text: "Your file has been deleted.",
-            icon: "success"
-        });
-        if (result.isConfirmed) { window.location.reload(); }
-}
 
 function habilitarEdicao(id) {
-    const campos = ['nome', 'endereco', 'numero', 'compl', 'cnpj', 'cep'];
+    const campos = ['nome', 'numero', 'compl', 'cnpj', 'cep'];
     
     campos.forEach(campo => {
         const input = document.getElementById(`${campo}-${id}`);
@@ -137,7 +112,6 @@ function habilitarEdicao(id) {
 
 async function editarLoja(id) {
     const nome = document.getElementById(`nome-${id}`).value;
-    const endereco = document.getElementById(`endereco-${id}`).value;
     const numero = document.getElementById(`numero-${id}`).value;
     const compl = document.getElementById(`compl-${id}`).value;
     const cnpj = document.getElementById(`cnpj-${id}`).value;
@@ -145,12 +119,12 @@ async function editarLoja(id) {
 
     try {
         console.log(id);
-        const response = await fetch(`/api/lojas/${id}`, {
+        const response = await fetch(`/api/estabelecimento/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ nome: nome, endereco: endereco, numero: numero, complemento: compl, cnpj: cnpj, cep:cep })
+            body: JSON.stringify({ nome: nome, numero: numero, complemento: compl, cnpj: cnpj, cep:cep })
         });
         const result = await response.json();
         console.log(result.mensagem);
@@ -159,4 +133,114 @@ async function editarLoja(id) {
         console.log(`Erro ao editar a loja: ${error}`);
     }
 }
+
+// 1) Abre o modal e popula campos
+async function abrirModalEdicaoLoja(id) {
+  try {
+    console.log("Abrindo modal de edição para ID", id);
+    const res = await fetch(`/api/estabelecimento/${id}`); // singular no GET
+    if (!res.ok) throw new Error("Loja não encontrada");
+    const loja = await res.json();
+
+    document.getElementById('editLojaId').value = loja.ID_estabelecimento;
+    document.getElementById('editLojaNome').value = loja.Nome;
+    document.getElementById('editLojaNumero').value = loja.Numero || '';
+    document.getElementById('editLojaComplemento').value = loja.Complemento || '';
+    document.getElementById('editLojaCnpj').value = loja.Cnpj;
+    document.getElementById('editLojaCep').value = loja.CEP;
+    // o data-bs-toggle abre o modal
+  } catch (e) {
+    console.error(e);
+    Swal.fire('Erro', e.message, 'error');
+  }
 }
+
+// 2) Envia PUT, fecha modal limpando backdrop e recarrega tabela
+async function salvarEdicaoLoja() {
+  try {
+    console.log(">> Iniciando salvarEdicaoLoja");
+    const id = document.getElementById('editLojaId').value;
+    const body = {
+      Nome: document.getElementById('editLojaNome').value,
+      Numero: document.getElementById('editLojaNumero').value,
+      Complemento: document.getElementById('editLojaComplemento').value,
+      Cnpj: document.getElementById('editLojaCnpj').value,
+      CEP: document.getElementById('editLojaCep').value
+    };
+    console.log("Dados a enviar:", id, body);
+
+    const response = await fetch(`/api/estabelecimentos/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+
+    console.log("Status da resposta:", response.status);
+    const data = await response.json().catch(() => ({}));
+    console.log("Body da resposta:", data);
+
+    if (!response.ok) {
+      return Swal.fire('Erro', data.mensagem || 'Falha ao atualizar', 'error');
+    }
+
+    await Swal.fire('Sucesso', 'Estabelecimento atualizado.', 'success');
+
+    // Fecha modal e remove backdrop
+    const modalEl = document.getElementById('modalEdicaoLoja');
+    const modalInst = bootstrap.Modal.getInstance(modalEl);
+    modalInst.hide();
+    document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+
+    // Recarrega só a tabela
+    listarLojas();
+
+  } catch (err) {
+    console.error("Catch salvarEdicaoLoja:", err);
+    Swal.fire('Erro inesperado', err.message, 'error');
+  }
+}
+
+// 3) Remove a loja no back e atualiza a tabela
+async function deletarLoja(id) {
+  console.log("Chamando DELETE para ID", id);
+  const res = await fetch(`/api/estabelecimentos/${id}`, { method: 'DELETE' });
+  if (!res.ok) throw new Error('Não consegui deletar');
+  const j = await res.json().catch(() => ({}));
+  console.log("Resposta DELETE:", j);
+}
+
+// 4) Popup de confirmação e chamada ao delete
+async function PopUpDelete(id) {
+    Swal.fire({
+        title: 'Tem certeza?',
+        text: "Você não poderá reverter isso!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sim, deletar!'
+    })
+    const result = await Swal.fire({
+    title: "Deseja deletar esse usuário?",
+    text: "Não será possível reverter essa ação!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#3085d6",
+    confirmButtonText: "Deletar"
+    });
+    if (result.isConfirmed) {
+        await deletarUsuario(id)
+        await Swal.fire({
+            title: "Deleted!",
+            text: "Your file has been deleted.",
+            icon: "success"
+        });
+    }
+}
+
+
+
+
+
+

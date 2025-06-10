@@ -152,21 +152,33 @@
       }
 
       async function deletarUsuario(id) {
-        if (!confirm("Deseja realmente deletar esse usuário?")) return;
-
-        try {
-          const response = await fetch(`/api/usuario/${id}`, { method: 'DELETE' });
-          if (response.ok) {
-            Swal.fire('Deletado!', 'Usuário deletado com sucesso.', 'success');
-            carregarAdmins();
-          } else {
-            Swal.fire('Erro!', 'Não foi possível deletar o usuário.', 'error');
-          }
-        } catch (error) {
-          console.error(error);
-          Swal.fire('Erro!', 'Erro ao tentar deletar o usuário.', 'error');
-        }
-      }
+    Swal.fire({
+        title: 'Tem certeza?',
+        text: "Você não poderá reverter isso!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sim, deletar!'
+    })
+    const result = await Swal.fire({
+    title: "Deseja deletar esse usuário?",
+    text: "Não será possível reverter essa ação!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#3085d6",
+    confirmButtonText: "Deletar"
+    });
+    if (result.isConfirmed) {
+        await deletarUsuario(id)
+        await Swal.fire({
+            title: "Deleted!",
+            text: "Your file has been deleted.",
+            icon: "success"
+        });
+    }
+}
 
       let modalEdicao = null;
 

@@ -100,7 +100,7 @@ async function salvarEdicaoUsuario() {
         if (!ValidarNome(nome)) return;
         if (!validarEmail(email)) return;
         if (!msgValidaCPF(cpf)) return;
-        if (!ValidarData(dataNascimento)) return;
+        if (!ValidarData(dataNascimentoRaw)) return;
 
         console.log("CHegou")
 
@@ -138,8 +138,7 @@ function formatarCPF(cpf) {
     return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
 }
 
-function msgValidaCPF() {
-    const cpf = document.getElementById('cpf').value;
+function msgValidaCPF(cpf) {
 
     if (!validaCPF(cpf)) {
         Swal.fire(
@@ -147,7 +146,7 @@ function msgValidaCPF() {
             '',
             'error'
         );
-        document.getElementById('cpf').style.outline = '1px solid rgb(202, 50, 121)';
+        
         return false;
     }
     return true;
@@ -177,8 +176,8 @@ async function PopUpDelete(id) {
         text: "Você não poderá reverter isso!",
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
         confirmButtonText: 'Sim, deletar!'
     })
     const result = await Swal.fire({
