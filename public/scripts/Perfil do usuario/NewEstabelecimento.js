@@ -295,12 +295,9 @@ async function adicionarLocalTop() {
                 body: formData
             })
             if (resposta.ok) {
-                await Swal.fire({
-                    title: 'Fotos adicionadas com sucesso',
-                    icon: 'success'
-                })
                 fotos = [];
                 mostrarFotoEstabelecimento(0);
+
             } else {
                 const erro = resposta.json()
                 Swal.fire({
@@ -310,6 +307,10 @@ async function adicionarLocalTop() {
                 });
             }
         }
+        await Swal.fire({
+            title: 'Fotos adicionadas com sucesso',
+            icon: 'success'
+        })
     } else {
         Swal.fire({
             title: 'Erro ao criar estabelecimento',

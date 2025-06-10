@@ -167,7 +167,7 @@ const Oferta = sequelize.define('Oferta', {
         type: DataTypes.DOUBLE,
         allowNull: false
     },
-    Grandeza: {
+    Nome: {
         type: DataTypes.STRING,
         allowNull: true
     },

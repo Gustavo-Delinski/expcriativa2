@@ -94,8 +94,8 @@ app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "paginas", "index.html"));
 });
 
-app.get("/pesquisa", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "paginas", "pesquisa.html"));
+app.get("/Estabelecimento", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "paginas", "TesteEstabelecimento.html"));
 });
 
 app.get("/estabelecimento", (req, res) => {
@@ -113,9 +113,9 @@ app.get("/perfil", (req,res) => {
     res.sendFile(path.join(__dirname, "public", "paginas", "perfilUsuario.html"));
 })
 
-// app.get("/lista",(req, res) => {
-//     res.sendFile(path.join(__dirname, "public", "paginas", "usuariocrud.html"));
-// });
+app.get("/pesquisa",(req, res) => {
+    res.sendFile(path.join(__dirname, "public", "paginas", "TesteSearch.html"));
+});
 
 app.get("/listaUsuarios", verificarAutenticacao, verificarAdm, (req, res) => {
     res.sendFile(path.join(__dirname, "public", "paginas", "usuariocrud.html"));

@@ -208,7 +208,7 @@ rota_lojas
     res.set('Content-Type', fotos[0].TipoFoto || 'image/png');
     res.send(fotos[0].Foto)
 })
-.get('/api/estabelecimentos', async (req, res) => {
+.get('/api/estabelecimentosGay', async (req, res) => {
   try {
     // const estabelecimentos = await Estabelecimento.findAll();
     const estabelecimentos = await Estabelecimento.findAll({
@@ -240,6 +240,24 @@ rota_lojas
     res.status(500).json({ erro: "Não foi possível carregar os estabelecimentos" });
   }
 })
+.get('/api/estabelecimentos', async (req, res) => {
+    const estabelecimentos = await Estabelecimento.findAll();
+    estabelecimentos ? res.status(200).json(estabelecimentos) : res.status(404).end();
+})
+.get('/api/estabelecimentosNovo/:id', async (req, res) => {
+    const { id } = req.params;
+        try {
+            const estabelecimentos = await Estabelecimento.findAll({
+                where: {ID_usuario: id},order: [['ID_estabelecimento', 'DESC']]
+            });
+            estabelecimentos.length
+                ? res.status(200).json(estabelecimentos)
+                : res.status(404).end();
+        } catch (error) {
+            console.error('Erro ao buscar estabelecimentos:', error);
+            res.status(500).json({ erro: 'Erro interno do servidor' });
+        }
+    })
 .post('/api/CriarEstabelecimento', async (req, res) => {
     const { Nome,Email,Telefone,Estado,Cidade,Bairro, Endereco, Numero, Complemento, CNPJ, CEP, usuarioId} = req.body;
     const lojas = await Estabelecimento.findOne({ where: { Cnpj: CNPJ } });
@@ -252,10 +270,11 @@ rota_lojas
     console.log("Dados recebidos:", req.body); // Adicione isso para debug
     
     try {
-        await Estabelecimento.create({
+        const newEstabele = await Estabelecimento.create({
             Nome: Nome,
             Email:Email,
             Cnpj: CNPJ,
+            Logradouro: Endereco,
             Numero: Numero ? Numero : null,
             Complemento: Complemento ? Complemento : null,
             Bairro: Bairro,
@@ -266,7 +285,7 @@ rota_lojas
             ID_usuario: usuarioId
         });
 
-        res.status(200).json({ mensagem: "Estabelecimento cadastrado com sucesso." });
+        res.status(200).json({ mensagem: "Estabelecimento cadastrado com sucesso.",estabelecimento:newEstabele});
     } catch (error) {
         console.error("Erro ao cadastrar estabelecimento:", error);
         res.status(500).json({ mensagem: `Erro ao cadastrar estabelecimento: ${error}` }); // Retorne JSON
@@ -316,17 +335,29 @@ rota_lojas
         imagemBase64: foto.Foto.toString('base64')
     }));
 
-    res.json(fotosFormatadas);
+    res.status(200).json(fotosFormatadas);
+})
+.get('/api/estabelecimento/primeirafoto/:id', async (req, res) => {
+    const {id} = req.params;
+    const fotos = await FotosEstabelecimento.findAll({where: {ID_estabelecimento: id}});
+
+    if (!fotos || fotos.length === 0) {
+        return res.status(204).send(null); // Sem conteúdo
+    }
+
+    // Transforma os ‘buffers’ em base64 para enviar via JSON
+    res.set('Content-Type', fotos[0].TipoFoto || 'image/png');
+    res.send(fotos[0].Foto)
 })
 
 
 
 .put('/api/Updtestabelecimento/:id', async (req, res) => {
     const { id } = req.params;
-    const { Nome, Email, Telefone, CNPJ, CEP, Estado, Cidade, Bairro, Numero, Complemento } = req.body;
+    const { Nome, Email, Telefone, CNPJ, CEP, Estado, Cidade, Bairro,Endereco, Numero, Complemento } = req.body;
 
     const estabelecimento = await Estabelecimento.findByPk(id);
-
+    console.log(req.body)
     if (!estabelecimento) {
         return res.status(404).json({ mensagem: 'Loja não encontrada.' });
     }
@@ -341,15 +372,35 @@ rota_lojas
             UF: Estado,
             Cidade: Cidade,
             Bairro: Bairro,
+            Logradouro:Endereco,
             Numero: Numero,
             Complemento: Complemento
         });
+        console.log(updated)
         return res.status(200).json({ mensagem: 'Loja atualizada com sucesso.', updated });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ mensagem: 'Erro ao atualizar loja.' });
     }
 })
+.post('/api/UptdFotoEstabelecimento', upload.single('file'), async (req, res) => {
+        const { CNPJ } = req.body;
+        const lojas = await Estabelecimento.findOne({ where: { Cnpj: CNPJ } });
+
+        try {
+            await FotosEstabelecimento.create({
+                Foto: req.file.buffer,
+                TipoFoto: req.file.mimetype,
+                ID_estabelecimento: lojas.ID_estabelecimento
+            });
+
+            res.status(200).json({ mensagem: "Foto do estabelecimento cadastrada com sucesso." });
+
+        } catch (error) {
+            console.error("Erro ao cadastrar foto do estabelecimento:", error);
+            res.status(500).json({ mensagem: `Erro ao cadastrar foto do estabelecimento: ${error}` });
+        }
+    })
 .delete('/api/estabelecimentos/:id', async (req, res) => {
   const { id } = req.params;
   const loja = await Estabelecimento.findByPk(id);

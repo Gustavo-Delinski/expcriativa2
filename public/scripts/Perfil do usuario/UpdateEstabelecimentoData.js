@@ -101,8 +101,8 @@ async function abrirAbaEstabelecimento(id) {
                 <div class="lowerside-btns">
                     <button type="button" class="DeleteEstabelecimentoUpdt" id="DeleteEstabelecimentoUpdt" onclick="">Excluir Estabelecimento</button>
                     <div class="UpdtEstabeleBtn">
-                        <button type="button" class="cancelUpdt" id="cancelUpdt" onclick="ChangeCampos();pegarDataEstabelecimento();">Cancelar</button>
-                        <button type="button" class="SaveUpdt" id="SaveUpdt" onclick="if(!UpdateEstabelecimento())return;ChangeCampos();pegarDataEstabelecimento();">Salvar</button>
+                        <button type="button" class="cancelUpdt" id="cancelUpdt" onclick="ChangeCampos();pegarDataEstabelecimento(idEstabelecimento);">Cancelar</button>
+                        <button type="button" class="SaveUpdt" id="SaveUpdt" onclick="Saveestabelecimento()">Salvar</button>
                         <button type="button" class="ChangeCampos" id='changecampos' onclick="ChangeCampos()">Editar informações</button>
                     </div>
                 </div>
@@ -120,7 +120,7 @@ async function abrirAbaEstabelecimento(id) {
                                 </g>
                             </svg>
                         </label>
-                        <input type="search" id="pesquisaServico"/>
+                        <input type="search" id="pesquisaServico" placeholder="Digite o Nome do serviço"/>
                     </div>
                     <div class="ControllerBtns">
                         <button type="button" class="addServico" id="addServico" onclick="AbrirModal()">
@@ -280,7 +280,7 @@ async function UpdateEstabelecimento() {
     const complemento = document.getElementById('complemento').value;
 
     try {
-        const response = await fetch(`/api/Updtestabelecimento/${10}`, {
+        const response = await fetch(`/api/Updtestabelecimento/${idEstabelecimento}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -308,6 +308,7 @@ async function UpdateEstabelecimento() {
         }
 
         const data = await response.json();
+        console.log(data);
         Swal.fire({
             title: 'Dados atualizados',
             text: data.mensagem,
@@ -322,6 +323,12 @@ async function UpdateEstabelecimento() {
         });
         return false;
     }
+}
+
+function Saveestabelecimento() {
+    if(!UpdateEstabelecimento())return;
+    ChangeCampos();
+    pegarDataEstabelecimento(idEstabelecimento);
 }
 
 function ShowImage(index) {

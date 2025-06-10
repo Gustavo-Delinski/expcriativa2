@@ -319,6 +319,7 @@ async function PegarEstabelecimentos() {
         const novo = document.createElement("button");
         novo.type = "button";
         novo.className = "estabelecimento";
+        novo.value = estabelecimento.ID_estabelecimento
         novo.onclick = () => abrirAbaEstabelecimento(estabelecimento.ID_estabelecimento);
         novo.innerHTML = `<svg width="25px" height="25px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" >

@@ -11,13 +11,19 @@ rota_oferta
     console.log(ofertas);
     ofertas ? res.status(200).json(ofertas) : res.status(404).end();
 })
+.get('/api/PrimeiraEstabelecimentoOfertas/:id', async (req, res) => {
+    const { id } = req.params;
+    const ofertas = await Oferta.findAll({where: {ID_estabelecimento: id}});
+    console.log(ofertas);
+    ofertas ? res.status(200).json(ofertas[0]) : res.status(404).end();
+})
 .get('/api/oferta/:id', async (req, res) => {
     const { id } = req.params;
     const oferta = await Oferta.findByPk(id);
     const servico = await Servico.findOne({where:{ID_servico: oferta.ID_servico}})
     oferta ? res.status(200).json({oferta:oferta,servico:servico}) : res.status(404).end();
 })
-.get('/api/ofertaServico/:id', async (req, res) => {})
+
 .post('/api/criarOferta/:id', async (req,res) => {
     const {Nome,Descricao,Valor} = req.body;
     const {id} = req.params;

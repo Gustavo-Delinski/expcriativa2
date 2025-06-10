@@ -91,7 +91,21 @@ btnLimpar.addEventListener('click', () => {
     listarEstabelecimentosComFiltros();
 });
 
-
+async function NewListarEstabelecimentos() {
+    const response = await fetch('/api/estabelecimentos');
+    const estabelecimentos = await response.json();
+    console.log(estabelecimentos)
+    for (const estab of estabelecimentos) {
+        const responseImg = await fetch(`/api/estabelecimento/foto/${estab.ID_estabelecimento}`);
+        if (responseImg.status !== 200) {
+            console.log(`Status ${responseImg.status}`);
+        } else {
+            const dados = await responseImg.json();
+        }
+        
+    }
+}
+NewListarEstabelecimentos();
 
 async function listarEstabelecimentos() {
     try {
@@ -101,24 +115,26 @@ async function listarEstabelecimentos() {
             return
         }
         const estabelecimentos = await resp.json();
-        // console.log('JSON da API →', estabelecimentos);
-
-        if (!Array.isArray(estabelecimentos)) {
-            console.error('Esperava um array, recebi:', estabelecimentos);
-            return;
-        }
-
         const grade = document.getElementById('grade-produtos');
         grade.innerHTML = '';
-
+        let dados;
         for (const estab of estabelecimentos) {
             console.log(estab.ID_estabelecimento)
-            const responseImg = await fetch(`/api/estabelecimento/imagem/${estab.ID_estabelecimento}`)
+            const responseImg = await fetch(`/api/estabelecimento/foto/${estab.ID_estabelecimento}`)
             console.log(responseImg)
-            if (responseImg.ok) {
-                const dados = await responseImg.json();
-                console.log(dados)
+            if (!responseImg.ok) {
+                Swal.fire({
+                    title: 'Erro ao carregar imagem',
+                    text: 'Não foi possível carregar a imagem do estabelecimento.',
+                    icon: 'error'
+                })
             }
+            if (responseImg.status === 204) {
+                dados = null
+            } else {
+               dados = await responseImg.json()
+            }
+                console.log(dados)
             const nome = estab.Nome || '—';
             const media = estab.Ofertas[0].Avaliacao[0].Nota || 'Sem avaliações';
             const foto = estab.fotoSrc || 'https://placehold.co/200x200';
@@ -137,9 +153,8 @@ async function listarEstabelecimentos() {
             card.innerHTML = `
         <div class="imagem-container">
           <img src="${foto}" alt="Foto de ${nome}" />
-          <button class="favorito">❤️</button>
         </div>
-        <h4><a href="estabelecimento" style="color: black; text-decoration: none"> ${nome} <span class="avaliacao">★ ${media} </a> </span></h4>
+        <h4>${nome}</h4>
         <h5>${servico}</h5>
         <p>${desc}</p>
         <h4>Preço: ${valor}</h4>
