@@ -58,7 +58,7 @@ function listarUsuarios() {
                     </td>
                     <td>
                         <button onclick="abrirModalEdicao(${usuario.ID_usuario})"
-                            style="width:100%; padding: 6px; background-color: dodgerblue; color: white; border: none;">🔄</button>
+                            style="width:100%; padding: 6px; background-color: #0d6efd;; color: white; border: none;">🔄</button>
                     </td>
                 `;
                 tabela.appendChild(linha);
@@ -117,7 +117,7 @@ async function salvarEdicaoUsuario() {
     });
 
     if (response.ok) {
-        Swal.fire('Usuário atualizado com sucesso!');
+        Swal.fire('Sucesso', 'Usuário atualizado com sucesso!', 'success');
         bootstrap.Modal.getInstance(document.getElementById('modalEdicaoUsuario')).hide();
         document.getElementById('TabelaCorpo').innerHTML = '';
         listarUsuarios(); // atualiza a tabela

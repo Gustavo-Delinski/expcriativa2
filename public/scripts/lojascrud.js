@@ -72,14 +72,14 @@ function listarLojas() {
           <td>${estabelecimento.Cnpj || ''}</td>
           <td>${estabelecimento.CEP || ''}</td>
           <td>
-            <button class="btn btn-danger" onclick="PopUpDelete(${estabelecimento.ID_estabelecimento}) ">X</button>
+            <button onclick="PopUpDelete(${estabelecimento.ID_estabelecimento})" class="btn btn-danger btn-sm" title="Deletar usuário" style="width: 100%; background-color: red; color: white; border-radius: 0px">X</button>
           </td>
 <td>
   <button 
-    class="btn btn-primary" 
+    class="btn btn-primary btn-sm" 
     data-bs-toggle="modal" 
     data-bs-target="#modalEdicaoLoja"
-    onclick="abrirModalEdicaoLoja(${estabelecimento.ID_estabelecimento})">
+    onclick="abrirModalEdicaoLoja(${estabelecimento.ID_estabelecimento})" style="width: 100%; background-color: #0d6efd; border-radius: 0px">
     🔄
   </button>
 </td>
@@ -232,8 +232,8 @@ async function PopUpDelete(id) {
     if (result.isConfirmed) {
         await deletarLoja(id)
         await Swal.fire({
-            title: "Deleted!",
-            text: "Your file has been deleted.",
+            title: "Deletado!",
+            text: "Seu estabelecimento foi deletado.",
             icon: "success"
         });
         listarLojas();
