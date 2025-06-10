@@ -35,6 +35,14 @@ rota_usuarios
     const usuarios = await Usuario.findAll();
     res.json(usuarios);
 })
+
+rota_usuarios.get('/api/usuarios/admins', async (req, res) => {
+    const admins = await Usuario.findAll({ where: { ADM: 1 } });
+    res.json(admins);
+  });
+
+rota_usuarios
+
 .post('/api/login', async (req, res) => {
     console.log("Dados recebidos:", req.body);
     const { email, senha } = req.body;
