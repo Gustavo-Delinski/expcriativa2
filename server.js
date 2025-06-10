@@ -115,12 +115,18 @@ app.get("/perfil", (req,res) => {
 //     res.sendFile(path.join(__dirname, "public", "paginas", "usuariocrud.html"));
 // });
 
-app.get("/listaLojas",(req, res) => {
-    res.sendFile(path.join(__dirname, "public", "paginas", "lojascrud.html"));
-});
-app.get("/listaUsuarios", (req, res) => {
+app.get("/listaUsuarios", verificarAutenticacao, verificarAdm, (req, res) => {
     res.sendFile(path.join(__dirname, "public", "paginas", "usuariocrud.html"));
 });
+
+app.get("/listaLojas", verificarAutenticacao, verificarAdm, (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "paginas", "lojascrud.html"));
+});
+
+app.get("/listaadmins", verificarAutenticacao, verificarAdm, (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "paginas", "adminscrud.html"));
+});
+
 
 app.get("/sessao", (req, res) => {
     res.json(req.session.usuarioId == null ? {Resposta: "Não há sessão ativa"} : {usuarioId: req.session.usuarioId, nome: req.session.nome});
@@ -137,8 +143,8 @@ app.get("/logout", (req, res) => {
 });
 
 sequelize.sync().then(() => {
-    app.listen(port,() => {
-        console.log(`Servidor rodando http://localhost:${port}`);
+    app.listen(port, '127.0.0.1', () => {
+        console.log(`Servidor rodando em http://127.0.0.1:${port}`);
     });
 })
 
