@@ -85,15 +85,15 @@
               <input type="hidden" id="editId">
               <div class="mb-3">
                 <label for="editNome" class="form-label">Nome</label>
-                <input type="text" class="form-control" id="editNome" required>
+                <input type="text" class="form-control" id="editNome" >
               </div>
               <div class="mb-3">
                 <label for="editEmail" class="form-label">Email</label>
-                <input type="email" class="form-control" id="editEmail" required>
+                <input type="email" class="form-control" id="editEmail" >
               </div>
               <div class="mb-3">
                 <label for="editCPF" class="form-label">CPF</label>
-                <input type="text" class="form-control" id="editCPF" required oninput="mascaraCPF(event)">
+                <input type="text" class="form-control" id="editCPF"  oninput="mascaraCPF(event)">
               </div>
               <div class="mb-3">
                 <label for="editDataNasc" class="form-label">Data de Nascimento</label>
@@ -112,6 +112,136 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
+      function validaCPF(cpf) {
+    cpf = cpf.replace(/\D/g, '');
+
+    if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) return false;
+
+    const calcDig = (factor, max) => {
+        let total = 0;
+        for (let i = 0; i < max; i++) {
+            total += parseInt(cpf[i]) * (factor--);
+        }
+        let resto = (total * 10) % 11;
+        return resto === 10 ? 0 : resto;
+    };
+
+    const dig1 = calcDig(10, 9);
+    const dig2 = calcDig(11, 10);
+
+    return dig1 === parseInt(cpf[9]) && dig2 === parseInt(cpf[10]);
+}
+
+function msgValidaCPF() {
+    const cpf = document.getElementById('cpf').value;
+
+    if (!validaCPF(cpf)) {
+        Swal.fire(
+            'CPF Inválido',
+            '',
+            'error'
+        );
+        document.getElementById('cpf').style.outline = '1px solid rgb(202, 50, 121)';
+        return false;
+    }
+    return true;
+}
+
+function ValidarNome(nome) {
+    const regex = /^[A-Za-zÀ-ÿ]+(?:\s+[A-Za-zÀ-ÿ]+)+$/;
+    if (nome.length < 8 || !regex.test(nome)) {
+        Swal.fire(
+            'Nome Inválido',
+            'Por favor, insira um nome completo.',
+            'error'
+        );
+        document.getElementById('nome').style.outline = '1px solid rgb(202, 50, 121)';
+        return false;
+    }
+    return true;
+}
+
+function validarEmail(email) {
+    const regex = /^[A-Za-z0-9._!#$%&*+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+    if (!regex.test(email)) {
+        Swal.fire(
+            'Email Inválido',
+            'Por favor, insira um email v&aacute;lido.',
+            'error'
+        )
+        document.getElementById('email').style.outline = '1px solid rgb(202, 50, 121)';
+        return false;
+    }
+    return true;
+}
+
+function validarSenhas(senha, senhaConfirmar) {
+    let mascara = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*]).{8,}$/
+
+
+    if (senha.length < 8) {
+        Swal.fire(
+            'Senha Fraca',
+            'A senha deve ter pelo menos 8 caracteres.',
+            'error'
+        );
+        document.getElementById('senha').style.outline = '1px solid rgb(202, 50, 121)';
+        document.getElementById('confirmarsenha').style.outline = '1px solid rgb(202, 50, 121)';
+        return false;
+    }
+    if (!mascara.test(senha)) {
+        Swal.fire(
+            'Senha Fraca',
+            'A senha deve ter pelo menos uma letra maiúscula, uma letra minúscula, um número e um símbolo especial.',
+            'error'
+        );
+        document.getElementById('senha').style.outline = '1px solid rgb(202, 50, 121)';
+        document.getElementById('confirmarsenha').style.outline = '1px solid rgb(202, 50, 121)';
+        return false;
+    }
+    if (senha !== senhaConfirmar) {
+        Swal.fire(
+            'Senhas Diferentes',
+            'O campo de senha e confirmação de senha devem ser iguais.',
+            'error'
+        );
+        document.getElementById('senha').style.outline = '1px solid rgb(202, 50, 121)';
+        document.getElementById('confirmarsenha').style.outline = '1px solid rgb(202, 50, 121)';
+        return false;
+    }
+    return true;
+}
+
+function ValidarData(data) {
+    let today = new Date();
+    let dataNasc = new Date(data);
+
+    let idade = today.getFullYear() - dataNasc.getFullYear();
+    let m = today.getMonth() - dataNasc.getMonth();
+    let d = today.getDate() - dataNasc.getDate();
+    if (isNaN(dataNasc.getTime())) {
+        Swal.fire(
+            'Data Inválida',
+            'Por favor, insira uma data v&aacute;lida.',
+            'error'
+        );
+        document.getElementById('datanasc').style.outline = '1px solid rgb(202, 50, 121)';
+        return false;
+    }
+    if (m < 0 || (m === 0 && d < 0)) {
+        idade--;
+    }
+    if (idade < 18) {
+        Swal.fire(
+            'Menor de idade',
+            'Apenas maiores de idade podem se cadastrar.',
+            'error'
+        );
+        document.getElementById('datanasc').style.outline = '1px solid rgb(202, 50, 121)';
+        return false;
+    }
+    return true;
+}
       async function abrirModalEdicao(id) {
         const response = await fetch(`/api/usuario/${id}`);
         const usuario = await response.json();
@@ -141,6 +271,13 @@
         const email = document.getElementById('editEmail').value;
         const cpf = document.getElementById('editCPF').value.replace(/\D/g, '');
         const dataNascimento = document.getElementById('editDataNasc').value;
+
+        if (!ValidarNome(nome)) return;
+        if (!validarEmail(email)) return;
+        if (!msgValidaCPF(cpf)) return;
+        if (!ValidarData(dataNascimento)) return;
+
+        console.log("Entrou")
 
         const body = { nome, email, cpf };
         if (dataNascimento) body.dataNascimento = dataNascimento;

@@ -207,7 +207,7 @@ async function pegarDados() {
             const url = URL.createObjectURL(img);
             document.getElementById('imgPerfil').style.backgroundImage = `url(${url})`;
             document.getElementById('Perfilimg').style.backgroundImage = `url(${url})`;
-            document.querySelector(".ImgUsuario").src = url;
+            document.querySelector(".conta").src = url;
         } else {
             console.error(`Erro ao carregar imagem. Status: ${responseImg.status}`);
         }

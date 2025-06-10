@@ -202,6 +202,16 @@
         const cpf = document.getElementById('editCPF').value.trim();
         const dataNasc = document.getElementById('editDataNasc').value;
 
+        
+        if (!ValidarNome(nome)) return;
+        if (!validarEmail(email)) return;
+        if (!msgValidaCPF(cpf)) return;
+        if (!ValidarData(dataNascimento)) return;
+
+        console.log("CHegou")
+
+
+
         if (!nome || !email || !cpf) {
           Swal.fire('Aviso', 'Preencha todos os campos obrigatórios.', 'warning');
           return;

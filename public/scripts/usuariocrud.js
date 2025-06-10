@@ -97,6 +97,14 @@ async function salvarEdicaoUsuario() {
     const cpf = document.getElementById('editCPF').value.replace(/\D/g, '');
     const dataNascimentoRaw = document.getElementById('editDataNasc').value;
 
+        if (!ValidarNome(nome)) return;
+        if (!validarEmail(email)) return;
+        if (!msgValidaCPF(cpf)) return;
+        if (!ValidarData(dataNascimento)) return;
+
+        console.log("CHegou")
+
+
     let dataNascimento = "";
     if (dataNascimentoRaw) {
         const [ano, mes, dia] = dataNascimentoRaw.split('-');
